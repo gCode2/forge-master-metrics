@@ -37,7 +37,7 @@ export function AuthProvider({children}: AuthProviderProps){
         }
 
         if(mounted){
-            setLoading(true)
+            setLoading(false)
         }
     }
         initializeAuth();
