@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { supabase } from "../lib/supabase";
 
 function RegisterPage() {
@@ -16,6 +16,8 @@ function RegisterPage() {
     password: "",
     confirmPassword: "",
   });
+
+  const navigate = useNavigate();
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
     setInputs((prev) => ({ ...prev, [e.target.name]: e.target.value }));
@@ -73,6 +75,7 @@ function RegisterPage() {
             password: "",
             confirmPassword: "",
         });
+        navigate("/dashboard")
     }finally{
         setLoading(false);
     }

@@ -7,6 +7,8 @@ import RegisterPage from "./pages/RegisterPage"
 import AdminPage from "./pages/AdminPage"
 import PlayersPage from "./pages/PlayersPage"
 import PlayerPage from "./pages/PlayerPage"
+import ProtectedRoute from "./components/auth/ProtectedRoute"
+import PublicRoute from "./components/auth/PublicRoute"
 function App() {
   // const [clans, setClans] = useState([])
   // useEffect(()=>{
@@ -24,15 +26,9 @@ function App() {
   return (
     <>
     <Routes>
-      <Route>
+      <Route element={<ProtectedRoute/>}>
         <Route path="/dashboard" element={
           <DashboardPage/>
-        }/>
-        <Route path="/login" element={
-          <LoginPage/>
-        }/>
-        <Route path="/register" element={
-          <RegisterPage/>
         }/>
         <Route path="/admin" element={
           <AdminPage/>
@@ -44,6 +40,14 @@ function App() {
            <PlayerPage/>
         }/>
 
+      </Route>
+      <Route element={<PublicRoute/>}>
+        <Route path="/login" element={
+          <LoginPage/>
+        }/>
+        <Route path="/register" element={
+          <RegisterPage/>
+        }/>
       </Route>
     </Routes>
       {/* <div className="text-3xl">
