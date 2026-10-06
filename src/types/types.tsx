@@ -18,3 +18,21 @@ export interface AuthContextValue {
 export interface AuthProviderProps{
     children: ReactNode;
 }
+export interface PlayerType{
+    id: string,
+    nickname: string,
+}
+export type PlayerClaimStatus = "pending" | "verified" | "rejected" | "revoked"
+
+export interface PlayerClaimType{
+    id: string,
+    player_id: string;
+    status: PlayerClaimStatus;
+}
+export interface PlayerClaimRowProps{
+    player: PlayerType,
+    claim?: PlayerClaimType,
+    submitting: boolean,
+    onClaim: (playerId: string) => void;
+    onCancel: (playerId: string) => void;
+}

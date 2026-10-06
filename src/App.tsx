@@ -10,18 +10,19 @@ import PlayerPage from "./pages/PlayerPage"
 import ProtectedRoute from "./components/auth/ProtectedRoute"
 import PublicRoute from "./components/auth/PublicRoute"
 function App() {
-  // const [clans, setClans] = useState([])
+  // const [players, setPlayers] = useState([])
   // useEffect(()=>{
-  //     getClans();
+  //     getPlayers();
   //   }, [])
 
-  // async function getClans(){
-  //   const {data, error} = await supabase.from('clans').select()
+  // async function getPlayers(){
+  //   const {data, error} = await supabase.from('players').select()
   //   if(error){
   //     console.error(error);
   //     return
   //   }
-  //   setClans(data);
+  //   console.log(data)
+  //   setPlayers(data);
   // }
   return (
     <>
@@ -52,14 +53,14 @@ function App() {
     </Routes>
       {/* <div className="text-3xl">
         Hello World
-        <div>
-          {clans.map(clan=>(
-            <div key={clan.id}>
-              {clan.name}
+        </div>
+        <div className="flex flex-row flex-wrap gap-2">
+          {players.map(player=>(
+            <div key={player.id} className={`${player.is_member ? `text-green-500` : `text-red-500`} border-1 rounded p-2`}>
+              {player.nickname}
             </div>
           ))}
-        </div>
-      </div> */}
+        </div> */}
     </>
   )
 }
