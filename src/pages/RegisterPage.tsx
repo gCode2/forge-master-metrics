@@ -6,11 +6,13 @@ function RegisterPage() {
   const [loading, setLoading] = useState(false);
   const [inputs, setInputs] = useState({
     username: "",
+    displayName: "",
     password: "",
     confirmPassword: "",
   });
   const [errors, setErrors] = useState({
     username: "",
+    displayName: "",
     password: "",
     confirmPassword: "",
   });
@@ -34,6 +36,7 @@ function RegisterPage() {
     
     try{
         const username = inputs.username.trim().toLowerCase();
+        const displayName = inputs.displayName.trim();
         const email = `${username}@polskapl.pl`;
 
         const { error } = await supabase.auth.signUp({
@@ -41,7 +44,8 @@ function RegisterPage() {
             password: inputs.password,
             options: {
                 data: {
-                    username: username,
+                    username,
+                    display_name: displayName
                 },
             },
         });
@@ -50,6 +54,7 @@ function RegisterPage() {
 
             setErrors({
                 username: error.message,
+                displayName: "",
                 password: "",
                 confirmPassword: "",
             });
@@ -58,11 +63,13 @@ function RegisterPage() {
         }
         setErrors({
             username: "",
+            displayName: "",
             password: "",
             confirmPassword: "",
         });
         setInputs({
             username: "",
+            displayName: "",
             password: "",
             confirmPassword: "",
         });
@@ -77,6 +84,7 @@ function RegisterPage() {
   function validateInputs() {
     const newErrors = {
       username: "",
+      displayName: "",
       password: "",
       confirmPassword: "",
     };
@@ -91,6 +99,16 @@ function RegisterPage() {
     } else if (!usernameRegex.test(inputs.username)) {
       newErrors.username = "Username has invalid characters";
     }
+
+    if (!inputs.displayName.trim()) {
+      newErrors.displayName = "Display name is required";
+    } else if (inputs.displayName.length < 3) {
+      newErrors.displayName = "Display is too short (min 3 characters)";
+    } else if (inputs.displayName.length > 20) {
+      newErrors.displayName = "Display name is too long (max 20 characters)";
+    } 
+
+
     if (!inputs.password.trim()) {
       newErrors.password = "Password is required";
     } else if (inputs.password.length < 8) {
@@ -98,6 +116,8 @@ function RegisterPage() {
     } else if (inputs.password.length > 20) {
       newErrors.password = "Password is too long (max 20 characters)";
     }
+
+
     if (!inputs.confirmPassword.trim()) {
       newErrors.confirmPassword = "Confirm password";
     } else if (inputs.password !== inputs.confirmPassword) {
@@ -109,10 +129,10 @@ function RegisterPage() {
   return (
     <>
       <form
-        className="flex flex-col justify-center items-center h-screen"
+        className="flex flex-col justify-center items-center h-screen w-screen"
         onSubmit={handleSubmit}
       >
-        <div className="relative flex flex-col justify-center items-center border-2 p-8 rounded">
+        <div className="relative flex flex-col justify-center items-center border-2 py-5 px-14 rounded">
           <fieldset
             disabled={loading}
             className={`${
@@ -130,7 +150,25 @@ function RegisterPage() {
                 value={inputs.username}
                 id="username"
                 className="bg-zinc-100 border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-1 shadow-xs placeholder:text-body rounded"
-                placeholder="Jane Doe"
+                placeholder="john_doe"
+                required
+                onChange={handleChange}
+              />
+              {/* karuzela nickname'ow z klanu */}
+              <span className="text-red-500 text-xs text-left w-full min-h-[1rem]">
+                {errors.username ?? ""}
+              </span>
+            </div>
+
+            <div className="flex flex-col justify-center items-center gap-1 w-full">
+              <label htmlFor="displayName">Display name</label>
+              <input
+                type="text"
+                name="displayName"
+                value={inputs.displayName}
+                id="displayName"
+                className="bg-zinc-100 border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-1 shadow-xs placeholder:text-body rounded"
+                placeholder="John Doe"
                 required
                 onChange={handleChange}
               />
