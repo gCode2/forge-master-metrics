@@ -49,14 +49,23 @@ function RegisterPage(){
             password: "",
             confirmPassword: ""
         }
-        if(!inputs.username.trim()){
-            console.log(inputs.username)
+        const usernameRegex = /^[a-zA-Z0-9_]+$/;
+
+        if (!inputs.username.trim()) {
             newErrors.username = "Username is required";
+        }else if(inputs.username.length < 3){
+            newErrors.username = "Username is too short (min 3 characters)";
+        }else if (inputs.username.length > 20) {
+            newErrors.username = "Username is too long (max 20 characters)";
+        } else if (!usernameRegex.test(inputs.username)) {
+            newErrors.username = "Username has invalid characters";
         }
-        if(!inputs.password.trim()){
+        if (!inputs.password.trim()) {
             newErrors.password = "Password is required";
-        }else if(inputs.password.length < 7){
+        } else if (inputs.password.length < 8) {
             newErrors.password = "Password must be at least 8 characters long";
+        } else if (inputs.password.length > 20) {
+            newErrors.password = "Password is too long (max 20 characters)";
         }
         if(!inputs.confirmPassword.trim()){
             newErrors.confirmPassword = "Confirm password";
@@ -69,7 +78,8 @@ function RegisterPage(){
     return (
         <>
             <form className="flex flex-col justify-center items-center h-screen" onSubmit={handleSubmit}>
-                <div className="flex flex-col xl-w-1/4 justify-center items-center border-2 p-8 rounded">
+                <div className="flex flex-col justify-center items-center border-2 p-8 rounded">
+                    {/* dont forget to include mobile in the styles */}
                     <div className="font-black text-3xl mb-3">
                         Register
                     </div>
