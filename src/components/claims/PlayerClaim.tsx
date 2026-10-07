@@ -123,7 +123,12 @@ function PlayerClaim(){
 
     return (
         <>
-            <ul className="flex flex-col gap-0.5 w-75">
+        <div className="flex flex-col gap-0.5 w-75">
+            <div>
+                Find and pick your nickname from the list below to claim your identity.
+            </div>
+        
+            <ul className="flex flex-col gap-0.5">
             {players.map(player=>{
                 const claim = claims.find(claim=>claim.player_id===player.id);
                 return (
@@ -140,6 +145,7 @@ function PlayerClaim(){
                 )
             })}
             </ul>
+        </div>
         </>
     )
 }

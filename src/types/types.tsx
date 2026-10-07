@@ -36,3 +36,9 @@ export interface PlayerClaimRowProps{
     onClaim: (playerId: string) => void;
     onCancel: (playerId: string) => void;
 }
+export type OnboardingStep = "intro" | "choose-player" | "pending" | "verified";
+
+
+export interface IntroProps{
+    understoodHandler: () => void;
+}
