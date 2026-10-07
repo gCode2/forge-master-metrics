@@ -1,17 +1,16 @@
 import { useEffect, useState } from "react";
 import { useAuth } from "../../hooks/useAuth";
-import type { PlayerClaimType, PlayerType } from "../../types/types";
+import type { PlayerClaimProps, PlayerType } from "../../types/types";
 import { supabase } from "../../lib/supabase";
 import PlayerClaimRow from "./PlayerClaimRow/PlayerClaimRow";
 
-function PlayerClaim(){
+function PlayerClaim({onClaimCreated} : PlayerClaimProps){
     const {user} = useAuth();
 
     const [players, setPlayers] = useState<PlayerType[]>([])
-    const [claims, setClaims] = useState<PlayerClaimType[]>([])
     const [loading, setLoading] = useState(true);
     const [submittingPlayerId, setSubmittingPlayerId] = useState<string | null>(null);
-    const [error, setError] = useState("");
+    const [error, setError] = useState<string | null>(null);
 
     const clanId = "ea51731c-1dea-4bda-9fdc-9e34ba16271d";
 
@@ -24,39 +23,16 @@ function PlayerClaim(){
             setLoading(true);
             setError("");
 
-            const 
-            [{
-                data: playersData, 
-                error: playersError
-            }, 
-            {
-                data: claimsData, 
-                error: claimsError
-            }] = await Promise.all([
-                supabase
-                    .from("players")
-                    .select("id, nickname")
-                    .eq("is_member", true)
-                    .order("nickname"),
-                supabase
-                    .from("player_claims")
-                    .select("id, player_id, status")
-                    .eq("user_id", user.id)
-            ]);
+            const {data: playersData, error: playersError} = await supabase.from("players").select("id, nickname").eq("is_member", true).order("nickname");
+
             if(playersError){
                 console.error("Failed to load players:", error);
                 setError("Failed to load players");
                 setLoading(false);
                 return;
             }
-            if(claimsError){
-                console.error("Failed to load claims:", error);
-                setError("Failed to load claims");
-                setLoading(false);
-                return;
-            }
+
             setPlayers(playersData ?? []);
-            setClaims(claimsData ?? []);
             setLoading(false);
         }
         loadData();
@@ -67,8 +43,6 @@ function PlayerClaim(){
 
         setSubmittingPlayerId(id);
         setError("");
-
-        
 
         const {data, error} = await supabase.from('player_claims').insert({
             user_id: user?.id,
@@ -84,29 +58,11 @@ function PlayerClaim(){
             console.error("Failed to create player claim:", error);
             setError(error.message);
         }else{
-            setClaims(prev=>[...prev, data]);
+            onClaimCreated(data);
         }
         setSubmittingPlayerId(null);
     }
 
-    async function handleCancel(claimId: string){
-        const claim = claims.find(claim=>claim.id === claimId);
-
-        if(!claim) return;
-
-        setSubmittingPlayerId(claim.player_id);
-        setError("");
-
-        const {error} = await supabase.from("player_claims").delete().eq("id", claimId);
-
-        if(error){
-            console.error("Failed to cancel player claim:", error);
-            setError(error.message);
-        }else{
-            setClaims(prev=>prev.filter(claim=>claim.id !== claimId));
-        }
-        setSubmittingPlayerId(null);
-    }
 
     if(error){
         return (
@@ -130,17 +86,14 @@ function PlayerClaim(){
         
             <ul className="flex flex-col gap-0.5">
             {players.map(player=>{
-                const claim = claims.find(claim=>claim.player_id===player.id);
                 return (
                     <PlayerClaimRow
                     key={player.id}
                     player={player}
-                    claim={claim}
                     submitting = {
                         submittingPlayerId === player.id
                     }
                     onClaim={handleClaim}
-                    onCancel={handleCancel}
                     />
                 )
             })}

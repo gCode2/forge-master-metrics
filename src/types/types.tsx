@@ -31,14 +31,19 @@ export interface PlayerClaimType{
 }
 export interface PlayerClaimRowProps{
     player: PlayerType,
-    claim?: PlayerClaimType,
     submitting: boolean,
     onClaim: (playerId: string) => void;
-    onCancel: (playerId: string) => void;
 }
 export type OnboardingStep = "intro" | "choose-player" | "pending" | "verified";
 
 
 export interface IntroProps{
     understoodHandler: () => void;
+}
+export interface PlayerClaimProps{
+    onClaimCreated: (data:PlayerClaimType) => void;
+}
+export interface PendingClaimProps{
+    claim: PlayerClaimType;
+    onClaimRemove: ()=>void;
 }
