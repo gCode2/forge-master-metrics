@@ -68,9 +68,7 @@ function LoginPage() {
   function validateInputs() {
     const newErrors = {
       username: "",
-      displayName: "",
       password: "",
-      confirmPassword: "",
     };
     const usernameRegex = /^[a-zA-Z0-9_]+$/;
 
