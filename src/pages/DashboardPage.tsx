@@ -72,7 +72,7 @@ function DashboardPage(){
 
     // }
     // clearLocalStorage();
-
+// supabase.auth.signOut();
     return (
         <>
             <div className="w-screen flex justify-center items-center py-6">
