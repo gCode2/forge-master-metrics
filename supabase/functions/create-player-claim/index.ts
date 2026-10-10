@@ -1,7 +1,7 @@
-import { createClient } from "@supabase/supabase-js";
+import { createClient } from "npm:@supabase/supabase-js@2";
 
 const corsHeaders = {
-  "Access-Control-Allow-Origin": "*",
+  "Access-Control-Allow-Origin": "http://localhost:5173",
   "Access-Control-Allow-Headers":
     "authorization, x-client-info, apikey, content-type",
   "Access-Control-Allow-Methods": "POST, OPTIONS",
@@ -16,6 +16,23 @@ function jsonResponse(body: unknown, status = 200) {
     },
   });
 }
+
+// const corsHeaders = {
+//   "Access-Control-Allow-Origin": "*",
+//   "Access-Control-Allow-Headers":
+//     "authorization, x-client-info, apikey, content-type",
+//   "Access-Control-Allow-Methods": "POST, OPTIONS",
+// };
+
+// function jsonResponse(body: unknown, status = 200) {
+//   return new Response(JSON.stringify(body), {
+//     status,
+//     headers: {
+//       ...corsHeaders,
+//       "Content-Type": "application/json",
+//     },
+//   });
+// }
 
 function generateToken(): string {
   // 32 znaki, bez łatwych do pomylenia I, O, 0 i 1.
@@ -39,17 +56,20 @@ function generateToken(): string {
   return `PLPL-${chars.join("")}`;
 }
 
-async function hashToken(token: string): Promise<string> {
-  const bytes = new TextEncoder().encode(token);
-  const hash = await crypto.subtle.digest("SHA-256", bytes);
-
-  return Array.from(new Uint8Array(hash))
-    .map((byte) => byte.toString(16).padStart(2, "0"))
-    .join("");
-}
 Deno.serve(async (req: Request) => {
+  // if (req.method === "OPTIONS") {
+  //   return new Response("ok", { headers: corsHeaders });
+  // }
+
+  // if (req.method !== "POST") {
+  //   return jsonResponse({ error: "Method not allowed" }, 405);
+  // }
+
   if (req.method === "OPTIONS") {
-    return new Response("ok", { headers: corsHeaders });
+    return new Response("ok", {
+      status: 200,
+      headers: corsHeaders,
+    });
   }
 
   if (req.method !== "POST") {
@@ -185,9 +205,9 @@ Deno.serve(async (req: Request) => {
     }
 
     const token = generateToken();
-    const tokenHash = await hashToken(token);
     const expiresAt = new Date(Date.now() + 48 * 60 * 60 * 1000).toISOString();
-
+    console.log("Player:", player);
+    console.log("Clan:", clan);
     const { data: claim, error: insertError } = await admin
       .from("player_claims")
       .insert({
@@ -196,35 +216,55 @@ Deno.serve(async (req: Request) => {
         clan_id: clan.id,
         status: "pending",
         verification_method: "admin_token",
-        verification_code_hash: tokenHash,
+        verification_code: token,
         expires_at: expiresAt,
       })
-      .select("id, user_id, player_id, clan_id, status, expires_at, requested_at")
+      .select("id, player_id, status, expires_at")
       .single();
-
+      console.log("Claim insert result:", { claim, insertError });
     if (insertError) {
-      // Indeksy UNIQUE są ostateczną ochroną przed równoczesnymi zgłoszeniami.
-      if (insertError.code === "23505") {
-        return jsonResponse(
-          { error: "A conflicting claim already exists" },
-          409,
-        );
-      }
-
-      console.error("Claim insert failed:", insertError);
-      return jsonResponse({ error: "Could not create claim" }, 500);
-    }
-
-    return jsonResponse({
-      claim,
-      player: {
-        id: player.id,
-        nickname: player.nickname,
-      },
-      token,
-    }, 201);
-  } catch (error) {
-    console.error("Unexpected create-player-claim error:", error);
-    return jsonResponse({ error: "Unexpected server error" }, 500);
+  if (insertError.code === "23505") {
+    return jsonResponse(
+      { error: "A conflicting claim already exists" },
+      409
+    );
   }
+
+  console.error("Claim insert failed:", insertError);
+  return jsonResponse({ error: "Could not create claim" }, 500);
+}
+
+if (!claim) {
+  console.error("Claim insert returned no data");
+  return jsonResponse(
+    { error: "Claim was created but no data was returned" },
+    500
+  );
+}
+
+return jsonResponse({
+  id: claim.id,
+  player_id: claim.player_id,
+  status: claim.status,
+  token,
+  expires_at: claim.expires_at,
+}, 201);
+
+  } catch (error) {
+  console.error(
+    "Unexpected create-player-claim error:",
+    error instanceof Error
+      ? { message: error.message, stack: error.stack }
+      : error,
+  );
+
+  return jsonResponse(
+    {
+      error: error instanceof Error
+        ? error.message
+        : "Unexpected server error",
+    },
+    500,
+  );
+}
 });

@@ -44,7 +44,8 @@ function DashboardPage(){
     },[user])
 
     function getUnderstand():boolean{
-        const saved = localStorage.getItem("understood");
+        if(!user) return false;
+        const saved = localStorage.getItem(`onboarding_understood_${user.id}`);
         if(!saved){
             return false;
         }
@@ -61,6 +62,7 @@ function DashboardPage(){
     }
 
     function handleClaimCreate(data:PlayerClaimType){
+        console.log(data);
         setClaim(data);
     }
     function handleClaimRemove(){

@@ -47,3 +47,7 @@ export interface PendingClaimProps{
     claim: PlayerClaimType;
     onClaimRemove: ()=>void;
 }
+export interface TokenType{
+    verification_code: string,
+    expires_at: string
+}

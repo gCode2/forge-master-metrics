@@ -3,6 +3,7 @@ import { useAuth } from "../../hooks/useAuth";
 import type { PlayerClaimProps, PlayerType } from "../../types/types";
 import { supabase } from "../../lib/supabase";
 import PlayerClaimRow from "./PlayerClaimRow/PlayerClaimRow";
+import { FunctionsHttpError } from "@supabase/supabase-js";
 
 function PlayerClaim({onClaimCreated} : PlayerClaimProps){
     const {user} = useAuth();
@@ -44,23 +45,25 @@ function PlayerClaim({onClaimCreated} : PlayerClaimProps){
         setSubmittingPlayerId(id);
         setError("");
 
-        const {data, error} = await supabase.from('player_claims').insert({
-            user_id: user?.id,
-            player_id: id,
-            clan_id: clanId,
-            status: "pending"
-        })
-        .select("id, player_id, status")
-        .single();
+        const {data, error} = await supabase.functions.invoke(
+            'create-player-claim',
+            {
+                body: {player_id: id}
+            }
+        )
+        if (error) {
+            console.error("Claim function error:", error);
 
+            if (error instanceof FunctionsHttpError) {
+                const details = await error.context.json();
+                console.error("Edge Function response:", details);
+            }
 
-        if(error){
-            console.error("Failed to create player claim:", error);
-            setError(error.message);
+            setError("Could not create a claim");
+            return;
         }else{
             onClaimCreated(data);
         }
-        setSubmittingPlayerId(null);
     }
 
 
