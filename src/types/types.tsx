@@ -27,7 +27,10 @@ export type PlayerClaimStatus = "pending" | "verified" | "rejected" | "revoked"
 export interface PlayerClaimType{
     id: string,
     player_id: string;
+    nickname: string,
     status: PlayerClaimStatus;
+    verification_code: string | null;
+    expires_at: string;
 }
 export interface PlayerClaimRowProps{
     player: PlayerType,
@@ -41,7 +44,7 @@ export interface IntroProps{
     understoodHandler: () => void;
 }
 export interface PlayerClaimProps{
-    onClaimCreated: (data:PlayerClaimType) => void;
+    onClaimCreated: () => void;
 }
 export interface PendingClaimProps{
     claim: PlayerClaimType;

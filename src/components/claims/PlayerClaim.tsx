@@ -1,108 +1,68 @@
 import { useEffect, useState } from "react";
-import { useAuth } from "../../hooks/useAuth";
-import type { PlayerClaimProps, PlayerType } from "../../types/types";
-import { supabase } from "../../lib/supabase";
-import PlayerClaimRow from "./PlayerClaimRow/PlayerClaimRow";
 import { FunctionsHttpError } from "@supabase/supabase-js";
+import { supabase } from "../../lib/supabase";
+import type { PlayerClaimProps, PlayerType } from "../../types/types";
+import PlayerClaimRow from "./PlayerClaimRow/PlayerClaimRow";
 
-function PlayerClaim({onClaimCreated} : PlayerClaimProps){
-    const {user} = useAuth();
-
-    const [players, setPlayers] = useState<PlayerType[]>([])
+function PlayerClaim({ onClaimCreated }: PlayerClaimProps) {
+    const [players, setPlayers] = useState<PlayerType[]>([]);
     const [loading, setLoading] = useState(true);
     const [submittingPlayerId, setSubmittingPlayerId] = useState<string | null>(null);
     const [error, setError] = useState<string | null>(null);
 
-    const clanId = "ea51731c-1dea-4bda-9fdc-9e34ba16271d";
+    useEffect(() => {
+        async function loadPlayers() {
+            const { data, error } = await supabase.rpc("list_claimable_players");
 
-    useEffect(()=>{
-        async function loadData(){
-            if(!user){
-                return;
-            }
-
-            setLoading(true);
-            setError("");
-
-            const {data: playersData, error: playersError} = await supabase.from("players").select("id, nickname").eq("is_member", true).order("nickname");
-
-            if(playersError){
+            if (error) {
                 console.error("Failed to load players:", error);
                 setError("Failed to load players");
-                setLoading(false);
-                return;
+            } else {
+                setPlayers(data ?? []);
             }
-
-            setPlayers(playersData ?? []);
             setLoading(false);
         }
-        loadData();
-    }, [user])
+        loadPlayers();
+    }, []);
 
-    async function handleClaim(id: string){
-        if(!user) return;
+    async function handleClaim(playerId: string) {
+        setSubmittingPlayerId(playerId);
+        setError(null);
 
-        setSubmittingPlayerId(id);
-        setError("");
+        const { error } = await supabase.functions.invoke("create-player-claim", {
+            body: { player_id: playerId },
+        });
 
-        const {data, error} = await supabase.functions.invoke(
-            'create-player-claim',
-            {
-                body: {player_id: id}
-            }
-        )
+        setSubmittingPlayerId(null);
+
         if (error) {
             console.error("Claim function error:", error);
-
             if (error instanceof FunctionsHttpError) {
-                const details = await error.context.json();
-                console.error("Edge Function response:", details);
+                console.error("Edge Function response:", await error.context.json());
             }
-
             setError("Could not create a claim");
             return;
-        }else{
-            onClaimCreated(data);
         }
+        onClaimCreated(); // Dashboard pobierze claima z get_my_claim
     }
 
-
-    if(error){
-        return (
-            <>{error}</>
-        )
-    }
-    if(loading){
-        return (
-            <>
-             Loading...
-            </>
-        )
-    }
+    if (loading) return <>Loading...</>;
 
     return (
-        <>
         <div className="flex flex-col gap-0.5 w-75">
-            <div>
-                Find and pick your nickname from the list below to claim your identity.
-            </div>
-        
+            <div>Find and pick your nickname from the list below to claim your identity.</div>
+            {error && <div className="text-red-500">{error}</div>}
             <ul className="flex flex-col gap-0.5">
-            {players.map(player=>{
-                return (
+                {players.map((player) => (
                     <PlayerClaimRow
-                    key={player.id}
-                    player={player}
-                    submitting = {
-                        submittingPlayerId === player.id
-                    }
-                    onClaim={handleClaim}
+                        key={player.id}
+                        player={player}
+                        submitting={submittingPlayerId === player.id}
+                        onClaim={handleClaim}
                     />
-                )
-            })}
+                ))}
             </ul>
         </div>
-        </>
-    )
+    );
 }
 export default PlayerClaim;

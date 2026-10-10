@@ -14,7 +14,7 @@ function PlayerClaimRow({player, submitting, onClaim} : PlayerClaimRowProps){
                     onClick={() => onClaim(player.id)}
                     disabled={submitting}
                 >
-                    {submitting ? "Submitting..." : "Claim"}
+                    {submitting ? "Claiming..." : "Claim"}
                 </button>
             
         </li>
