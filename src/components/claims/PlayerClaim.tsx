@@ -43,7 +43,7 @@ function PlayerClaim({ onClaimCreated }: PlayerClaimProps) {
             setError("Could not create a claim");
             return;
         }
-        onClaimCreated(); // Dashboard pobierze claima z get_my_claim
+        onClaimCreated();
     }
 
     if (loading) return <>Loading...</>;

@@ -9,6 +9,7 @@ import PlayersPage from "./pages/PlayersPage"
 import PlayerPage from "./pages/PlayerPage"
 import ProtectedRoute from "./components/auth/ProtectedRoute"
 import PublicRoute from "./components/auth/PublicRoute"
+import HomePage from "./pages/HomePage"
 function App() {
   // const [players, setPlayers] = useState([])
   // useEffect(()=>{
@@ -48,6 +49,9 @@ function App() {
         }/>
         <Route path="/register" element={
           <RegisterPage/>
+        }/>
+        <Route path="/" element={
+          <HomePage/>
         }/>
       </Route>
     </Routes>

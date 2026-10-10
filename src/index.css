@@ -38,3 +38,56 @@ select,
 textarea {
   font-family: inherit;
 }
+
+.carousel-image {
+    --orbit-radius: 3.5rem;   /* jak daleko elementy odchodzą na boki */
+    --orbit-half: 4s;       /* czas przejścia z lewej na prawą; pełny obieg = 2x */
+
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 6rem;
+    height: 6rem;
+
+    border: 2px solid #000;
+    border-radius: 0.75rem;
+    overflow: hidden;
+
+    /* dwie niezależne animacje: ruch w poziomie + "głębia" */
+    animation:
+        orbit-x calc(var(--orbit-half)) ease-in-out infinite alternate,
+        orbit-depth calc(var(--orbit-half) * 2) ease-in-out infinite;
+    will-change: translate, scale, filter, opacity;
+}
+
+/* drugi element jest przesunięty o pół cyklu (przeciwna faza) */
+.carousel-image-1 {
+    animation-delay: 0s, 0s;
+}
+
+.carousel-image-2 {
+    animation-delay: calc(var(--orbit-half) * -1), calc(var(--orbit-half) * -1);
+}
+
+/* ruch lewo <-> prawo (alternate + ease-in-out daje sinusoidalny ruch) */
+@keyframes orbit-x {
+    from { translate: calc(var(--orbit-radius) * -1) 0; }
+    to   { translate: var(--orbit-radius) 0; }
+}
+
+/* głębia: na środku jeden jest z przodu (duży, ostry),
+   drugi z tyłu (mały, rozmyty); zamiana następuje na krańcach */
+@keyframes orbit-depth {
+    0%, 100% { scale: 1;    filter: blur(0);   opacity: 1;    z-index: 3; }
+    25%      { scale: 1.12; filter: blur(0);   opacity: 1;    z-index: 3; } /* z przodu */
+    50%      { scale: 1;    filter: blur(0);   opacity: 1;    z-index: 3; }
+    75%      { scale: 0.8;  filter: blur(3px); opacity: 0.7;  z-index: 1; } /* z tyłu */
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .carousel-image { animation: none; }
+    .carousel-image-1 { translate: -3.5rem 0; }
+    .carousel-image-2 { translate: 3.5rem 0; }
+}

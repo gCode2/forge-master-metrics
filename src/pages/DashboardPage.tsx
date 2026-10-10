@@ -56,7 +56,8 @@ function DashboardPage() {
         }
         return <PlayerClaim onClaimCreated={loadClaim} />;
     }
-
+    // supabase.auth.signOut();
+    // localStorage.clear();
     return (
         <div className="w-screen flex justify-center items-center py-6">
             <div className="flex flex-col justify-center items-center text-center gap-2 w-125">

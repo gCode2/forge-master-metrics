@@ -143,12 +143,12 @@ function LoginPage() {
               >
                 Login
               </button>
-              <button
+              <Link to="/"
                 type="button"
-                className="flex flex-row justify-center items-center bg-zinc-400 enabled:hover:bg-zinc-300 text-white font-bold py-2 px-4 border-b-4 border-zinc-700 enabled:hover:border-zinc-500 transition duration-200 enabled:hover:cursor-pointer rounded ring-1 ring-black w-20"
+                className="flex flex-row justify-center items-center bg-zinc-400 hover:bg-zinc-300 text-white font-bold py-2 px-4 border-b-4 border-zinc-700 hover:border-zinc-500 transition duration-200 hover:cursor-pointer rounded ring-1 ring-black w-20"
               >
                 Home
-              </button>
+              </Link>
             </div>
             <div className="pt-2">
               Dont have an account yet?{" "}
