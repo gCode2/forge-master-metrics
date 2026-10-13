@@ -5,6 +5,7 @@ import type { PlayerClaimType } from "../types/types";
 import Intro from "../components/dashboard/Intro";
 import PlayerClaim from "../components/claims/PlayerClaim";
 import PendingClaim from "../components/claims/PendingClaim";
+import getOnboardingStep from "../features/onboarding/getOnboardingStep";
 
 function DashboardPage() {
     const { user } = useAuth();
@@ -45,16 +46,19 @@ function DashboardPage() {
         if (loading) return <>Loading...</>;
         if (error) return <>{error}</>;
 
-        if (claim?.status === "pending") {
-            return <PendingClaim claim={claim} onClaimRemove={loadClaim} />;
+        const step = getOnboardingStep(claim, understood);
+
+        switch(step){
+            case "intro":
+                return <Intro understoodHandler={handleUnderstood} />
+            case "choose-player":
+                return <PlayerClaim onClaimCreated={loadClaim} />
+            case "pending":
+                return <PendingClaim claim={claim!} onClaimRemove={loadClaim} />
+            case "verified":
+                return <>Identity verified!</>
+        
         }
-        if (claim?.status === "verified") {
-            return <>Identity verified!</>;
-        }
-        if (!understood) {
-            return <Intro understoodHandler={handleUnderstood} />;
-        }
-        return <PlayerClaim onClaimCreated={loadClaim} />;
     }
     // supabase.auth.signOut();
     // localStorage.clear();

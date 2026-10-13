@@ -29,7 +29,7 @@ function PendingClaim({ claim, onClaimRemove }: PendingClaimProps) {
                 <span className="font-bold text-green-500">{" " + claim.nickname}</span>
             </div>
             <div>
-                <div>Your verification token: {claim.verification_code}</div>
+                <div>Your verification token: <span  className="font-medium">{claim.verification_code}</span></div>
                 <div>
                     To get your identity approved, please copy your verification token and send it using one of the following methods:
                 </div>
