@@ -6,6 +6,7 @@ import Intro from "../components/dashboard/Intro";
 import PlayerClaim from "../components/claims/PlayerClaim";
 import PendingClaim from "../components/claims/PendingClaim";
 import getOnboardingStep from "../features/onboarding/getOnboardingStep";
+import Dashboard from "../components/dashboard/Dashboard";
 
 function DashboardPage() {
     const { user } = useAuth();
@@ -56,7 +57,7 @@ function DashboardPage() {
             case "pending":
                 return <PendingClaim claim={claim!} onClaimRemove={loadClaim} />
             case "verified":
-                return <>Identity verified!</>
+                return <Dashboard playerId={claim!.player_id}/>
         
         }
     }
