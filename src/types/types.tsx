@@ -54,13 +54,6 @@ export interface TokenType{
     verification_code: string,
     expires_at: string
 }
-// export interface PlayerDashboardStats{
-//     nickname: string,
-//     warsPlayed: number,
-//     highestScore: number | null,
-//     lowestScore: number | null,
-//     averageScore: number | null,
-// }
 
 export interface PlayerDashboardStats{
     average_last_3: number,

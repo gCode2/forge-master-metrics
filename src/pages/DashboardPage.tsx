@@ -65,11 +65,21 @@ function DashboardPage() {
     // localStorage.clear();
     return (
         <div className="w-screen flex justify-center items-center py-6">
-            <div className="flex flex-col justify-center items-center text-center gap-2 w-125">
-                <div className="text-3xl">
-                    Hey <span className="text-orange-400">{user?.user_metadata.display_name}</span>
+            <div className="flex flex-col justify-center items-center text-center gap-2 w-full h-full">
+                {getOnboardingStep(claim, understood) !== "verified" && (
+                <div className="mb-8 text-center">
+                    <h1 className="text-3xl font-bold">
+                        Hey{" "}
+                        <span className="text-orange-400">
+                            {user?.user_metadata.display_name}
+                        </span>
+                    </h1>
+
+                    <p className="mt-2 text-slate-400">
+                        This is your dashboard page.
+                    </p>
                 </div>
-                <div>This is your dashboard page.</div>
+            )}
                 <div>{renderStep()}</div>
             </div>
         </div>
