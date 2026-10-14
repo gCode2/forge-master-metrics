@@ -1,19 +1,29 @@
 import { useEffect, useState } from "react";
 import { useAuth } from "../../hooks/useAuth";
 import { supabase } from "../../lib/supabase";
-import type { DashboardProps, PlayerDashboardStats } from "../../types/types";
+import type { DashboardProps, PlayerDashboardStats, PlayerWarHistory } from "../../types/types";
 import { LuShieldAlert, LuSwords } from "react-icons/lu";
 import { FaRegCalendarAlt, FaStarHalfAlt } from "react-icons/fa";
 import { IoStatsChart } from "react-icons/io5";
-import { IoMdTrophy } from "react-icons/io";
-import { FaShieldHalved, FaStar } from "react-icons/fa6";
+import { IoIosPeople, IoMdTrophy } from "react-icons/io";
+import { FaPeopleGroup, FaShieldHalved, FaStar } from "react-icons/fa6";
 import { HiTrendingDown } from "react-icons/hi";
+import {
+    CartesianGrid,
+    Line,
+    LineChart,
+    ResponsiveContainer,
+    Tooltip,
+    XAxis,
+    YAxis,
+} from "recharts";
 
 function Dashboard({playerId} : DashboardProps){
 
     const [data, setData] = useState<PlayerDashboardStats | null>(null)
     const [error, setError] = useState<string | null>(null)
     const [loading, setLoading] = useState(true);
+    const [warHistory, setWarHistory] = useState<PlayerWarHistory[]>([])
 
     async function getDashboardInfo(){
         setLoading(true);
@@ -28,8 +38,19 @@ function Dashboard({playerId} : DashboardProps){
         setData(data);
     }
 
+    async function getWarHistory(){
+        const {data, error} = await supabase.from("v_player_war_history").select("war_number, points").eq("player_id", playerId);
+        if(error){
+            console.error("Failed to load war history:", error);
+            setError("Failed to load war history");
+        }
+        // console.log(data)
+        setWarHistory(data ?? []);
+    }
+
     useEffect(()=>{
         getDashboardInfo();
+        getWarHistory();
     }, [])
 
     const formatNumber = (value: number | string | undefined | null) => {
@@ -43,95 +64,6 @@ function Dashboard({playerId} : DashboardProps){
 
     return (
         <>
-        {/* <div>
-            <div>
-                You've been with us in {data?.scored_wars_count} wars.
-            </div>
-            <div>
-                {
-                    Boolean(data?.is_member) ? 
-                    <>
-                        And you're still with us (current war: #{data?.last_scored_war_number})
-                    </>: 
-                    <>
-                        The last one was: #{data?.first_scored_war_number}
-                    </>
-                }
-                
-            </div>
-            <div>
-                Last one was: #{data?.last_scored_war_number}
-            </div>
-        </div>
-        <div className="flex flex-row gap-1">
-            
-            <div className="border-2 w-45 h-30 rounded-xl flex flex-col justify-between items-center p-1">
-                <div className="">
-                    Total points:
-                </div>
-                <div className="text-xl">
-                    {Math.floor(Number(data?.total_points))}
-                </div>
-                <div>
-                    rank in clan: #{data?.total_points_rank}
-                </div>
-            </div>
-            <div className="border-2 w-45 h-30 rounded-xl flex flex-col justify-between items-center p-1">
-                <div className="">
-                    Average points:
-                </div>
-                <div className="text-xl">
-                    {Math.floor(Number(data?.average_points))}
-                </div>
-                <div>
-                    rank in clan: #{data?.average_points_rank}
-                </div>
-            </div>
-            <div className="border-2 w-45 h-30 rounded-xl flex flex-col justify-between items-center p-1">
-                <div className="">
-                    Last 3 wars average:
-                </div>
-                <div className="text-xl">
-                    {data?.average_last_3}
-                </div>
-                <div>
-                    rank in clan: #{data?.average_last_3_rank}
-                </div>
-            </div>
-            <div className="border-2 w-45 h-30 rounded-xl flex flex-col justify-between items-center p-1">
-                <div className="">
-                    Lowest score:
-                </div>
-                <div className="h-full flex flex-col items-center justify-center">
-                    <div className="text-xl">
-                        {data?.lowest_points} 
-                    </div>
-                    <div>
-                        at war number <br/> 
-                        <span className="text-xl">
-                            #{data?.lowest_war_number}
-                        </span>
-                    </div>
-                </div>
-            </div>
-            <div className="border-2 w-45 h-30 rounded-xl flex flex-col justify-between items-center p-1">
-                <div className="">
-                    Highest score:
-                </div>
-                <div className="h-full flex flex-col items-center justify-center">
-                    <div className="text-xl">
-                        {data?.highest_points} 
-                    </div>
-                    <div>
-                        at war number <br/> 
-                        <span className="text-xl">
-                            #{data?.highest_war_number}
-                        </span>
-                    </div>
-                </div>
-            </div>
-        </div>
-             */}
              <div className="flex flex-col gap-2 w-screen px-15 items-center justify-center">
 
                 <div className="grid grid-cols-[1fr_auto_auto] items-center border-2 rounded w-[90%] h-25 shadow-lg/20 px-6">
@@ -174,9 +106,6 @@ function Dashboard({playerId} : DashboardProps){
                             </div>
                         )}
                     </div>
-                    {/* <div>
-                        Wars played: {data?.scored_wars_count}
-                    </div> */}
                 </div>
 
             </div>
@@ -247,11 +176,13 @@ function Dashboard({playerId} : DashboardProps){
                             CLAN RANK #{data?.average_last_3_rank}
                         </div>
                 </div>
+                
             </div>
             <div className="grid grid-cols-3 items-center w-[90%] gap-3">
-                        <div className="flex flex-row items-center justify-left gap-2 border-2 rounded h-25 shadow-lg/20 col-span-2 px-6">
+                        <div className="flex flex-col border-2 rounded h-81 shadow-lg/20 col-span-2 px-6 py-3 gap-2">
+                        <div className="flex flex-row items-center justify-left gap-3 h-15 px-5">
                             <div>
-                                <IoStatsChart className="text-4xl"/>
+                                <IoStatsChart className="text-4xl text-orange-400 drop-shadow-sm/150"/>
                             </div>
                             <div>
                                 <div className="font-bold text-xl">
@@ -261,8 +192,45 @@ function Dashboard({playerId} : DashboardProps){
                                 Points scored in each war
                                 </div>
                             </div>
-                            
                         </div>
+                        <div className="w-full h-56">
+                            <ResponsiveContainer width="100%" height="100%" className="focus:outline-none">
+                                <LineChart data={warHistory} margin={{top: 16, right:20, left:12, bottom: 8}}className="focus:outline-none">
+                                    <CartesianGrid vertical={true} horizontal={true} />
+                                    <XAxis 
+                                        style={{ fontSize: "10px" }} 
+                                        dataKey="war_number" 
+                                        tickFormatter={(value) => `War #${value}`} 
+                                        interval={0} // Wymusza pokazanie wszystkich etykiet na osi X
+                                    />
+                                    <YAxis 
+                                        tickFormatter={(value) => {
+                                            if (value >= 1_000_000) return `${(value / 1_000_000).toFixed(1)}M`;
+                                            if (value >= 1_000) return `${(value / 1_000).toFixed(0)}k`;
+                                            return value;
+                                        }}
+                                        width={50}
+                                    />
+                                    <Tooltip
+                                        labelFormatter={(value) => `War #${value}`}
+                                        formatter={(value) => [
+                                            Number(value).toLocaleString(),
+                                            "Points",
+                                        ]}
+                                    />
+                                    <Line
+                                        type="monotone"
+                                        dataKey="points"
+                                        stroke="#f97316"
+                                        strokeWidth={3}
+                                        dot={{ r: 4 }}
+                                        activeDot={{ r: 6 }}
+                                        connectNulls={false}
+                                    />
+                                </LineChart> 
+                            </ResponsiveContainer>
+                        </div>
+                            </div>
                         <div className="flex flex-col gap-3">
                             <div className="flex flex-row items-center justify-between gap-2 border-2 rounded h-25 shadow-lg/20 px-6 bg-green-50">
 
@@ -308,6 +276,23 @@ function Dashboard({playerId} : DashboardProps){
                                     
                                         <div className="text-gray-500 text-sm font-medium">
                                             LOWEST SCORE
+                                        </div>
+                                </div>
+                            </div>
+                            <div className="flex flex-row items-center justify-between gap-2 border-2 rounded h-25 shadow-lg/20 px-6">
+
+                                <div>
+                                    <IoIosPeople className="text-4xl text-orange-400 drop-shadow-sm/150"/>
+                                </div>
+                                <div className="flex-2 flex-col justify-left text-left px-2">
+                                    <div className="font-bold text-md stext-stroke-3">
+                                        CLAN STATS
+                                    </div>
+                                </div>
+                                <div className="justify-center items-center border-2 border-orange-500 rounded-lg py-1 px-2">
+                                    
+                                        <div className="text-orange-500 text-sm font-medium">
+                                            SEE MORE
                                         </div>
                                 </div>
                             </div>
