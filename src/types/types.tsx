@@ -80,3 +80,7 @@ export interface PlayerDashboardStats{
 export interface DashboardProps{
     playerId: string;
 }
+export interface PlayerWarHistory{
+    war_number: number;
+    points: number | null;
+}

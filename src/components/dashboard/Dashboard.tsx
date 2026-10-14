@@ -2,8 +2,12 @@ import { useEffect, useState } from "react";
 import { useAuth } from "../../hooks/useAuth";
 import { supabase } from "../../lib/supabase";
 import type { DashboardProps, PlayerDashboardStats } from "../../types/types";
-import { LuSwords } from "react-icons/lu";
-import { FaRegCalendarAlt } from "react-icons/fa";
+import { LuShieldAlert, LuSwords } from "react-icons/lu";
+import { FaRegCalendarAlt, FaStarHalfAlt } from "react-icons/fa";
+import { IoStatsChart } from "react-icons/io5";
+import { IoMdTrophy } from "react-icons/io";
+import { FaShieldHalved, FaStar } from "react-icons/fa6";
+import { HiTrendingDown } from "react-icons/hi";
 
 function Dashboard({playerId} : DashboardProps){
 
@@ -209,15 +213,15 @@ function Dashboard({playerId} : DashboardProps){
                     </div>
                 </div>
             </div>
-            <div className="flex flex-row items-center w-[90%] h-30 gap-3">
+            <div className="flex flex-row items-center w-[90%] h-27 gap-3">
                 <div className="flex flex-col items-center justify-center border-2 rounded w-full h-full shadow-lg/20">
                         <div className="text-sm">
                             TOTAL POINTS
                         </div>
-                        <div className="font-bold text-4xl">
+                        <div className="font-black text-4xl">
                             {formatNumber(Math.floor(Number(data?.total_points)))}
                         </div>
-                        <div className="bg-orange-400 rounded-lg py-1 px-2 font-bold">
+                        <div className="bg-orange-400 rounded-lg py-0.5 px-2 font-bold">
                             CLAN RANK #{data?.total_points_rank}
                         </div>
                 </div>
@@ -225,10 +229,10 @@ function Dashboard({playerId} : DashboardProps){
                         <div className="text-sm">
                             AVERAGE POINTS
                         </div>
-                        <div className="font-bold text-4xl">
+                        <div className="font-black text-4xl">
                             {formatNumber(Math.floor(Number(data?.average_points)))}
                         </div>
-                        <div className="bg-orange-400 rounded-lg py-1 px-2 font-bold">
+                        <div className="bg-orange-400 rounded-lg py-0.5 px-2 font-bold">
                             CLAN RANK #{data?.average_points_rank}
                         </div>
                 </div>
@@ -236,13 +240,79 @@ function Dashboard({playerId} : DashboardProps){
                         <div className="text-sm">
                             LAST 3 WARS AVERAGE
                         </div>
-                        <div className="font-bold text-4xl">
+                        <div className="font-black text-4xl">
                             {formatNumber(Math.floor(Number(data?.average_last_3)))}
                         </div>
-                        <div className="bg-orange-400 rounded-lg py-1 px-2 font-bold">
+                        <div className="bg-orange-400 rounded-lg py-0.5 px-2 font-bold">
                             CLAN RANK #{data?.average_last_3_rank}
                         </div>
                 </div>
+            </div>
+            <div className="grid grid-cols-3 items-center w-[90%] gap-3">
+                        <div className="flex flex-row items-center justify-left gap-2 border-2 rounded h-25 shadow-lg/20 col-span-2 px-6">
+                            <div>
+                                <IoStatsChart className="text-4xl"/>
+                            </div>
+                            <div>
+                                <div className="font-bold text-xl">
+                                WAR HISTORY
+                                </div>
+                                <div className="text-sm">
+                                Points scored in each war
+                                </div>
+                            </div>
+                            
+                        </div>
+                        <div className="flex flex-col gap-3">
+                            <div className="flex flex-row items-center justify-between gap-2 border-2 rounded h-25 shadow-lg/20 px-6 bg-green-50">
+
+                                <div>
+                                    {/* <IoMdTrophy className="text-5xl text-orange-400 drop-shadow-sm/150"/> */}
+                                    <FaStar className="text-4xl text-orange-400 drop-shadow-sm/150"/>
+                                </div>
+                                <div className="flex-2 flex-col justify-left text-left px-2">
+                                    <div className="font-bold text-md stext-stroke-3">
+                                    PERSONAL BEST
+                                    </div>
+                                    <div>
+                                        {formatNumber(Math.floor(Number(data?.highest_points)))} points
+                                    </div>
+                                    <div className="text-zinc-500 text-xs">
+                                        in War <span className="font-bold">#{data?.highest_war_number}</span>
+                                    </div>
+                                </div>
+                                <div className="justify-center items-center border-2 border-green-600 bg-green-300 rounded-lg py-1 px-2">
+                                    
+                                        <div className="text-green-600 text-sm font-medium">
+                                            HIGHEST SCORE
+                                        </div>
+                                </div>
+                            </div>
+                            <div className="flex flex-row items-center justify-between gap-2 border-2 rounded h-25 shadow-lg/20 px-6 bg-gray-100">
+
+                                <div>
+                                    <FaStarHalfAlt className="text-4xl text-gray-400 drop-shadow-sm/150"/>
+                                </div>
+                                <div className="flex-2 flex-col justify-left text-left px-2">
+                                    <div className="font-bold text-md stext-stroke-3">
+                                        LOWEST SCORE
+                                    </div>
+                                    <div>
+                                        {formatNumber(Math.floor(Number(data?.lowest_points)))} points
+                                    </div>
+                                    <div className="text-zinc-500 text-xs">
+                                        in War <span className="font-bold">#{data?.lowest_war_number}</span>
+                                    </div>
+                                </div>
+                                <div className="justify-center items-center border-2 border-gray-500 bg-gray-300 rounded-lg py-1 px-2">
+                                    
+                                        <div className="text-gray-500 text-sm font-medium">
+                                            LOWEST SCORE
+                                        </div>
+                                </div>
+                            </div>
+                        </div>
+                        
             </div>
         </div>
         </>
