@@ -1,13 +1,11 @@
 import { useEffect, useState } from "react";
-import { useAuth } from "../../hooks/useAuth";
 import { supabase } from "../../lib/supabase";
 import type { DashboardProps, PlayerDashboardStats, PlayerWarHistory } from "../../types/types";
-import { LuShieldAlert, LuSwords } from "react-icons/lu";
+import { LuSwords } from "react-icons/lu";
 import { FaRegCalendarAlt, FaStarHalfAlt } from "react-icons/fa";
 import { IoStatsChart } from "react-icons/io5";
-import { IoIosPeople, IoMdTrophy } from "react-icons/io";
-import { FaPeopleGroup, FaShieldHalved, FaStar } from "react-icons/fa6";
-import { HiTrendingDown } from "react-icons/hi";
+import { IoIosPeople} from "react-icons/io";
+import { FaStar } from "react-icons/fa6";
 import {
     CartesianGrid,
     Line,
