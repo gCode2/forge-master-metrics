@@ -64,8 +64,8 @@ function DashboardPage() {
     // supabase.auth.signOut();
     // localStorage.clear();
     return (
-        <div className="w-screen flex justify-center items-center py-6">
-            <div className="flex flex-col justify-center items-center text-center gap-2 w-full h-full">
+        <main className="flex w-full p-6">
+            <div className="flex flex-col text-center gap-2 w-full">
                 {getOnboardingStep(claim, understood) !== "verified" && (
                 <div className="mb-8 text-center">
                     <h1 className="text-3xl font-bold">
@@ -80,9 +80,9 @@ function DashboardPage() {
                     </p>
                 </div>
             )}
-                <div>{renderStep()}</div>
+                <div className="w-full">{renderStep()}</div>
             </div>
-        </div>
+        </main>
     );
 }
 export default DashboardPage;

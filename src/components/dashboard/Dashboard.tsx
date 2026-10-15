@@ -32,8 +32,8 @@ function Dashboard({playerId} : DashboardProps){
             console.error("Failed to load dashboard data:", error);
             setError("Failed to load dashboard data");
         }
-        // console.log(data)
         setData(data);
+        setLoading(false);
     }
 
     async function getWarHistory(){
@@ -42,7 +42,6 @@ function Dashboard({playerId} : DashboardProps){
             console.error("Failed to load war history:", error);
             setError("Failed to load war history");
         }
-        // console.log(data)
         setWarHistory(data ?? []);
     }
 
@@ -59,12 +58,12 @@ function Dashboard({playerId} : DashboardProps){
     };
 
     if(error) return <>{error}</>
+    if(loading) return <>Loading...</>
 
     return (
-        <>
-             <div className="flex flex-col gap-2 w-screen px-15 items-center justify-center">
+             <div className="flex flex-col gap-2 w-full">
 
-                <div className="grid grid-cols-[1fr_auto_auto] items-center border-2 rounded w-[90%] h-25 shadow-lg/20 px-6">
+                <div className="grid grid-cols-[1fr_auto_auto] items-center border-2 rounded w-full h-25 shadow-lg/20 px-6">
         
                 <div className="flex flex-col gap-1 justify-center items-start">
                     <div>
@@ -107,7 +106,7 @@ function Dashboard({playerId} : DashboardProps){
                 </div>
 
             </div>
-            <div className="grid grid-cols-3 items-center border-2 rounded w-[90%] h-12 shadow-lg/20 px-6">
+            <div className="grid grid-cols-3 items-center border-2 rounded w-full h-12 shadow-lg/20 px-6">
                 <div>
                     <div className="flex flex-row items-center justify-center gap-2">
                         <div>
@@ -140,7 +139,7 @@ function Dashboard({playerId} : DashboardProps){
                     </div>
                 </div>
             </div>
-            <div className="flex flex-row items-center w-[90%] h-27 gap-3">
+            <div className="flex flex-row items-center w-full h-27 gap-3">
                 <div className="flex flex-col items-center justify-center border-2 rounded w-full h-full shadow-lg/20">
                         <div className="text-sm">
                             TOTAL POINTS
@@ -176,7 +175,7 @@ function Dashboard({playerId} : DashboardProps){
                 </div>
                 
             </div>
-            <div className="grid grid-cols-3 items-center w-[90%] gap-3">
+            <div className="grid grid-cols-3 items-center w-full gap-3">
                         <div className="flex flex-col border-2 rounded h-81 shadow-lg/20 col-span-2 px-6 py-3 gap-2">
                         <div className="flex flex-row items-center justify-left gap-3 h-15 px-5">
                             <div>
@@ -231,9 +230,7 @@ function Dashboard({playerId} : DashboardProps){
                             </div>
                         <div className="flex flex-col gap-3">
                             <div className="flex flex-row items-center justify-between gap-2 border-2 rounded h-25 shadow-lg/20 px-6 bg-green-50">
-
                                 <div>
-                                    {/* <IoMdTrophy className="text-5xl text-orange-400 drop-shadow-sm/150"/> */}
                                     <FaStar className="text-4xl text-orange-400 drop-shadow-sm/150"/>
                                 </div>
                                 <div className="flex-2 flex-col justify-left text-left px-2">
@@ -298,7 +295,6 @@ function Dashboard({playerId} : DashboardProps){
                         
             </div>
         </div>
-        </>
     )
 }
 
