@@ -63,7 +63,7 @@ function Dashboard({playerId} : DashboardProps){
     return (
              <div className="flex flex-col gap-2 w-full">
 
-                <div className="grid grid-cols-[1fr_auto_auto] items-center border-2 rounded w-full h-25 shadow-lg/20 px-6">
+                <div className="grid grid-cols-[1fr_auto_auto] items-center border-2 rounded w-full h-23 shadow-lg/20 px-6">
         
                 <div className="flex flex-col gap-1 justify-center items-start">
                     <div>
@@ -139,7 +139,7 @@ function Dashboard({playerId} : DashboardProps){
                     </div>
                 </div>
             </div>
-            <div className="flex flex-row items-center w-full h-27 gap-3">
+            <div className="flex flex-row items-center w-full h-26 gap-3">
                 <div className="flex flex-col items-center justify-center border-2 rounded w-full h-full shadow-lg/20">
                         <div className="text-sm">
                             TOTAL POINTS
@@ -147,7 +147,7 @@ function Dashboard({playerId} : DashboardProps){
                         <div className="font-black text-4xl">
                             {formatNumber(Math.floor(Number(data?.total_points)))}
                         </div>
-                        <div className="bg-orange-400 rounded-lg py-0.5 px-2 font-bold">
+                        <div className="text-sm bg-orange-400 rounded-lg py-0.5 px-2 font-bold">
                             CLAN RANK #{data?.total_points_rank}
                         </div>
                 </div>
@@ -158,7 +158,7 @@ function Dashboard({playerId} : DashboardProps){
                         <div className="font-black text-4xl">
                             {formatNumber(Math.floor(Number(data?.average_points)))}
                         </div>
-                        <div className="bg-orange-400 rounded-lg py-0.5 px-2 font-bold">
+                        <div className="text-sm bg-orange-400 rounded-lg py-0.5 px-2 font-bold">
                             CLAN RANK #{data?.average_points_rank}
                         </div>
                 </div>
@@ -169,7 +169,7 @@ function Dashboard({playerId} : DashboardProps){
                         <div className="font-black text-4xl">
                             {formatNumber(Math.floor(Number(data?.average_last_3)))}
                         </div>
-                        <div className="bg-orange-400 rounded-lg py-0.5 px-2 font-bold">
+                        <div className="text-sm bg-orange-400 rounded-lg py-0.5 px-2 font-bold">
                             CLAN RANK #{data?.average_last_3_rank}
                         </div>
                 </div>

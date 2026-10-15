@@ -1,11 +1,11 @@
 function AppFooter(){
     return (
         <>
-            <div className="border-2 flex flex-row p-3 gap-3 justify-around items-center">
-                <div className="text-orange-400">
-                    Made by gCode2
+            <div className="border-t-2 flex flex-row p-2 gap-3 justify-around items-center shadow-[0_-15px_15px_-3px_rgba(0,0,0,0.1)] text-sm">
+                <div>
+                    Made by <span className="text-orange-400"> gCode2</span>
                 </div>
-                <div className="text-zinc-300">
+                <div className="text-zinc-400">
                     Exclusively for POLSKAPL [PLPL] Forge Master Clan
                 </div>
                 <div className="text-black">

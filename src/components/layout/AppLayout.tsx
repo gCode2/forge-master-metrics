@@ -5,13 +5,10 @@ import AppFooter from "./AppFooter";
 function AppLayout(){
     return (
         <>
-            <div className="w-screen max-w-full">
-
-            
-            <AppHeader/>
-            <Outlet/>
-            <AppFooter/>
-
+            <div className="flex flex-col h-screen w-full">
+                <AppHeader/>
+                <Outlet/>
+                <AppFooter/>
             </div>
         </>
     )

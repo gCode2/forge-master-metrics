@@ -132,7 +132,7 @@ function RegisterPage() {
   return (
     <>
       <form
-        className="flex flex-col justify-center items-center h-screen w-screen"
+        className="flex flex-col justify-center items-center h-full w-full p-6"
         onSubmit={handleSubmit}
       >
         <div className="relative flex flex-col justify-center items-center border-2 py-5 px-14 rounded">

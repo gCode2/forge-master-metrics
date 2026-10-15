@@ -3,7 +3,7 @@ import { Link } from "react-router";
 function HomePage(){
     return (
         <>
-            <div className="flex flex-col w-screen h-screen justify-center items-center relative">
+            <div className="flex flex-col w-full h-full justify-center items-center relative p-6">
                 <div className="flex items-center justify-center relative w-52 h-36">
                 <div className="carousel-image carousel-image-1">
                     <img
@@ -40,9 +40,6 @@ function HomePage(){
                         >
                             Sign up
                         </Link>
-                    </div>
-                    <div className="text-xs text-zinc-300">
-                       Exclusively made for [PLPL] POLSKAPL Clan
                     </div>
                 </div>
                 

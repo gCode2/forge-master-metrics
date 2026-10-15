@@ -31,7 +31,9 @@ function App() {
           }/>
 
         </Route>
+      </Route>
         <Route element={<PublicRoute/>}>
+        <Route element={<AppLayout/>}>
           <Route path="/login" element={
             <LoginPage/>
           }/>
@@ -42,7 +44,7 @@ function App() {
             <HomePage/>
           }/>
         </Route>
-      </Route>
+        </Route>
     </Routes>
     </>
   )

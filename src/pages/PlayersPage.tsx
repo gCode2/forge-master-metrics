@@ -1,7 +1,7 @@
 function PlayersPage(){
     return (
         <>
-            <div>
+            <div className="h-full">
                 Players Page
             </div>
         </>
