@@ -114,44 +114,49 @@ function PlayersPage(){
 
     return (
         <>
-            <div className="min-h-full flex flex-col justify-center items-center gap-2">
-                <div className="text-2xl font-bold p-3">
-                    Players War Stats
+            <div className="min-h-full flex-1 flex-col justify-center items-center gap-2">
+                <div className="flex flex-col justify-center items-center">
+
+                    <div className="text-3xl font-bold pt-5 pb-2">
+                        Players War Stats
+                    </div>
+                    <div className="flex flex-row gap-3">
+                        <button 
+                            className={`${baseButtonClasses} ${
+                                selectedType === "General" 
+                                    ? "bg-orange-400 border-b-4 border-orange-600 hover:bg-orange-300 hover:border-orange-500"
+                                    : "bg-zinc-400 border-b-4 border-zinc-700 hover:bg-zinc-300 hover:border-zinc-500"
+                            }`} 
+                            onClick={() => handleTypeChange("General")}
+                        >
+                            General
+                        </button>
+                        
+                        <button 
+                            className={`${baseButtonClasses} ${
+                                selectedType === "Wars Details" 
+                                    ? "bg-orange-400 border-b-4 border-orange-600 hover:bg-orange-300 hover:border-orange-500" 
+                                    : "bg-zinc-400 border-b-4 border-zinc-700 hover:bg-zinc-300 hover:border-zinc-500"
+                            }`} 
+                            onClick={() => handleTypeChange("Wars Details")}
+                        >
+                            Wars Details
+                        </button>
+                    </div>
+
                 </div>
-                <div className="flex flex-row gap-3">
-                    <button 
-                        className={`${baseButtonClasses} ${
-                            selectedType === "General" 
-                                ? "bg-blue-600 border-b-4 border-blue-800 hover:bg-blue-500 hover:border-blue-700" 
-                                : "bg-zinc-400 border-b-4 border-zinc-700 hover:bg-zinc-300 hover:border-zinc-500"
-                        }`} 
-                        onClick={() => handleTypeChange("General")}
-                    >
-                        General
-                    </button>
-                    
-                    <button 
-                        className={`${baseButtonClasses} ${
-                            selectedType === "Wars Details" 
-                                ? "bg-blue-600 border-b-4 border-blue-800 hover:bg-blue-500 hover:border-blue-700" 
-                                : "bg-zinc-400 border-b-4 border-zinc-700 hover:bg-zinc-300 hover:border-zinc-500"
-                        }`} 
-                        onClick={() => handleTypeChange("Wars Details")}
-                    >
-                        Wars Details
-                    </button>
-                </div>
+                
                 <div className="w-full text-center">
                     {selectedType === "General" ? (
                         <PlayersList players={players} />
                     ) : detailsLoading ? (
                         <div className="p-6">Loading war details...</div>
                     ) : detailsError ? (
-                        <div className="p-6">
+                        <div className="p-6 flex flex-col justify-center items-center gap-2">
                             <p>{detailsError}</p>
                             <button
                                 onClick={loadDetailedPlayers}
-                                className="mt-2 rounded bg-blue-600 px-4 py-2 text-white"
+                                className="w-20 flex flex-row justify-center items-center text-white font-bold py-2 px-4 transition duration-200 enabled:hover:cursor-pointer rounded ring-1 ring-black bg-orange-400 border-b-4 border-orange-600 hover:bg-orange-300 hover:border-orange-500"
                             >
                                 Retry
                             </button>

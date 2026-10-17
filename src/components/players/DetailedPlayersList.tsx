@@ -35,7 +35,7 @@ function DetailedPlayersList({
     }
     return (
         <div className="w-full min-w-0">
-            <div className="max-h-[70dvh] w-full overflow-auto rounded">
+            <div className="max-h-[70dvh] w-full overflow-auto rounded px-3 py-1">
                 <table className="min-w-full border-separate border-spacing-0.5 text-sm">
                     <thead className="sticky top-0 z-20 bg-white">
                         <tr>
@@ -95,7 +95,7 @@ function DetailedPlayersList({
                                             key={war.id}
                                             title={
                                                 points == null
-                                                    ? "Brak zapisanego wyniku"
+                                                    ? "No score recorded"
                                                     : `${Number(points).toLocaleString("pl-PL")} pkt`
                                             }
                                             className="border-2 border-gray-500 px-2 py-2 text-center tabular-nums rounded-md"

@@ -28,7 +28,7 @@ function App() {
           <Route element={<VerifiedRoute />}>
             <Route path="/admin" element={<AdminPage />} />
             <Route path="/players" element={<PlayersPage />} />
-            <Route path="/player/:id" element={<PlayerPage />} />
+            <Route path="/players/:nickname" element={<PlayerPage />} />
           </Route>
         </Route>
 
