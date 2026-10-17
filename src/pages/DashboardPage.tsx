@@ -42,7 +42,6 @@ function DashboardPage() {
         if (storageKey) localStorage.setItem(storageKey, "true");
         setUnderstood(true);
     }
-    console.log(user);
     function renderStep() {
         if (loading) return <>Loading...</>;
         if (error) return <>{error}</>;
@@ -81,7 +80,7 @@ function DashboardPage() {
                     </p>
                 </div>
             )}
-                <div className="w-full">{renderStep()}</div>
+                <div className="w-full flex justify-center items-center">{renderStep()}</div>
             </div>
         </main>
     );
