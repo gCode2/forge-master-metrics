@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { supabase } from "../../lib/supabase";
-import type { DashboardProps, PlayerDashboardStats, PlayerWarHistory } from "../../types/types";
+import type { DashboardProps, PlayerStats, PlayerWarHistory } from "../../types/types";
 import { LuSwords } from "react-icons/lu";
 import { FaRegCalendarAlt, FaStarHalfAlt } from "react-icons/fa";
 import { IoStatsChart } from "react-icons/io5";
@@ -18,7 +18,7 @@ import {
 
 function Dashboard({playerId} : DashboardProps){
 
-    const [data, setData] = useState<PlayerDashboardStats | null>(null)
+    const [data, setData] = useState<PlayerStats | null>(null)
     const [error, setError] = useState<string | null>(null)
     const [loading, setLoading] = useState(true);
     const [warHistory, setWarHistory] = useState<PlayerWarHistory[]>([])

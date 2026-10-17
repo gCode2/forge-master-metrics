@@ -55,7 +55,7 @@ export interface TokenType{
     expires_at: string
 }
 
-export interface PlayerDashboardStats{
+export interface PlayerStats{
     average_last_3: number,
     average_last_3_rank: number,
     average_points: number,
@@ -84,3 +84,25 @@ export interface PlayerWarHistory{
     war_number: number;
     points: number | null;
 }
+
+export interface PlayersListProps{
+    players: PlayerStats[]
+}
+export interface PlayerRowProps{
+    player: PlayerStats
+}
+export interface DetailedPlayersListProps{
+    players: PlayerStats[];
+    wars: WarColumn[];
+    pointsByPlayer: PlayerWarPoints;
+}
+export interface WarColumn {
+    id: string;
+    war_number: number;
+}
+
+export type PlayerWarPoints = Record<
+    string,
+    Record<string, number | null>
+>;
+ 
