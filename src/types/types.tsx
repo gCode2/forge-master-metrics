@@ -86,7 +86,10 @@ export interface PlayerWarHistory{
 }
 
 export interface PlayersListProps{
-    players: PlayerStats[]
+    players: PlayerStats[],
+    sortHandler: (field: string)=>void;
+    sortOrder: string | null;
+    sortField: string | null;
 }
 export interface PlayerRowProps{
     player: PlayerStats
