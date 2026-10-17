@@ -42,7 +42,7 @@ function DashboardPage() {
         if (storageKey) localStorage.setItem(storageKey, "true");
         setUnderstood(true);
     }
-
+    console.log(user);
     function renderStep() {
         if (loading) return <>Loading...</>;
         if (error) return <>{error}</>;

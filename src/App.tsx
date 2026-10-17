@@ -11,25 +11,28 @@ import ProtectedRoute from "./components/auth/ProtectedRoute"
 import PublicRoute from "./components/auth/PublicRoute"
 import HomePage from "./pages/HomePage"
 import AppLayout from "./components/layout/AppLayout"
+import VerifiedRoute from "./components/auth/VerifiedRoute"
 function App() {
   return (
     <>
     <Routes>
       <Route element={<ProtectedRoute/>}>
-        <Route element={<AppLayout/>}>
-          <Route path="/dashboard" element={
-            <DashboardPage/>
-          }/>
-          <Route path="/admin" element={
-            <AdminPage/>
-          }/>
-          <Route path="/players" element={
-            <PlayersPage/>
-          }/>
-          <Route path="/player/:id" element={
-            <PlayerPage/>
-          }/>
-
+        <Route path="/dashboard" element={
+              <DashboardPage/>
+            }/>
+        <Route element={<VerifiedRoute/>}>
+          <Route element={<AppLayout/>}>
+            
+            <Route path="/admin" element={
+              <AdminPage/>
+            }/>
+            <Route path="/players" element={
+              <PlayersPage/>
+            }/>
+            <Route path="/player/:id" element={
+              <PlayerPage/>
+            }/>
+        </Route>
         </Route>
       </Route>
         <Route element={<PublicRoute/>}>
