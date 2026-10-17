@@ -45,6 +45,7 @@ function PlayersPage(){
             .select(`
                 id,
                 war_number,
+                result,
                 war_participants (
                     player_id,
                     points
@@ -77,6 +78,7 @@ function PlayersPage(){
             warRows.map((war) => ({
                 id: war.id,
                 war_number: war.war_number,
+                result: war.result
             }))
         );
 

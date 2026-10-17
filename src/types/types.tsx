@@ -99,6 +99,7 @@ export interface DetailedPlayersListProps{
 export interface WarColumn {
     id: string;
     war_number: number;
+    result: string;
 }
 
 export type PlayerWarPoints = Record<

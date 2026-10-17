@@ -1,8 +1,6 @@
+import { Link } from "react-router";
 import type { DetailedPlayersListProps } from "../../types/types";
-
-
-
-
+import { MdOpenInNew } from "react-icons/md";
 
 function formatCompactPoints(
     value: number | string | null | undefined
@@ -32,25 +30,25 @@ function DetailedPlayersList({
     pointsByPlayer,
 }: DetailedPlayersListProps) {
     if (wars.length === 0) {
+
         return <p>No wars available.</p>;
     }
-
     return (
         <div className="w-full min-w-0">
-            <div className="max-h-[70dvh] w-full overflow-auto rounded border">
-                <table className="w-max min-w-full border-separate border-spacing-0 text-sm">
-                    <thead className="sticky top-0 z-20">
+            <div className="max-h-[70dvh] w-full overflow-auto rounded">
+                <table className="min-w-full border-separate border-spacing-0.5 text-sm">
+                    <thead className="sticky top-0 z-20 bg-white">
                         <tr>
                             <th
                                 rowSpan={2}
-                                className="sticky left-0 z-30 min-w-36 border bg-zinc-800 px-3 py-2 text-left text-white"
+                                className="sticky left-0 z-30 min-w-36 border-2 px-3 py-2 text-center rounded-md text-xl bg-white"
                             >
                                 Nickname
                             </th>
 
                             <th
                                 colSpan={wars.length}
-                                className="border bg-zinc-800 px-3 py-2 text-center text-white"
+                                className="border-2 px-3 py-2 text-center rounded-md bg-white text-xl"
                             >
                                 Wars
                             </th>
@@ -60,7 +58,7 @@ function DetailedPlayersList({
                             {wars.map((war) => (
                                 <th
                                     key={war.id}
-                                    className="w-16 min-w-16 border bg-zinc-700 px-2 py-2 text-center text-white"
+                                    className={`${war.result === "win" ? "bg-green-500 border-green-600" : "bg-red-500 border-red-600"} min-w-16 border-2 px-2 py-2 text-center text-white rounded-md`}
                                 >
                                     {war.war_number}
                                 </th>
@@ -73,9 +71,17 @@ function DetailedPlayersList({
                             <tr key={player.player_id}>
                                 <th
                                     scope="row"
-                                    className="sticky left-0 z-10 border bg-white px-3 py-2 text-left"
+                                    className={`${player.is_member ? "bg-white" : "bg-gray-300" } sticky left-0 z-10 border-2 border-gray-500 px-3 py-2 text-left rounded-md grid grid-cols-2 gap-2`}
                                 >
-                                    {player.nickname}
+                                    <div className="text-center">
+                                        {player.nickname}
+                                    </div>
+                                    <div>
+                                        <Link className="flex flex-row justify-end items-center gap-2 text-blue-500" to={`/players/${player.nickname}`}>
+                                        More <MdOpenInNew/>
+                                        </Link>
+                                    </div>
+                                    
                                 </th>
 
                                 {wars.map((war) => {
@@ -92,7 +98,7 @@ function DetailedPlayersList({
                                                     ? "Brak zapisanego wyniku"
                                                     : `${Number(points).toLocaleString("pl-PL")} pkt`
                                             }
-                                            className="border px-2 py-2 text-center tabular-nums"
+                                            className="border-2 border-gray-500 px-2 py-2 text-center tabular-nums rounded-md"
                                         >
                                             {formatCompactPoints(points)}
                                         </td>
