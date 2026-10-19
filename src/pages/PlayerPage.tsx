@@ -25,7 +25,7 @@ function PlayerPage(){
     const [loading, setLoading] = useState(true);
     const [warHistory, setWarHistory] = useState<PlayerWarHistory[]>([])
 
-    async function getDashboardInfo(){
+    async function getPlayerInfo(){
         setLoading(true);
         setError(null);
 
@@ -40,6 +40,7 @@ function PlayerPage(){
             setError("Failed to load dashboard data");
             
         }
+        console.log(data.is_member)
         setData(data);
         setLoading(false);
     }
@@ -58,7 +59,7 @@ function PlayerPage(){
     }
 
     useEffect(()=>{
-        getDashboardInfo();
+        getPlayerInfo();
         getWarHistory();
     }, [])
 
@@ -69,8 +70,8 @@ function PlayerPage(){
         return num.toLocaleString();
     };
 
-    if(error) return <>{error}</>
-    if(loading) return <>Loading...</>
+    if(error) return <div className="h-full flex flex-col justify-center items-center">{error}</div>;
+    if(loading) return <div className="h-full flex flex-col justify-center items-center">Loading...</div>;
 
     return (
         <main className="flex w-full p-6">

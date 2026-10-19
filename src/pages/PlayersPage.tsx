@@ -23,7 +23,6 @@ function PlayersPage(){
     const [sortField, setSortField] = useState<SortField | null>("last_3_avg");
 
     function handleSort(field: SortField){
-        console.log(field)
         if(sortField === field){
             if(sortOrder === "desc") setSortOrder("asc");
             else if(sortOrder === "asc") {
