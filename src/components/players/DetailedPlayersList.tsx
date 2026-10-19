@@ -42,7 +42,7 @@ function DetailedPlayersList({
         <div className="w-full min-w-0">
             <div className="max-h-[70dvh] w-full overflow-auto rounded px-3 py-1">
                 <table className="min-w-full border-separate border-spacing-0.5 text-sm">
-                    <thead className="sticky top-0 z-20 bg-white">
+                    <thead className="sticky top-0 z-30 before:absolute before:-inset-x-0.5 before:-top-1 before:bottom-0.5 before:-z-10 before:bg-white before-content-['']">
                         <tr>
                             <th
                                 rowSpan={2}
@@ -73,12 +73,6 @@ function DetailedPlayersList({
 
                         <tr>
                             {wars.map((war) => (
-                                // <th
-                                //     key={war.id}
-                                //     className={`${war.result === "win" ? "bg-green-500" : "bg-red-500"} min-w-16 border-2 border-black px-2 py-2 text-center text-white rounded-md`}
-                                // >
-                                //     {war.war_number}
-                                // </th>
                                 <th key={war.id} className={`${war.result === "win" ? "bg-green-500" : "bg-red-500"} min-w-16 border-2 border-black px-2 py-2 text-center text-white rounded-md`}>
 
                                     <div className="flex flex-row justify-between items-center px-1">
