@@ -40,7 +40,6 @@ function PlayerPage(){
             setError("Failed to load dashboard data");
             
         }
-        console.log(data.is_member)
         setData(data);
         setLoading(false);
     }
