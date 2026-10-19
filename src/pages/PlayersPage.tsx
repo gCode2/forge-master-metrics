@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { supabase } from "../lib/supabase";
-import type { PlayerStats, PlayerWarPoints, WarColumn } from "../types/types";
+import type { PlayerStats, PlayerWarPoints, SortField, WarColumn } from "../types/types";
 import PlayersList from "../components/players/PlayersList";
 import DetailedPlayersList from "../components/players/DetailedPlayersList";
 
@@ -20,18 +20,19 @@ function PlayersPage(){
 
 
     const [sortOrder, setSortOrder] = useState<string | null>("desc");
-    const [sortField, setSortField] = useState<string | null>("last_3_avg");
+    const [sortField, setSortField] = useState<SortField | null>("last_3_avg");
 
-    function handleSort(field: string){
+    function handleSort(field: SortField){
+        console.log(field)
         if(sortField === field){
-            if(sortOrder === "asc") setSortOrder("desc");
-            else if(sortOrder === "desc") {
+            if(sortOrder === "desc") setSortOrder("asc");
+            else if(sortOrder === "asc") {
                 setSortField(null);
                 setSortOrder(null);
             }
         }else{
             setSortField(field);
-            setSortOrder("asc");
+            setSortOrder("desc");
         }
     }
 
@@ -44,25 +45,47 @@ function PlayersPage(){
 
                     return sortOrder === "asc" ? playerA.localeCompare(playerB) : playerB.localeCompare(playerA);
 
-            }else if(sortField==="total"){
-                    const playerA = a.total_points ?? 0;
-                    const playerB = b.total_points ?? 0;
-                    return sortOrder === "asc" ? playerA-playerB : playerB-playerA;
-            }else if(sortField==="avg"){
-                    const playerA = a.average_points ?? 0;
-                    const playerB = b.average_points ?? 0;
-                    return sortOrder === "asc" ? playerA-playerB : playerB-playerA;
-            }else if(sortField==="last_3_avg"){
-                    const playerA = a.average_last_3 ?? 0;
-                    const playerB = b.average_last_3 ?? 0;
-                    return sortOrder === "asc" ? playerA-playerB : playerB-playerA;
-            }else{
-                throw new Error("Unknown sort field")
             }
-            return 0;
+            if(sortField.startsWith("war:")){
+                const warNumber = parseInt(sortField.slice(4));
+
+                const war = wars.find(
+                    (war) => war.war_number === warNumber
+                );
+
+                if(!war) return 0;
+
+                const pointsA = pointsByPlayer[a.player_id]?.[war.id];
+                const pointsB = pointsByPlayer[b.player_id]?.[war.id];
+
+                if(pointsA == null && pointsB === null) return 0;
+                if(pointsA == null) return 1;
+                if(pointsB == null) return -1;
+
+                return sortOrder === "asc" ? 
+                pointsA - pointsB :
+                pointsB - pointsA;
+            }
+
+            const getValue = (player: PlayerStats): number => {
+                switch(sortField){
+                    case "total":
+                        return player.total_points ?? 0;
+                    case "avg":
+                        return player.average_points ?? 0;
+                    case "last_3_avg":
+                        return player.average_last_3 ?? 0;
+                    default:
+                        return 0;
+                }
+            }
+
+            const result = getValue(a) - getValue(b);
+
+            return sortOrder === "asc" ? result : -result;
             })
         }
-    , [players, sortField, sortOrder])
+    , [players, sortField, sortOrder, pointsByPlayer, wars])
 
     const loadPlayers = useCallback(
         async () => {
@@ -221,9 +244,12 @@ function PlayersPage(){
                         </div>
                     ) : (
                         <DetailedPlayersList
-                            players={players}
+                            players={sortedPlayers}
                             wars={wars}
                             pointsByPlayer={pointsByPlayer}
+                            sortOrder={sortOrder}
+                            sortField={sortField}
+                            sortHandler={handleSort}
                         />
                     )}
                     

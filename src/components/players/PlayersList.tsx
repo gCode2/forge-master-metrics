@@ -1,4 +1,4 @@
-import { FaSort, FaSortAmountDownAlt, FaSortAmountUpAlt, FaSortDown, FaSortUp } from "react-icons/fa";
+import { FaSort, FaSortDown, FaSortUp } from "react-icons/fa";
 import type { PlayersListProps } from "../../types/types";
 import PlayerRow from "./PlayerRow";
 

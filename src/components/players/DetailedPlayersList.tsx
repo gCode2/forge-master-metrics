@@ -1,6 +1,9 @@
 import { Link } from "react-router";
 import type { DetailedPlayersListProps } from "../../types/types";
 import { MdOpenInNew } from "react-icons/md";
+import { FaSort, FaSortDown, FaSortUp } from "react-icons/fa";
+
+
 
 function formatCompactPoints(
     value: number | string | null | undefined
@@ -28,9 +31,11 @@ function DetailedPlayersList({
     players,
     wars,
     pointsByPlayer,
+    sortOrder,
+    sortField,
+    sortHandler
 }: DetailedPlayersListProps) {
     if (wars.length === 0) {
-
         return <p>No wars available.</p>;
     }
     return (
@@ -56,11 +61,32 @@ function DetailedPlayersList({
 
                         <tr>
                             {wars.map((war) => (
-                                <th
-                                    key={war.id}
-                                    className={`${war.result === "win" ? "bg-green-500 border-green-600" : "bg-red-500 border-red-600"} min-w-16 border-2 px-2 py-2 text-center text-white rounded-md`}
-                                >
-                                    {war.war_number}
+                                // <th
+                                //     key={war.id}
+                                //     className={`${war.result === "win" ? "bg-green-500" : "bg-red-500"} min-w-16 border-2 border-black px-2 py-2 text-center text-white rounded-md`}
+                                // >
+                                //     {war.war_number}
+                                // </th>
+                                <th key={war.id} className={`${war.result === "win" ? "bg-green-500" : "bg-red-500"} min-w-16 border-2 border-black px-2 py-2 text-center text-white rounded-md`}>
+
+                                    <div className="flex flex-row justify-between items-center px-1">
+                                        <button className="flex flex-row justify-center items-center text-center">
+                                            {war.war_number}
+                                        </button>
+                                        <button className={`${
+                                    sortField === `war:${war.war_number}` ? (
+                                        sortOrder === "asc" ? "bg-red-500 hover:bg-red-400 border-b-red-800" : sortOrder === "desc" ? "bg-green-500 hover:bg-green-400 border-b-green-800" : "bg-zinc-300 hover:bg-zinc-200 border-b-zinc-700"
+                                    ) : "bg-zinc-300 hover:bg-zinc-200 border-b-zinc-700"} 
+                                     p-1 rounded-lg text-sm hover:cursor-pointer w-6 flex justify-center items-center border-b-4 ring-1 ring-black text-black`} onClick={()=>sortHandler(`war:${war.war_number}`)}>
+                                            {sortField === `war:${war.war_number}` ? 
+                                            (sortOrder === "asc" ? <FaSortUp/> 
+                                                : (sortOrder === "desc") ?  <FaSortDown/> 
+                                                : <FaSort/>) 
+                                            : <FaSort/>
+                                            }
+                                </button>
+                                    </div>
+
                                 </th>
                             ))}
                         </tr>
@@ -71,7 +97,7 @@ function DetailedPlayersList({
                             <tr key={player.player_id}>
                                 <th
                                     scope="row"
-                                    className={`${player.is_member ? "bg-white" : "bg-gray-300" } sticky left-0 z-10 border-2 border-gray-500 px-3 py-2 text-left rounded-md grid grid-cols-2 gap-2`}
+                                    className={`${player.is_member ? "bg-white" : "bg-gray-300" } sticky left-0 z-10 border-2  px-3 py-2 text-left rounded-md grid grid-cols-2 gap-2`}
                                 >
                                     <div className="text-center">
                                         {player.nickname}
@@ -98,7 +124,7 @@ function DetailedPlayersList({
                                                     ? "No score recorded"
                                                     : `${Number(points).toLocaleString("pl-PL")} pkt`
                                             }
-                                            className="border-2 border-gray-500 px-2 py-2 text-center tabular-nums rounded-md"
+                                            className="border-2 px-2 py-2 text-center tabular-nums rounded-md"
                                         >
                                             {formatCompactPoints(points)}
                                         </td>

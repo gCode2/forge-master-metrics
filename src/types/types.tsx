@@ -87,7 +87,7 @@ export interface PlayerWarHistory{
 
 export interface PlayersListProps{
     players: PlayerStats[],
-    sortHandler: (field: string)=>void;
+    sortHandler: (field: SortField)=>void;
     sortOrder: string | null;
     sortField: string | null;
 }
@@ -98,6 +98,9 @@ export interface DetailedPlayersListProps{
     players: PlayerStats[];
     wars: WarColumn[];
     pointsByPlayer: PlayerWarPoints;
+    sortOrder: string | null;
+    sortField: string | null;
+    sortHandler:(field: SortField) => void;
 }
 export interface WarColumn {
     id: string;
@@ -110,3 +113,4 @@ export type PlayerWarPoints = Record<
     Record<string, number | null>
 >;
  
+ export type SortField = | "nickname" | "total" | "avg" | "last_3_avg" | `war:${string}` | null
