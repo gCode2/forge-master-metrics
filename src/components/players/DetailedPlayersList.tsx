@@ -48,7 +48,19 @@ function DetailedPlayersList({
                                 rowSpan={2}
                                 className="sticky left-0 z-30 min-w-36 border-2 px-3 py-2 text-center rounded-md text-xl bg-white"
                             >
-                                Nickname
+                                <div className="flex flex-row justify-center gap-3">
+                                    <div>
+                                        Nickname
+                                    </div>
+                                    <button className="p-1 bg-zinc-300 rounded-lg text-sm hover:bg-zinc-200 hover:cursor-pointer w-10 flex justify-center items-center ring-1 ring-black border-b-4 border-b-zinc-700" onClick={()=>sortHandler("nickname")}>
+                                        {sortField === "nickname" ? 
+                                        (sortOrder === "asc" ? <FaSortUp/> 
+                                            : (sortOrder === "desc") ?  <FaSortDown/> 
+                                            : <FaSort/>) 
+                                        : <FaSort/>
+                                        }
+                                    </button>
+                                </div>
                             </th>
 
                             <th
