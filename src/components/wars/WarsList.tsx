@@ -5,7 +5,7 @@ function WarsList({wars}: WarsListProps){
     return (
         <>
             <div className="flex flex-col gap-2 w-full">
-                <div className="grid grid-cols-5 p-3 border-2 rounded-xl items-center text-center shadow-lg/20 font-bold">
+                <div className="grid grid-cols-6 p-3 border-2 rounded-xl items-center text-center shadow-lg/20 font-bold">
                     <div className="text-center">
                         War Number
                     </div>
@@ -17,6 +17,9 @@ function WarsList({wars}: WarsListProps){
                     </div>
                     <div>
                         Participants
+                    </div>
+                    <div>
+                        War Result
                     </div>
                     <div>
                         Action
