@@ -43,7 +43,6 @@ function PlayersPage(){
                     const playerB = b.nickname;
 
                     return sortOrder === "asc" ? playerA.localeCompare(playerB) : playerB.localeCompare(playerA);
-
             }
             if(sortField.startsWith("war:")){
                 const warNumber = parseInt(sortField.slice(4));

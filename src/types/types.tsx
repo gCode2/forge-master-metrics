@@ -107,7 +107,18 @@ export interface WarColumn {
     war_number: number;
     result: string;
 }
-
+export interface War {
+    war_id: string;
+    war_number: number;
+    enemy_name: string;
+    status: string;
+    result: string;
+    min_points: number;
+    max_points: number;
+    tier_points_delta: number;
+    participant_count: number;
+    total_points: number;
+}
 export type PlayerWarPoints = Record<
     string,
     Record<string, number | null>

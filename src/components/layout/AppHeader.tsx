@@ -1,6 +1,6 @@
 // import { useAuth } from "../../hooks/useAuth";
 import AppNavigation from "./AppNavigation";
-import applogo from "/public/favicon2.png";
+import applogo from "/favicon2.png";
 
 function AppHeader(){
     // const {user} = useAuth();

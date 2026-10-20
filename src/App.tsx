@@ -10,6 +10,7 @@ import PublicRoute from "./components/auth/PublicRoute"
 import HomePage from "./pages/HomePage"
 import AppLayout from "./components/layout/AppLayout"
 import VerifiedRoute from "./components/auth/VerifiedRoute"
+import WarsPage from "./pages/WarsPage"
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
             <Route path="/admin" element={<AdminPage />} />
             <Route path="/players" element={<PlayersPage />} />
             <Route path="/players/:nickname" element={<PlayerPage />} />
+            <Route path="/wars" element={<WarsPage/>} />
           </Route>
         </Route>
 
