@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import type { War } from "../types/types";
 import { supabase } from "../lib/supabase";
+import WarsList from "../components/wars/WarsList";
 
 function WarsPage(){
     const [wars, setWars] = useState<War[]>([])
@@ -12,11 +13,11 @@ function WarsPage(){
             setLoading(true);
             setError(null);
 
-            const {data, error} = await supabase.from("v_war_summary").select("war_id, war_number, enemy_name, status, result, min_points, max_points, tier_points_delta, participant_count, total_points");
+            const {data, error} = await supabase.from("v_war_summary").select("war_id, war_number, enemy_name, status, result, min_points, max_points, tier_points_delta, participant_count, total_points").order("war_number", {ascending: false});
 
             if(error){
                 console.error("Failed to load wars:", error);
-                setError("Failed to load wars:");
+                setError("Failed to load wars :(");
             }else {
                 setWars(data);
             }
@@ -45,6 +46,9 @@ function WarsPage(){
                 <div className="text-3xl font-bold pt-5 pb-2">
                        Wars Stats
                 </div>
+            </div>
+            <div className="w-full flex justify-center items-center p-6">
+                <WarsList wars={wars}/>
             </div>
         </div>
         </>

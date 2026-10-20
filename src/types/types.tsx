@@ -125,3 +125,10 @@ export type PlayerWarPoints = Record<
 >;
  
  export type SortField = | "nickname" | "total" | "avg" | "last_3_avg" | `war:${string}` | null
+
+ export interface WarsListProps{
+    wars: War[];
+ }
+ export interface WarRowProps{
+    war: War;
+ }
