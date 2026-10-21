@@ -1,4 +1,4 @@
-import { IoIosArrowDropdown, IoIosArrowDropup } from "react-icons/io";
+import { IoIosArrowDropdown} from "react-icons/io";
 import type { WarRowProps } from "../../types/types";
 import { useState } from "react";
 
