@@ -1,7 +1,12 @@
-import { IoIosArrowDropdown } from "react-icons/io";
+import { IoIosArrowDropdown, IoIosArrowDropup } from "react-icons/io";
 import type { WarRowProps } from "../../types/types";
+import { useState } from "react";
 
 function WarRow({war}: WarRowProps){
+    const [isExpanded, setExpanded] = useState(false);
+    function handleExpand(){
+        setExpanded(!isExpanded);
+    }
     return (
         <>
             <div className="grid grid-cols-6 p-3 border-2 rounded-xl shadow-lg/20 items-center text-center">
@@ -21,16 +26,25 @@ function WarRow({war}: WarRowProps){
                         {war.result}
                 </div>
                 <div className="flex justify-center">
-                    <button className="flex flex-row justify-center items-center gap-1 bg-zinc-400 enabled:hover:bg-zinc-300 text-white font-bold py-1 px-4 border-b-4 border-zinc-700 enabled:hover:border-zinc-500 transition duration-200 enabled:hover:cursor-pointer rounded ring-1 ring-black">
-                        <span>
-                            Show more
+                    <button className="flex flex-row justify-between items-center gap-1 bg-zinc-400 enabled:hover:bg-zinc-300 text-white font-bold py-1 px-4 border-b-4 w-35 border-zinc-700 enabled:hover:border-zinc-500 transition duration-200 enabled:hover:cursor-pointer rounded ring-1 ring-black" onClick={handleExpand}>
+                        
+                        <span className="flex-1">
+                            {!isExpanded ? "More info" : "Less info"}
                         </span>
                         <span className="text-xl">
-                            <IoIosArrowDropdown/>
+                            <IoIosArrowDropdown className={`transition-all duration-200 ${!isExpanded ? "rotate-0" : "-rotate-180"}`}/>
                         </span>
+                    
+                        
                     </button>
                 </div>
+                
+                
+                <div className={`bg-gray-300 col-span-full flex flex-row justify-center items-center rounded p-0 m-0 transition-all duration-400 invisible h-0 overflow-hidden border-invisible border-gray-500 ${isExpanded && "visible h-10 p-3 m-2 border-2"}`}>
+                    Expanded
+                </div>
             </div>
+            
         </>
     )
 }
