@@ -19,7 +19,23 @@ function WarsPage(){
                 console.error("Failed to load wars:", error);
                 setError("Failed to load wars :(");
             }else {
-                setWars(data);
+                // setWars(data);
+                const processedWars: War[] = (data ?? []).map(
+                    (war: War, index: number, array: War[]) => {
+                        const candidate = array[index+1];
+                        const prevWar = 
+                        candidate?.war_number === war.war_number - 1 ? candidate : undefined;
+
+                        const totalPointsGrowthPercentage = prevWar && prevWar.total_points !== 0 ? 
+                        ((war.total_points - prevWar.total_points) / prevWar.total_points) * 100 : null;
+
+                        return {
+                            ...war,
+                            total_points_growth_percentage: totalPointsGrowthPercentage
+                        }
+                    }
+                )
+                setWars(processedWars)
             }
             setLoading(false);
         }, []

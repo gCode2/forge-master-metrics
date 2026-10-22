@@ -118,12 +118,14 @@ export interface War {
     tier_points_delta: number;
     participant_count: number;
     total_points: number;
+    total_points_growth_percentage?: number | null;
     war_daily_stats: WarDay[];
 }
 
 export interface WarDay{
     day_number: number;
     total_points: number;
+    growth_percentage?: number | null;
 }
 
 export type PlayerWarPoints = Record<

@@ -24,8 +24,23 @@ function WarRow({war}: WarRowProps){
                 <div className="truncate">
                     {war.enemy_name}
                 </div>
-                <div>
-                    {war.total_points}
+                <div className="grid grid-cols-2">
+                    {formatNumber(war.total_points)}
+
+                    {war.total_points_growth_percentage != null ? (
+                        <span className={`text-sm font-bold ${war.total_points_growth_percentage > 0 ? "text-green-400" : "text-red-400"}`}>
+                            (
+                                {
+                                    war.total_points_growth_percentage > 0 ? "+" : ""
+                                }
+                                {
+                                    war.total_points_growth_percentage.toFixed(2) + "%"
+                                }
+                            )
+                        </span>
+                    ) : <span className="text-sm font-bold text-gray-400">
+                        ( - )
+                        </span>}
                 </div>
                 <div>
                     {war.participant_count}
