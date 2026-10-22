@@ -74,16 +74,14 @@ function WarRow({war}: WarRowProps){
                             
                         </thead>
                         <tbody>
-
-                        </tbody>
                         <tr>
                         {war.war_daily_stats.map(warDay=>(
-                            <td>
+                            <td key={crypto.randomUUID()}>
                                 {formatNumber(warDay.total_points)}
                             </td>
-                            
                         ))}
                         </tr>
+                        </tbody>
                     </table>
                 </div>
             </div>
