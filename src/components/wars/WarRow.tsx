@@ -25,22 +25,25 @@ function WarRow({war}: WarRowProps){
                     {war.enemy_name}
                 </div>
                 <div className="grid grid-cols-2">
-                    {formatNumber(war.total_points)}
-
-                    {war.total_points_growth_percentage != null ? (
-                        <span className={`text-sm font-bold ${war.total_points_growth_percentage > 0 ? "text-green-400" : "text-red-400"}`}>
-                            (
-                                {
-                                    war.total_points_growth_percentage > 0 ? "+" : ""
-                                }
-                                {
-                                    war.total_points_growth_percentage.toFixed(2) + "%"
-                                }
-                            )
-                        </span>
-                    ) : <span className="text-sm font-bold text-gray-400">
-                        ( - )
-                        </span>}
+                    <div>
+                        {formatNumber(war.total_points)}
+                    </div>
+                    <div>
+                        {war.total_points_growth_percentage != null ? (
+                            <span className={`text-sm font-bold ${war.total_points_growth_percentage > 0 ? "text-green-400" : "text-red-400"}`}>
+                                (
+                                    {
+                                        war.total_points_growth_percentage > 0 ? "+" : ""
+                                    }
+                                    {
+                                        war.total_points_growth_percentage.toFixed(2) + "%"
+                                    }
+                                )
+                            </span>
+                        ) : <span className="text-sm font-bold text-gray-400">
+                            ( - )
+                            </span>}
+                    </div>
                 </div>
                 <div>
                     {war.participant_count}
@@ -63,41 +66,55 @@ function WarRow({war}: WarRowProps){
                 </div>
                 
                 
-                <div className={`bg-gray-300 col-span-full flex flex-row justify-center items-center rounded p-0 m-0 transition-all duration-400 invisible h-0 overflow-hidden border-invisible border-gray-500 ${isExpanded && "visible h-18 p-3 m-2 border-2"}`}>
-                    <table className="w-full p-10">
-                        <thead>
-                            <tr>
-                                <th>
+                <div className={`bg-gray-300 col-span-full flex flex-col justify-center items-center rounded p-0 m-0 transition-all duration-400 invisible h-0 overflow-hidden border-invisible border-gray-500 flex flex-col ${isExpanded && "visible h-18 p-3 m-2 border-2"}`}>
+                        <div className="w-full grid grid-cols-6">
+                                <div>
                                     Day 1
-                                </th>
-                                <th>
+                                </div>
+                                <div>
                                     Day 2
-                                </th>
-                                <th>
+                                </div>
+                                <div>
                                     Day 3
-                                </th>
-                                <th>
+                                </div>
+                                <div>
                                     Day 4
-                                </th>
-                                <th>
+                                </div>
+                                <div>
                                     Day 5
-                                </th>
-                                <th>
+                                </div>
+                                <div>
                                     Day 6
-                                </th>
-                            </tr>
-                            
-                        </thead>
-                        <tbody>
-                        <tr>
-                        {war.war_daily_stats.map(warDay=>(
-                            <td key={crypto.randomUUID()}>
-                                {formatNumber(warDay.total_points)}
-                            </td>
+                                </div>
+                        </div>
+                        <div className="w-full grid grid-cols-6">
+                            {war.war_daily_stats.map(warDay=>(
+                            <div key={crypto.randomUUID()}>
+                                <div className="grid grid-cols-2">
+                                    <div className="text-right">
+                                        {formatNumber(warDay.total_points)}
+                                    </div>
+                                    <div className="ml-1 text-left">
+                                        {warDay.growth_percentage != null ? (
+                                            <span className={`text-sm ml-1 font-bold ${warDay.growth_percentage > 0 ? "text-green-400" : "text-red-400"}`}>
+                                                (
+                                                    {
+                                                        warDay.growth_percentage > 0 ? "+" : ""
+                                                    }
+                                                    {
+                                                        warDay.growth_percentage.toFixed(2) + "%"
+                                                    }
+                                                )
+                                            </span>
+                                        ) : <span className="text-sm font-bold text-gray-400 ml-1">
+                                            ( - )
+                                            </span>}
+                                    </div>
+                                </div>
+                            </div>
                         ))}
-                        </tr>
-                        </tbody>
-                    </table>
+                        </div>
+                        
                 </div>
             </div>
             

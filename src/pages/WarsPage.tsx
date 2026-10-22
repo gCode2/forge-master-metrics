@@ -19,7 +19,6 @@ function WarsPage(){
                 console.error("Failed to load wars:", error);
                 setError("Failed to load wars :(");
             }else {
-                // setWars(data);
                 const processedWars: War[] = (data ?? []).map(
                     (war: War, index: number, array: War[]) => {
                         const candidate = array[index+1];
@@ -29,9 +28,23 @@ function WarsPage(){
                         const totalPointsGrowthPercentage = prevWar && prevWar.total_points !== 0 ? 
                         ((war.total_points - prevWar.total_points) / prevWar.total_points) * 100 : null;
 
+
+                        const processedDailyStats = (war.war_daily_stats ?? []).map((warDay)=>{
+                            const prevDay = prevWar?.war_daily_stats?.find((day)=> day.day_number === warDay.day_number);
+
+                            const dayGrowthPercentage = prevDay && prevDay.total_points !== 0 ? ((warDay.total_points - prevDay.total_points) / prevDay.total_points) * 100 : null;
+
+                            return {
+                                ...warDay,
+                                growth_percentage: dayGrowthPercentage
+                            };
+
+                        })
+
                         return {
                             ...war,
-                            total_points_growth_percentage: totalPointsGrowthPercentage
+                            total_points_growth_percentage: totalPointsGrowthPercentage,
+                            war_daily_stats: processedDailyStats,
                         }
                     }
                 )
