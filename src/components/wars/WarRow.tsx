@@ -66,8 +66,8 @@ function WarRow({war}: WarRowProps){
                 </div>
                 
                 
-                <div className={`bg-gray-300 col-span-full flex flex-col justify-center items-center rounded p-0 m-0 transition-all duration-400 invisible h-0 overflow-hidden border-invisible border-gray-500 flex flex-col ${isExpanded && "visible h-18 p-3 m-2 border-2"}`}>
-                        <div className="w-full grid grid-cols-6">
+                <div className={`${war.result === "win" ? "bg-green-200" : "bg-red-200"} col-span-full flex flex-col justify-center items-center rounded p-0 mt-0 transition-all duration-400 invisible h-0 overflow-hidden border-invisible border-gray-500 flex flex-col ${isExpanded && "visible h-18 p-3 mt-2 border-2"}`}>
+                        <div className="w-full grid grid-cols-6 font-bold">
                                 <div>
                                     Day 1
                                 </div>
@@ -96,17 +96,18 @@ function WarRow({war}: WarRowProps){
                                     </div>
                                     <div className="ml-1 text-left">
                                         {warDay.growth_percentage != null ? (
-                                            <span className={`text-sm ml-1 font-bold ${warDay.growth_percentage > 0 ? "text-green-400" : "text-red-400"}`}>
+                                            <span className={`text-sm ml-1 font-bold ${warDay.growth_percentage > 0 ? "text-green-500" : "text-red-500"}`}>
                                                 (
                                                     {
                                                         warDay.growth_percentage > 0 ? "+" : ""
                                                     }
                                                     {
-                                                        warDay.growth_percentage.toFixed(2) + "%"
+                                                        warDay.growth_percentage < 1000 ? 
+                                                        warDay.growth_percentage.toFixed(2) + "%" : "1000.00%"
                                                     }
                                                 )
                                             </span>
-                                        ) : <span className="text-sm font-bold text-gray-400 ml-1">
+                                        ) : <span className="text-sm font-bold text-gray-500 ml-1">
                                             ( - )
                                             </span>}
                                     </div>

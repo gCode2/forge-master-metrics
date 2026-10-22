@@ -44,7 +44,7 @@ function WarsPage(){
                         return {
                             ...war,
                             total_points_growth_percentage: totalPointsGrowthPercentage,
-                            war_daily_stats: processedDailyStats,
+                            war_daily_stats: processedDailyStats
                         }
                     }
                 )
