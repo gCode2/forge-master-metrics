@@ -7,6 +7,14 @@ function WarRow({war}: WarRowProps){
     function handleExpand(){
         setExpanded(!isExpanded);
     }
+
+    const formatNumber = (value: number | string | undefined | null) => {
+        if (value === undefined || value === null) return "0";
+        const num = Number(value);
+        if (isNaN(num)) return "0";
+        return num.toLocaleString();
+    };
+
     return (
         <>
             <div className="grid grid-cols-6 p-3 border-2 rounded-xl shadow-lg/20 items-center text-center">
@@ -40,8 +48,43 @@ function WarRow({war}: WarRowProps){
                 </div>
                 
                 
-                <div className={`bg-gray-300 col-span-full flex flex-row justify-center items-center rounded p-0 m-0 transition-all duration-400 invisible h-0 overflow-hidden border-invisible border-gray-500 ${isExpanded && "visible h-10 p-3 m-2 border-2"}`}>
-                    Expanded
+                <div className={`bg-gray-300 col-span-full flex flex-row justify-center items-center rounded p-0 m-0 transition-all duration-400 invisible h-0 overflow-hidden border-invisible border-gray-500 ${isExpanded && "visible h-18 p-3 m-2 border-2"}`}>
+                    <table className="w-full p-10">
+                        <thead>
+                            <tr>
+                                <th>
+                                    Day 1
+                                </th>
+                                <th>
+                                    Day 2
+                                </th>
+                                <th>
+                                    Day 3
+                                </th>
+                                <th>
+                                    Day 4
+                                </th>
+                                <th>
+                                    Day 5
+                                </th>
+                                <th>
+                                    Day 6
+                                </th>
+                            </tr>
+                            
+                        </thead>
+                        <tbody>
+
+                        </tbody>
+                        <tr>
+                        {war.war_daily_stats.map(warDay=>(
+                            <td>
+                                {formatNumber(warDay.total_points)}
+                            </td>
+                            
+                        ))}
+                        </tr>
+                    </table>
                 </div>
             </div>
             

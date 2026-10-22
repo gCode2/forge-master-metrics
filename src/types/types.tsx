@@ -118,7 +118,14 @@ export interface War {
     tier_points_delta: number;
     participant_count: number;
     total_points: number;
+    war_daily_stats: WarDay[];
 }
+
+export interface WarDay{
+    day_number: number;
+    total_points: number;
+}
+
 export type PlayerWarPoints = Record<
     string,
     Record<string, number | null>

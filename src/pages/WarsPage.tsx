@@ -13,7 +13,7 @@ function WarsPage(){
             setLoading(true);
             setError(null);
 
-            const {data, error} = await supabase.from("v_war_summary").select("war_id, war_number, enemy_name, status, result, min_points, max_points, tier_points_delta, participant_count, total_points").order("war_number", {ascending: false});
+            const {data, error} = await supabase.from("v_war_summary").select("war_id, war_number, enemy_name, status, result, min_points, max_points, tier_points_delta, participant_count, total_points, war_daily_stats (day_number, total_points)").order("war_number", {ascending: false});
 
             if(error){
                 console.error("Failed to load wars:", error);
