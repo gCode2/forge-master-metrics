@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { supabase } from "../../lib/supabase";
 import type { DashboardProps, PlayerStats, PlayerWarHistory } from "../../types/types";
-import { IoStatsChart } from "react-icons/io5";
 import {
     CartesianGrid,
     Line,
