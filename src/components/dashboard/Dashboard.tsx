@@ -1,11 +1,7 @@
 import { useEffect, useState } from "react";
 import { supabase } from "../../lib/supabase";
 import type { DashboardProps, PlayerStats, PlayerWarHistory } from "../../types/types";
-import { LuSwords } from "react-icons/lu";
-import { FaRegCalendarAlt, FaStarHalfAlt } from "react-icons/fa";
 import { IoStatsChart } from "react-icons/io5";
-import { IoIosPeople} from "react-icons/io";
-import { FaStar } from "react-icons/fa6";
 import {
     CartesianGrid,
     Line,
@@ -61,7 +57,7 @@ function Dashboard({playerId} : DashboardProps){
     if(loading) return <>Loading...</>
 
     return (
-             <div className="flex flex-col gap-2 w-full">
+             <div className="flex flex-1 flex-col gap-2 w-full">
 
                 <div className="grid grid-cols-[1fr_auto_auto] items-center border-2 rounded w-full h-23 shadow-lg/20 px-6">
         
@@ -110,7 +106,7 @@ function Dashboard({playerId} : DashboardProps){
                 <div>
                     <div className="flex flex-row items-center justify-center gap-2">
                         <div>
-                            <LuSwords className="text-3xl"/>
+                            <img src="/icons/swords.png" className="h-8 w-8"/>
                         </div>
                         <div>
                             You've fought in <span className="font-bold text-orange-400">{data?.scored_wars_count}</span> wars
@@ -121,7 +117,7 @@ function Dashboard({playerId} : DashboardProps){
                 <div>
                     <div className="flex flex-row items-center justify-center gap-2">
                         <div>
-                            <FaRegCalendarAlt className="text-3xl"/>
+                            <img src="/icons/calendar.png" className="h-8 w-8"/>
                         </div>
                         <div>
                             Last recorded war: #<span className="font-bold text-orange-400">{data?.last_scored_war_number}</span>
@@ -131,7 +127,7 @@ function Dashboard({playerId} : DashboardProps){
                 <div>
                     <div className="flex flex-row items-center justify-center gap-2">
                         <div>
-                            <FaRegCalendarAlt className="text-3xl"/>
+                            <img src="/icons/number-1.png" className="h-8 w-8"/>
                         </div>
                         <div>
                             First appearance at war: #<span className="font-bold text-orange-400">{data?.first_scored_war_number}</span>
@@ -179,9 +175,9 @@ function Dashboard({playerId} : DashboardProps){
                         <div className="flex flex-col border-2 rounded h-81 shadow-lg/20 col-span-2 px-6 py-3 gap-2">
                         <div className="flex flex-row items-center justify-left gap-3 h-15 px-5">
                             <div>
-                                <IoStatsChart className="text-4xl text-orange-400 drop-shadow-sm/150"/>
+                                <img src="/icons/bar-chart.png" className="h-11 w-11"/>
                             </div>
-                            <div>
+                            <div className="text-left">
                                 <div className="font-bold text-xl">
                                 WAR HISTORY
                                 </div>
@@ -231,7 +227,7 @@ function Dashboard({playerId} : DashboardProps){
                         <div className="flex flex-col gap-3">
                             <div className="flex flex-row items-center justify-between gap-2 border-2 rounded h-25 shadow-lg/20 px-6 bg-green-50">
                                 <div>
-                                    <FaStar className="text-4xl text-orange-400 drop-shadow-sm/150"/>
+                                        <img src="/icons/trophy.png" className="h-13 w-13"/> 
                                 </div>
                                 <div className="flex-2 flex-col justify-left text-left px-2">
                                     <div className="font-bold text-md stext-stroke-3">
@@ -254,7 +250,7 @@ function Dashboard({playerId} : DashboardProps){
                             <div className="flex flex-row items-center justify-between gap-2 border-2 rounded h-25 shadow-lg/20 px-6 bg-gray-100">
 
                                 <div>
-                                    <FaStarHalfAlt className="text-4xl text-gray-400 drop-shadow-sm/150"/>
+                                    <img src="/icons/broken-shield.png" className="h-13 w-13"/>
                                 </div>
                                 <div className="flex-2 flex-col justify-left text-left px-2">
                                     <div className="font-bold text-md stext-stroke-3">
@@ -277,7 +273,7 @@ function Dashboard({playerId} : DashboardProps){
                             <div className="flex flex-row items-center justify-between gap-2 border-2 rounded h-25 shadow-lg/20 px-6">
 
                                 <div>
-                                    <IoIosPeople className="text-4xl text-orange-400 drop-shadow-sm/150"/>
+                                    <img src="/icons/clan.png" className="h-13 w-13"/>
                                 </div>
                                 <div className="flex-2 flex-col justify-left text-left px-2">
                                     <div className="font-bold text-md stext-stroke-3">

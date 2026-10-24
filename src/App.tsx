@@ -11,6 +11,8 @@ import HomePage from "./pages/HomePage"
 import AppLayout from "./components/layout/AppLayout"
 import VerifiedRoute from "./components/auth/VerifiedRoute"
 import WarsPage from "./pages/WarsPage"
+import CalculatorsPage from "./pages/CalculatorsPage"
+import ChartsPage from "./pages/ChartsPage"
 
 function App() {
   return (
@@ -31,6 +33,8 @@ function App() {
             <Route path="/players" element={<PlayersPage />} />
             <Route path="/players/:nickname" element={<PlayerPage />} />
             <Route path="/wars" element={<WarsPage/>} />
+            <Route path="/calculators" element={<CalculatorsPage/>}/>
+            <Route path="/charts" element={<ChartsPage/>}/>
           </Route>
         </Route>
 

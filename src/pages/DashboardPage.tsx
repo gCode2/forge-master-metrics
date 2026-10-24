@@ -64,7 +64,7 @@ function DashboardPage() {
     if(loading) return <div className="h-full flex flex-col justify-center items-center">Loading...</div>;
     
     return (
-        <main className="flex w-full p-6">
+        <main className="flex flex-1 w-full p-6">
             <div className="flex flex-col text-center gap-2 w-full">
                 {getOnboardingStep(claim, understood) !== "verified" && (
                 <div className="mb-8 text-center">
