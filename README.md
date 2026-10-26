@@ -1,75 +1,86 @@
-# React + TypeScript + Vite
+# Forge Master Metrics
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Forge Master Metrics is a web application for tracking player performance, analyzing clan wars, and comparing statistics in Forge Master.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- **Dashboard** — Overview of player statistics, rankings, and recent war performance.
+- **Player Statistics** — Browse players, compare scores, and view individual war history.
+- **War History** — Track clan wars, enemy clans, results, participant counts, and daily performance.
+- **War Points Calculator** — Calculate and analyze war points.
+- **Authentication** — User registration, login, and player account verification.
 
-## React Compiler
+## Tech Stack
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- React 19
+- TypeScript
+- Vite
+- Tailwind CSS 4
+- Recharts
+- Supabase
 
-## Expanding the ESLint configuration
+## Getting Started
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+### Prerequisites
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+- Node.js and npm
+- A configured Supabase project
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+### Installation
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+Clone the repository and install the dependencies:
 
+```bash
+git clone https://github.com/gCode2/forge-master-metrics.git
+cd forge-master-metrics
+npm install
 ```
 
-You can also install [eslint-plugin-react-x](https://npmx.dev/package/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://npmx.dev/package/eslint-plugin-react-dom) for React-specific lint rules:
+### Environment Variables
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+Create a `.env` file in the project root and add your Supabase credentials:
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-
+```env
+VITE_SUPABASE_URL=your_supabase_url
+VITE_SUPABASE_PUBLISHABLE_KEY=your_supabase_publishable_key
 ```
+
+### Run Locally
+
+Start the development server:
+
+```bash
+npm run dev
+```
+
+To create a production build:
+
+```bash
+npm run build
+```
+
+## Project Structure
+
+```text
+src/
+├── components/   # UI components
+├── features/     # Authentication and onboarding
+├── hooks/        # Custom React hooks
+├── lib/          # Shared utilities and Supabase client
+├── pages/        # Application pages
+└── types/        # TypeScript types
+supabase/
+└── functions/    # Supabase Edge Functions
+```
+
+## Development Status
+
+The application includes player statistics, war tracking, authentication, and a dashboard. Some sections, such as advanced charts and administration, are still under development.
+
+## Contributing
+
+Contributions, suggestions, and bug reports are welcome.
+
+## License
+
+No license has been specified yet.

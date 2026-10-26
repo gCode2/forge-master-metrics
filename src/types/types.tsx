@@ -141,3 +141,20 @@ export type PlayerWarPoints = Record<
  export interface WarRowProps{
     war: War;
  }
+
+ export interface WarDayAction {
+    key: string,
+    name: string,
+ }
+
+ export interface WarDayActionMapping{
+    key: string,
+    points:number
+ }
+
+ export interface WarDayData {
+    day: number,
+    actions: WarDayActionMapping[]
+ }
+
+ export type ActionSegments = Record<string, WarDayAction[]>;

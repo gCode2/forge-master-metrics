@@ -1,0 +1,82 @@
+import type { ActionSegments } from "../types/types";
+
+
+export const actionSegments: ActionSegments = {
+    forge: [
+        { key: 'forge_primitive', name: 'Forge Primitive Equipment' },
+        { key: 'forge_medieval', name: 'Forge Medieval Equipment' },
+        { key: 'forge_early_modern', name: 'Forge Early-Modern Equipment' },
+        { key: 'forge_modern', name: 'Forge Modern Equipment' },
+        { key: 'forge_space', name: 'Forge Space Equipment' },
+        { key: 'forge_interstellar', name: 'Forge Interstellar Equipment' },
+        { key: 'forge_multiverse', name: 'Forge Multiverse Equipment' },
+        { key: 'forge_quantum', name: 'Forge Quantum Equipment' },
+        { key: 'forge_underworld', name: 'Forge Underworld Equipment' },
+        { key: 'forge_divine', name: 'Forge Divine Equipment' },
+    ],
+    spending: [
+        { key: 'spend_coins_forge', name: 'Spend 1000 Coins on Forge' },
+        { key: 'spend_gem_forge', name: 'Spend 1 Gem on Forge' },
+    ],
+    techTree: [
+        { key: 'tech_1', name: 'Finish Tech Tree I Upgrade' },
+        { key: 'tech_2', name: 'Finish Tech Tree II Upgrade' },
+        { key: 'tech_3', name: 'Finish Tech Tree III Upgrade' },
+        { key: 'tech_4', name: 'Finish Tech Tree IV Upgrade' },
+        { key: 'tech_5', name: 'Finish Tech Tree V Upgrade' },
+    ],
+    dungeons: [
+        { key: 'dungeon_hammer', name: 'Use Hammer Thief Dungeon Key' },
+        { key: 'dungeon_ghost', name: 'Use Ghost Town Dungeon Key' },
+        { key: 'dungeon_invasion', name: 'Use Invasion Dungeon Key' },
+        { key: 'dungeon_zombie', name: 'Use Zombie Rush Dungeon Key' },
+    ],
+    skills: [
+        { key: 'summon_common_skill', name: 'Summon Common Skill' },
+        { key: 'summon_rare_skill', name: 'Summon Rare Skill' },
+        { key: 'summon_epic_skill', name: 'Summon Epic Skill' },
+        { key: 'summon_legendary_skill', name: 'Summon Legendary Skill' },
+        { key: 'summon_ultimate_skill', name: 'Summon Ultimate Skill' },
+        { key: 'summon_mythic_skill', name: 'Summon Mythic Skill' },
+        { key: 'upgrade_common_skill', name: 'Upgrade Common Skill' },
+        { key: 'upgrade_rare_skill', name: 'Upgrade Rare Skill' },
+        { key: 'upgrade_epic_skill', name: 'Upgrade Epic Skill' },
+        { key: 'upgrade_legendary_skill', name: 'Upgrade Legendary Skill' },
+        { key: 'upgrade_ultimate_skill', name: 'Upgrade Ultimate Skill' },
+        { key: 'upgrade_mythic_skill', name: 'Upgrade Mythic Skill' },
+    ],
+    mounts: [
+        { key: 'summon_common_mount', name: 'Summon Common Mount' },
+        { key: 'summon_rare_mount', name: 'Summon Rare Mount' },
+        { key: 'summon_epic_mount', name: 'Summon Epic Mount' },
+        { key: 'summon_legendary_mount', name: 'Summon Legendary Mount' },
+        { key: 'summon_ultimate_mount', name: 'Summon Ultimate Mount' },
+        { key: 'summon_mythic_mount', name: 'Summon Mythic Mount' },
+        { key: 'merge_common_mount', name: 'Merge Common Mount' },
+        { key: 'merge_rare_mount', name: 'Merge Rare Mount' },
+        { key: 'merge_epic_mount', name: 'Merge Epic Mount' },
+        { key: 'merge_legendary_mount', name: 'Merge Legendary Mount' },
+        { key: 'merge_ultimate_mount', name: 'Merge Ultimate Mount' },
+        { key: 'merge_mythic_mount', name: 'Merge Mythic Mount' },
+    ],
+    eggs: [
+        { key: 'hatch_common_egg', name: 'Hatch Common Egg' },
+        { key: 'hatch_rare_egg', name: 'Hatch Rare Egg' },
+        { key: 'hatch_epic_egg', name: 'Hatch Epic Egg' },
+        { key: 'hatch_legendary_egg', name: 'Hatch Legendary Egg' },
+        { key: 'hatch_ultimate_egg', name: 'Hatch Ultimate Egg' },
+        { key: 'hatch_mythic_egg', name: 'Hatch Mythic Egg' },
+    ],
+    pets: [
+        { key: 'merge_common_pet', name: 'Merge Common Pet' },
+        { key: 'merge_rare_pet', name: 'Merge Rare Pet' },
+        { key: 'merge_epic_pet', name: 'Merge Epic Pet' },
+        { key: 'merge_legendary_pet', name: 'Merge Legendary Pet' },
+        { key: 'merge_ultimate_pet', name: 'Merge Ultimate Pet' },
+        { key: 'merge_mythic_pet', name: 'Merge Mythic Pet' },
+    ],
+    clanBrawl: [
+        { key: 'defeat_rival_members', name: 'Defeat rival clan members' },
+        { key: 'win_all_out_brawl', name: 'Win the all-out brawl' },
+    ]
+}
