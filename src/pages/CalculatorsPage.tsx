@@ -1,17 +1,8 @@
 import { Link } from "react-router";
-
-import {war_days_base_points} from "../data/warDaysPoints.ts";
-import {actionSegments} from "../data/warDayActions.ts";
-
-
-import type { WarDayData } from "../types/types";
-import { useState } from "react";
+import WarDayCalculator from "../components/calculators/WarDayCalculator/WarDayCalculator.tsx";
 
 function CalculatorsPage () {
-    const [selectedDay, setSelectedDay] = useState<WarDayData | null>(null)
 
-        // console.log(war_days_base_points);
-        // console.log(actionSegments)
     return (
         <>
         <main className="flex flex-1 flex-col w-full p-6 gap-2">
@@ -32,10 +23,10 @@ function CalculatorsPage () {
                     </div>
                 </div>
             </div>
-            <div className="grid grid-cols-2 gap-3">
-                <div className="border-2 rounded flex flex-row text-2xl gap-3 p-6 shadow-lg/20 ">
-                    <div className="flex flex-col gap-1">
-                        <div className="flex flex-row justify-center items-center gap-5">
+            <div className="w-full flex flex-col gap-3">
+                <div className="border-2 rounded flex flex-row text-2xl gap-3 p-6 shadow-lg/20 w-full">
+                    <div className="flex flex-col gap-1 w-full">
+                        <div className="flex flex-row justify-start items-center gap-5">
                             <div>
                                 <img src="/icons/war_points.png" className="h-25 w-25"/>
                             </div>
@@ -48,47 +39,14 @@ function CalculatorsPage () {
                                 </div>
                             </div>
                         </div>
-                        <div className="text-sm">
-                            <div className="bg-red-100">
-                                <div className="text-lg">
-                                    Provide your bonuses
-                                </div>
-                            </div>
-                            <div className="bg-red-100">
-                                <div className="text-lg">
-                                    Select a War Day
-                                </div>
-                                <div>
-                                    <select>
-                                        
-                                            {war_days_base_points.map((day: WarDayData)=>(
-                                                <option key={day.day}>
-                                                    Day {day.day}
-                                                </option>
-                                            ))}
-                                        
-                                    </select>
-                                </div>
-                                <div>
-
-                                </div>
-                            </div>
-                            {/* <form className="max-w-sm">
-                                <label htmlFor="countries" className="block mb-2.5 text-sm font-medium text-heading">Select an option</label>
-                                <select id="countries" className="block w-full px-3 py-2.5 bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand shadow-xs placeholder:text-body">
-                                    <option selected>Choose a country</option>
-                                    <option value="US">United States</option>
-                                    <option value="CA">Canada</option>
-                                    <option value="FR">France</option>
-                                    <option value="DE">Germany</option>
-                                </select>
-                            </form> */}
+                        <div className="mt-6 w-full">
+                            <WarDayCalculator/>
                         </div>
                     </div>
                 </div>
-                <div className="border-2 rounded flex flex-row text-2xl gap-3 p-6 shadow-lg/20 ">
-                    <div className="flex flex-col gap-1">
-                        <div className="flex flex-row justify-center items-center gap-5">
+                <div className="border-2 rounded flex flex-row text-2xl gap-3 p-6 shadow-lg/20 w-full">
+                    <div className="flex flex-col gap-1 w-full">
+                        <div className="flex flex-row justify-start items-center gap-5 w-full">
                             <div>
                                 <img src="/icons/ascend.png" className="h-25 w-25"/>
                             </div>
