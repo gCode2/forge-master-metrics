@@ -46,7 +46,7 @@ export const warActions = [{
 },
 {
     id: 2,
-    name: "dungeons",
+    name: "Dungeons",
     actions: [
         {
             name: "Hammer Dungeon",
@@ -167,7 +167,8 @@ export const warActions = [{
     customAction: {
         name: "Summon Mounts",
         defaultPoints: 600
-    }
+    },
+    defaultCost: 50,
 },
 {
     id: 6,
@@ -275,7 +276,8 @@ export const warActions = [{
     customAction:{
         name: "Summon Skills",
         defaultPoints: 125
-    }
+    },
+    defaultCost: 200,
 },
 {
     id:10,
