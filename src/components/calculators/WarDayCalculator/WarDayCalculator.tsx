@@ -25,7 +25,7 @@ const FORGE_CHANCE_KEYS = {
 const inputClass = "border px-1 w-25 rounded-sm";
 
 function formatPoints(value: number) {
-    return value.toLocaleString(undefined, { maximumFractionDigits: 2 });
+    return Math.floor(value).toLocaleString();
 }
 
 function getSpendUnitSize(actionName: string) {
@@ -46,7 +46,7 @@ function NumberField({ label, value, onChange, width = "w-25" }: {
                 type="number"
                 min={0}
                 value={value}
-                onChange={(e) => onChange(Number(e.target.value))}
+                onChange={(e) => onChange(Math.max(0, Math.floor(Number(e.target.value) || 0)))}
                 className={`border ml-2 px-2 ${width} rounded-sm`}
             />
         </label>
@@ -99,21 +99,37 @@ function WarDayCalculator() {
         return quantities[dayKey(key)] ?? defaultVal;
     }
 
-    function handleQuantityChange(key: string, value: number){
-        const fullKey = dayKey(key);
-        setQuantities(prev => ({...prev, [fullKey]: Math.max(0, value)}));
+    function toNonNegativeInteger(value: number) {
+        return Number.isFinite(value)
+            ? Math.max(0, Math.floor(value))
+            : 0;
     }
 
-    function handlePointsChange(key: string, value: number){
-        setCustomPoints(prev => ({...prev, [key]: Math.max(0, value)}));
+    function handleQuantityChange(key: string, value: number) {
+        const fullKey = dayKey(key);
+
+        setQuantities(prev => ({
+            ...prev,
+            [fullKey]: toNonNegativeInteger(value),
+        }));
+    }
+
+    function handlePointsChange(key: string, value: number) {
+        setCustomPoints(prev => ({
+            ...prev,
+            [key]: toNonNegativeInteger(value),
+        }));
     }
 
     function getPoints(key: string, defaultValue: number){
         return customPoints[key] !== undefined ? customPoints[key] : defaultValue;
     }
 
-    function handleSettingChange(key: string, value: number){
-        setSpecialSettings(prev => ({...prev, [key]: Math.max(0, value)}));
+    function handleSettingChange(key: string, value: number) {
+        setSpecialSettings(prev => ({
+            ...prev,
+            [key]: toNonNegativeInteger(value),
+        }));
     }
 
     function getCost(key: string, defaultVal: number = 1){
@@ -139,7 +155,12 @@ function WarDayCalculator() {
             case 1: {
                 const hammers = getQty("forge-hammers");
                 const extraChance = specialSettings.forgeExtraChance ?? 0;
-                const expectedForges = hammers * (1 + extraChance / 100);
+
+                const chance = extraChance / 100;
+
+                const expectedForges = chance < 1 ? hammers / (1-chance) : hammers;
+
+
                 const expectedPointsPerHammer = actionList.reduce((sum, act) => {
                     const chanceKey = FORGE_CHANCE_KEYS[
                         act.name as keyof typeof FORGE_CHANCE_KEYS
@@ -406,16 +427,28 @@ function WarDayCalculator() {
                                                         <input
                                                             type="number"
                                                             value={getQty(qtyKey)}
-                                                            onChange={(e) => handleQuantityChange(qtyKey, Number(e.target.value))}
+                                                            onChange={(e) => handleQuantityChange(
+                                                                qtyKey,
+                                                                Math.max(0, Math.floor(Number(e.target.value) || 0))
+                                                            )}
                                                             className={`ml-1 ${inputClass}`}
+                                                            min={0}
+                                                            step={1}
                                                         />
                                                     </label>
                                                     <label>Pts:
                                                         <input
                                                             type="number"
                                                             value={getPoints(pointKey, act.defaultPoints)}
-                                                            onChange={(e) => handlePointsChange(pointKey, Number(e.target.value))}
+                                                            onChange={(e) =>
+                                                                handlePointsChange(
+                                                                    pointKey,
+                                                                    Math.max(0, Math.floor(Number(e.target.value) || 0))
+                                                                )
+                                                            }
                                                             className={`ml-1 ${inputClass}`}
+                                                            min={0}
+                                                            step={1}
                                                         />
                                                     </label>
                                                 </div>
@@ -468,13 +501,13 @@ function WarDayCalculator() {
                                     <div className="flex flex-wrap gap-4 items-center">
                                         <NumberField
                                             label="How many mounts to merge?"
-                                            value={getQty("merge-mounts-qty")}
+                                            value={getQty("merge-mounts-qty", Math.floor(getExpectedMounts()))}
                                             onChange={(v) => handleQuantityChange("merge-mounts-qty", v)}
                                         />
                                         <NumberField
-                                            label="How many mounts to merge?"
-                                            value={getQty("merge-mounts-qty", Math.floor(getExpectedMounts()))}
-                                            onChange={(v) => handleQuantityChange("merge-mounts-qty", v)}
+                                            label="Pts per action:"
+                                            value={getPoints("merge-mounts-pts", customAct.defaultPoints)}
+                                            onChange={(v) => handlePointsChange("merge-mounts-pts", v)}
                                         />
                                     </div>
                                 )}
@@ -492,16 +525,28 @@ function WarDayCalculator() {
                                                         <input
                                                             type="number"
                                                             value={getQty(qtyKey)}
-                                                            onChange={(e) => handleQuantityChange(qtyKey, Number(e.target.value))}
+                                                            onChange={(e) => handleQuantityChange(
+                                                                qtyKey,
+                                                                Math.max(0, Math.floor(Number(e.target.value) || 0))
+                                                            )}
                                                             className={`ml-1 ${inputClass}`}
+                                                            min={0}
+                                                            step={1}
                                                         />
                                                     </label>
                                                     <label>Pts:
                                                         <input
                                                             type="number"
                                                             value={getPoints(pointKey, act.defaultPoints)}
-                                                            onChange={(e) => handlePointsChange(pointKey, Number(e.target.value))}
+                                                            onChange={(e) =>
+                                                                handlePointsChange(
+                                                                    pointKey,
+                                                                    Math.max(0, Math.floor(Number(e.target.value) || 0))
+                                                                )
+                                                            }
                                                             className={`ml-1 ${inputClass}`}
+                                                            min={0}
+                                                            step={1}
                                                         />
                                                     </label>
                                                 </div>
@@ -523,16 +568,28 @@ function WarDayCalculator() {
                                                         <input
                                                             type="number"
                                                             value={getQty(qtyKey)}
-                                                            onChange={(e) => handleQuantityChange(qtyKey, Number(e.target.value))}
+                                                            onChange={(e) => handleQuantityChange(
+                                                                qtyKey,
+                                                                Math.max(0, Math.floor(Number(e.target.value) || 0))
+                                                            )}
                                                             className="border ml-1 px-1 w-24"
+                                                            min={0}
+                                                            step={1}
                                                         />
                                                     </label>
                                                     <label>Pts per unit:
                                                         <input
                                                             type="number"
                                                             value={getPoints(pointKey, act.defaultPoints)}
-                                                            onChange={(e) => handlePointsChange(pointKey, Number(e.target.value))}
+                                                            onChange={(e) =>
+                                                                handlePointsChange(
+                                                                    pointKey,
+                                                                    Math.max(0, Math.floor(Number(e.target.value) || 0))
+                                                                )
+                                                            }
                                                             className={`ml-1 ${inputClass}`}
+                                                            min={0}
+                                                            step={1}
                                                         />
                                                     </label>
                                                     <span className="text-xs text-zinc-500">
