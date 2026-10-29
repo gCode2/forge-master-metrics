@@ -158,3 +158,19 @@ export type PlayerWarPoints = Record<
  }
 
  export type ActionSegments = Record<string, WarDayAction[]>;
+
+
+ export interface warDayActionsType {
+    id: number,
+    name: string,
+    actions: warDayAction[],
+    customAction?:{
+        name: string,
+        defaultPoints: number
+    },
+    defaultCost?:number
+ }
+ export interface warDayAction{
+    name: string,
+    defaultPoints:number
+ }
