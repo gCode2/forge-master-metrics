@@ -25,7 +25,7 @@ const FORGE_CHANCE_KEYS = {
 const inputClass = "border px-1 w-25 rounded-sm";
 
 function formatPoints(value: number) {
-    return Math.floor(value).toLocaleString();
+    return value.toLocaleString(undefined, { maximumFractionDigits: 2 });
 }
 
 function getSpendUnitSize(actionName: string) {
