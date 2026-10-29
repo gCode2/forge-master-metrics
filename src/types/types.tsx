@@ -174,3 +174,23 @@ export type PlayerWarPoints = Record<
     name: string,
     defaultPoints:number
  }
+
+ export interface forgeLevelType{
+    level: number,
+    totalCost: number | null,
+    gemCost: number | null,
+    forgeChances: forgeChancesType
+ }
+
+ export interface forgeChancesType{
+    primitive: number,
+    medieval: number,
+    earlyModern: number,
+    modern: number,
+    space: number,
+    interstellar: number,
+    multiverse: number,
+    quantum: number,
+    underworld: number,
+    divine: number
+ }
