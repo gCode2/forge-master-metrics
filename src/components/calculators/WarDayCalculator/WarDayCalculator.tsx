@@ -74,6 +74,7 @@ function WarDayCalculator() {
     const [customPoints, setCustomPoints] = useState<Record<string, number>>({});
     const [specialSettings, setSpecialSettings] = useState<Record<string, number>>({
         mountExtraChance: 0,
+        forgeExtraChance: 0,
     });
 
     const [selectedForgeLevel, setSelectedForgeLevel] = useState(1);
@@ -126,7 +127,7 @@ function WarDayCalculator() {
         const cost = getCost("mountCost", defaultCost);
         const chance = specialSettings.mountExtraChance ?? 0;
         const summons = cost > 0 ? Math.floor(keys / cost) : 0;
-        return summons * (1 + chance / 100);
+        return Math.floor(summons * (1 + chance / 100));
     }
 
     function getGroupSummary(group: WarGroup): { points: number; detail?: string } {
@@ -137,7 +138,8 @@ function WarDayCalculator() {
         switch (group.id) {
             case 1: {
                 const hammers = getQty("forge-hammers");
-
+                const extraChance = specialSettings.forgeExtraChance ?? 0;
+                const expectedForges = hammers * (1 + extraChance / 100);
                 const expectedPointsPerHammer = actionList.reduce((sum, act) => {
                     const chanceKey = FORGE_CHANCE_KEYS[
                         act.name as keyof typeof FORGE_CHANCE_KEYS
@@ -159,9 +161,9 @@ function WarDayCalculator() {
                 }, 0)
 
                 return {
-                    points: hammers * expectedPointsPerHammer,
+                    points: Math.floor(expectedForges * expectedPointsPerHammer),
                     detail:
-                        `${formatPoints(hammers)} hammers × ${formatPoints(expectedPointsPerHammer)} expected pts per hammer` + `(Forge level ${selectedForge.level})`
+                        `Est. ${formatPoints(Math.floor(expectedForges))} hammers × ${formatPoints(expectedPointsPerHammer)} expected pts per hammer` + ` (Forge level ${selectedForge.level})`
                 };
             }
             case 2: {
@@ -271,6 +273,13 @@ function WarDayCalculator() {
                                                 value={getQty("forge-hammers")}
                                                 onChange={(v) =>
                                                     handleQuantityChange("forge-hammers", v)
+                                                }
+                                            />
+                                            <NumberField
+                                                label="Extra forge chance (%):"
+                                                value={specialSettings.forgeExtraChance ?? 0}
+                                                onChange={(v) =>
+                                                    handleSettingChange("forgeExtraChance", v)
                                                 }
                                             />
 
