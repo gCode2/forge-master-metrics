@@ -557,8 +557,8 @@ export const forgeLevels: forgeLevelType[] = [
             earlyModern: 0.66,
             modern: 0.32,
             space: 0.02,
-            interstellar: 0,
-            multiverse: 0.0005,
+            interstellar: 0.0005,
+            multiverse: 0,
             quantum: 0,
             underworld: 0,
             divine: 0
@@ -574,8 +574,8 @@ export const forgeLevels: forgeLevelType[] = [
             earlyModern: 0.317,
             modern: 0.64,
             space: 0.04,
-            interstellar: 0,
-            multiverse: 0.0025,
+            interstellar: 0.0025,
+            multiverse: 0,
             quantum: 0,
             underworld: 0,
             divine: 0
@@ -591,8 +591,8 @@ export const forgeLevels: forgeLevelType[] = [
             earlyModern: 0.215,
             modern: 0.70,
             space: 0.08,
-            interstellar: 0,
-            multiverse: 0.005,
+            interstellar: 0.005,
+            multiverse: 0,
             quantum: 0,
             underworld: 0,
             divine: 0
@@ -609,8 +609,8 @@ export const forgeLevels: forgeLevelType[] = [
             modern: 0.829,
             space: 0.16,
             interstellar: 0.01,
-            multiverse: 0,
-            quantum: 0.0005,
+            multiverse: 0.0005,
+            quantum: 0,
             underworld: 0,
             divine: 0
         }
@@ -626,8 +626,8 @@ export const forgeLevels: forgeLevelType[] = [
             modern: 0.657,
             space: 0.32,
             interstellar: 0.02,
-            multiverse: 0,
-            quantum: 0.0025,
+            multiverse: 0.0025,
+            quantum: 0,
             underworld: 0,
             divine: 0
         }
@@ -643,8 +643,8 @@ export const forgeLevels: forgeLevelType[] = [
             modern: 0.315,
             space: 0.64,
             interstellar: 0.04,
-            multiverse: 0,
-            quantum: 0.005,
+            multiverse: 0.005,
+            quantum: 0,
             underworld: 0,
             divine: 0
         }
@@ -661,8 +661,8 @@ export const forgeLevels: forgeLevelType[] = [
             space: 0.91,
             interstellar: 0.08,
             multiverse: 0.01,
-            quantum: 0,
-            underworld: 0.0005,
+            quantum: 0.0005,
+            underworld: 0,
             divine: 0
         }
     },
@@ -678,8 +678,8 @@ export const forgeLevels: forgeLevelType[] = [
             space: 0.817,
             interstellar: 0.16,
             multiverse: 0.02,
-            quantum: 0,
-            underworld: 0.0025,
+            quantum: 0.0025,
+            underworld: 0,
             divine: 0
         }
     },
@@ -695,8 +695,8 @@ export const forgeLevels: forgeLevelType[] = [
             space: 0.635,
             interstellar: 0.32,
             multiverse: 0.04,
-            quantum: 0,
-            underworld: 0.005,
+            quantum: 0.005,
+            underworld: 0,
             divine: 0
         }
     },
@@ -708,8 +708,8 @@ export const forgeLevels: forgeLevelType[] = [
             primitive: 0,
             medieval: 0,
             earlyModern: 0,
-            modern: 0.27,
-            space: 0,
+            modern: 0,
+            space: 0.27,
             interstellar: 0.64,
             multiverse: 0.08,
             quantum: 0.01,
@@ -730,8 +730,8 @@ export const forgeLevels: forgeLevelType[] = [
             interstellar: 0.82,
             multiverse: 0.16,
             quantum: 0.02,
-            underworld: 0,
-            divine: 0.0002
+            underworld: 0.0002,
+            divine: 0
         }
     },
     {
@@ -743,10 +743,10 @@ export const forgeLevels: forgeLevelType[] = [
             medieval: 0,
             earlyModern: 0,
             modern: 0,
-            space: 0.64,
-            interstellar: 0.32,
-            multiverse: 0.04,
-            quantum: 0,
+            space: 0,
+            interstellar: 0.64,
+            multiverse: 0.32,
+            quantum: 0.04,
             underworld: 0.0005,
             divine: 0
         }
@@ -760,10 +760,10 @@ export const forgeLevels: forgeLevelType[] = [
             medieval: 0,
             earlyModern: 0,
             modern: 0,
-            space: 0.438,
-            interstellar: 0.50,
-            multiverse: 0.06,
-            quantum: 0.001,
+            space: 0,
+            interstellar: 0.438,
+            multiverse: 0.50,
+            quantum: 0.06,
             underworld: 0.0025,
             divine: 0
         }
@@ -830,7 +830,7 @@ export const forgeLevels: forgeLevelType[] = [
             modern: 0,
             space: 0,
             interstellar: 0,
-            multiverse: 0.60,
+            multiverse: 0.5995,
             quantum: 0.36,
             underworld: 0.04,
             divine: 0.0005
@@ -847,7 +847,7 @@ export const forgeLevels: forgeLevelType[] = [
             modern: 0,
             space: 0,
             interstellar: 0,
-            multiverse: 0.508,
+            multiverse: 0.5075,
             quantum: 0.43,
             underworld: 0.06,
             divine: 0.0025

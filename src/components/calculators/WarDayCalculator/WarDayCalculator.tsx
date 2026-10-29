@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { warActions, warDaysActions } from "../../../data/warDay";
+import { forgeLevels, warActions, warDaysActions } from "../../../data/warDay";
 
 type WarGroup = (typeof warActions)[number];
 
@@ -8,6 +8,19 @@ const FORGE_TIERS = [
     { key: "forge-tier-2", title: "Modern / Space / Interstellar", names: ["Modern", "Space", "Interstellar"], defaultPoints: 2 },
     { key: "forge-tier-3", title: "Multiverse / Quantum / Underworld / Divine", names: ["Multiverse", "Quantum", "Underworld", "Divine"], defaultPoints: 3 },
 ];
+
+const FORGE_CHANCE_KEYS = {
+    Primitive: "primitive",
+    Medieval: "medieval",
+    "Early Modern": "earlyModern",
+    Modern: "modern",
+    Space: "space",
+    Interstellar: "interstellar",
+    Multiverse: "multiverse",
+    Quantum: "quantum",
+    Underworld: "underworld",
+    Divine: "divine",
+} as const;
 
 const inputClass = "border px-1 w-25 rounded-sm";
 
@@ -63,7 +76,11 @@ function WarDayCalculator() {
         mountExtraChance: 0,
     });
 
+    const [selectedForgeLevel, setSelectedForgeLevel] = useState(1);
+
     const daysIds = warDaysActions[selectedDay - 1] || [];
+
+    const selectedForge = forgeLevels.find(level => level.level === selectedForgeLevel) ?? forgeLevels[0];
 
     const filteredActions = daysIds
     .map(id => warActions.find(actionGroup => actionGroup.id === id))
@@ -120,18 +137,31 @@ function WarDayCalculator() {
         switch (group.id) {
             case 1: {
                 const hammers = getQty("forge-hammers");
-                let highestTier: (typeof FORGE_TIERS)[number] | null = null;
-                for (const tier of FORGE_TIERS) {
-                    if (tier.names.some(name => getQty(`forge-equipment-${name}`) > 0)) {
-                        highestTier = tier;
+
+                const expectedPointsPerHammer = actionList.reduce((sum, act) => {
+                    const chanceKey = FORGE_CHANCE_KEYS[
+                        act.name as keyof typeof FORGE_CHANCE_KEYS
+                    ];
+
+                    if(!chanceKey){
+                        return sum;
                     }
-                }
-                const tierPts = highestTier ? getPoints(highestTier.key, highestTier.defaultPoints) : 0;
+
+                    const tier = FORGE_TIERS.find(item=>item.names.includes(act.name));
+
+                    if(!tier) {
+                        return sum;
+                    }
+                    const chance = selectedForge.forgeChances[chanceKey];
+                    const points = getPoints(tier.key, tier.defaultPoints);
+                    return sum + chance * points;
+
+                }, 0)
+
                 return {
-                    points: hammers * tierPts,
-                    detail: highestTier
-                        ? `${formatPoints(hammers)} hammers × ${formatPoints(tierPts)} pts (highest selected tier)`
-                        : "Select at least one equipment type",
+                    points: hammers * expectedPointsPerHammer,
+                    detail:
+                        `${formatPoints(hammers)} hammers × ${formatPoints(expectedPointsPerHammer)} expected pts per hammer` + `(Forge level ${selectedForge.level})`
                 };
             }
             case 2: {
@@ -234,45 +264,111 @@ function WarDayCalculator() {
                                 </div>
 
                                 {group.id === 1 && (
-                                    <div className="flex flex-col gap-3">
-                                        <div className="flex flex-wrap items-center gap-4">
+                                    <div className="flex flex-col gap-4">
+                                        <div className="flex flex-wrap items-end gap-4">
                                             <NumberField
                                                 label="Number of hammers:"
                                                 value={getQty("forge-hammers")}
-                                                onChange={(v) => handleQuantityChange("forge-hammers", v)}
+                                                onChange={(v) =>
+                                                    handleQuantityChange("forge-hammers", v)
+                                                }
                                             />
-                                            <span className="text-xs text-zinc-500">For now, only the highest selected tier counts.</span>
+
+                                            <label className="flex flex-col gap-1 font-medium">
+                                                Forge level:
+                                                <select
+                                                    value={selectedForgeLevel}
+                                                    onChange={(e) =>
+                                                        setSelectedForgeLevel(Number(e.target.value))
+                                                    }
+                                                    className="border rounded-sm px-2 py-1 bg-white"
+                                                >
+                                                    {forgeLevels.map((level) => (
+                                                        <option key={level.level} value={level.level}>
+                                                            Level {level.level}
+                                                        </option>
+                                                    ))}
+                                                </select>
+                                            </label>
                                         </div>
-                                        {FORGE_TIERS.map((tier) => (
-                                            <div key={tier.key} className="border rounded p-3 flex flex-col gap-2">
-                                                <div className="flex flex-wrap items-center justify-between gap-3">
-                                                    <div className="font-semibold">{tier.title}</div>
+
+                                        <div className="border rounded p-3 flex flex-col gap-3">
+                                            <div className="font-semibold">
+                                                Points per equipment tier
+                                            </div>
+
+                                            {FORGE_TIERS.map((tier) => (
+                                                <div
+                                                    key={tier.key}
+                                                    className="flex flex-wrap items-center justify-between gap-3"
+                                                >
+                                                    <span>{tier.title}</span>
+
                                                     <NumberField
-                                                        label="Points per equipment:"
+                                                        label="Points:"
                                                         value={getPoints(tier.key, tier.defaultPoints)}
                                                         onChange={(v) => handlePointsChange(tier.key, v)}
                                                     />
                                                 </div>
-                                                <div className="flex flex-wrap gap-4">
-                                                    {tier.names.map((name) => {
-                                                        const equipmentKey = `forge-equipment-${name}`;
-                                                        return (
-                                                            <label key={name} className="flex items-center gap-1 font-semibold">
-                                                                <input
-                                                                    type="checkbox"
-                                                                    checked={getQty(equipmentKey) > 0}
-                                                                    onChange={(e) => handleQuantityChange(equipmentKey, e.target.checked ? 1 : 0)}
-                                                                />
-                                                                {name}
-                                                            </label>
-                                                        );
-                                                    })}
-                                                </div>
+                                            ))}
+                                        </div>
+
+                                        <div className="border rounded p-3 flex flex-col gap-2">
+                                            <div className="font-semibold">
+                                                Equipment drop chances — Level {selectedForge.level}
                                             </div>
-                                        ))}
+
+                                            {group.actions.map((act) => {
+                                                const chanceKey =
+                                                    FORGE_CHANCE_KEYS[
+                                                        act.name as keyof typeof FORGE_CHANCE_KEYS
+                                                    ];
+
+                                                const chance = chanceKey
+                                                    ? selectedForge.forgeChances[chanceKey]
+                                                    : 0;
+
+                                                const tier = FORGE_TIERS.find(item =>
+                                                    item.names.includes(act.name)
+                                                );
+
+                                                const points = tier
+                                                    ? getPoints(tier.key, tier.defaultPoints)
+                                                    : act.defaultPoints;
+
+                                                const expectedPoints = chance * points;
+
+                                                return (
+                                                    <div
+                                                        key={act.name}
+                                                        className="flex flex-wrap items-center justify-between gap-3 border-b last:border-b-0 pb-2 last:pb-0"
+                                                    >
+                                                        <span className="font-medium">
+                                                            {act.name}
+                                                        </span>
+
+                                                        <div className="flex flex-wrap items-center gap-3 text-sm">
+                                                            <span className="text-zinc-600">
+                                                                Chance: {(chance * 100).toLocaleString(
+                                                                    undefined,
+                                                                    { maximumFractionDigits: 4 }
+                                                                )}%
+                                                            </span>
+
+                                                            <span className="text-zinc-600">
+                                                                {formatPoints(points)} pts
+                                                            </span>
+
+                                                            <span className="font-semibold">
+                                                                Expected: {formatPoints(expectedPoints)} pts
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                );
+                                            })}
+                                        </div>
                                     </div>
                                 )}
-
                                 {group.id === 2 && customAct && (
                                     <div className="flex flex-wrap gap-4 items-center">
                                         <NumberField
