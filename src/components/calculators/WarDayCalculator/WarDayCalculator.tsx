@@ -91,12 +91,12 @@ function WarDayCalculator() {
         setSelectedDay(dayNumber);
     }
 
-    function dayKey(key: string){
-        return `day${selectedDay}:${key}`;
+    function dayKey(key: string, day = selectedDay) {
+        return `day${day}:${key}`;
     }
 
-    function getQty(key: string, defaultVal: number = 0){
-        return quantities[dayKey(key)] ?? defaultVal;
+    function getQty(key: string, defaultVal: number = 0, day = selectedDay) {
+        return quantities[dayKey(key, day)] ?? defaultVal;
     }
 
     function toNonNegativeInteger(value: number) {
@@ -136,24 +136,24 @@ function WarDayCalculator() {
         return specialSettings[key] !== undefined ? specialSettings[key] : defaultVal;
     }
 
-    function getExpectedMounts() {
+    function getExpectedMounts(day = selectedDay) {
         const mountGroup = warActions.find(g => g.id === 5);
         const defaultCost = (mountGroup as any)?.defaultCost ?? 1;
-        const keys = getQty("mount-keys-qty");
+        const keys = getQty("mount-keys-qty", 0, day);
         const cost = getCost("mountCost", defaultCost);
         const chance = specialSettings.mountExtraChance ?? 0;
         const summons = cost > 0 ? Math.floor(keys / cost) : 0;
         return Math.floor(summons * (1 + chance / 100));
     }
 
-    function getGroupSummary(group: WarGroup): { points: number; detail?: string } {
+    function getGroupSummary(group: WarGroup, day = selectedDay): { points: number; detail?: string } {
         const customAct = group.customAction;
         const actionList = group.actions || [];
         const groupDefaultCost = (group as any).defaultCost ?? 1;
 
         switch (group.id) {
             case 1: {
-                const hammers = getQty("forge-hammers");
+                const hammers = getQty("forge-hammers",0,day);
                 const extraChance = specialSettings.forgeExtraChance ?? 0;
 
                 const chance = extraChance / 100;
@@ -188,45 +188,45 @@ function WarDayCalculator() {
                 };
             }
             case 2: {
-                const keys = getQty("dungeon-keys", 8);
+                const keys = getQty("dungeon-keys", 8, day);
                 const pts = getPoints("dungeon-pts", customAct?.defaultPoints ?? 0);
                 return { points: keys * pts, detail: `${formatPoints(keys)} dungeons × ${formatPoints(pts)} pts` };
             }
             case 3: {
                 const total = actionList.reduce((sum, act) =>
-                    sum + getQty(`egg-qty-${act.name}`) * getPoints(`egg-pts-${act.name}`, act.defaultPoints), 0);
+                    sum + getQty(`egg-qty-${act.name}`,0,day) * getPoints(`egg-pts-${act.name}`, act.defaultPoints), 0,);
                 return { points: total };
             }
             case 4: {
-                const qty = getQty("merge-pets-qty");
+                const qty = getQty("merge-pets-qty",0,day);
                 const pts = getPoints("merge-pets-pts", customAct?.defaultPoints ?? 0);
                 return { points: qty * pts, detail: `${formatPoints(qty)} merges × ${formatPoints(pts)} pts` };
             }
             case 5: {
-                const keys = getQty("mount-keys-qty");
+                const keys = getQty("mount-keys-qty",0,day);
                 const cost = getCost("mountCost", groupDefaultCost);
                 const chance = specialSettings.mountExtraChance ?? 0;
                 const pts = getPoints("mount-pts", customAct?.defaultPoints ?? 0);
                 const summons = cost > 0 ? Math.floor(keys / cost) : 0;
-                const expectedMounts = getExpectedMounts();
+                const expectedMounts = getExpectedMounts(day);
                 return {
                     points: expectedMounts * pts,
                     detail: `${formatPoints(summons)} summons → ~${formatPoints(expectedMounts)} mounts (incl. ${formatPoints(chance)}% extra chance) × ${formatPoints(pts)} pts`,
                 };
             }
             case 6: {
-                const qty = getQty("merge-mounts-qty", Math.floor(getExpectedMounts()));
+                const qty = getQty("merge-mounts-qty", Math.floor(getExpectedMounts()),day);
                 const pts = getPoints("merge-mounts-pts", customAct?.defaultPoints ?? 0);
                 return { points: qty * pts, detail: `${formatPoints(qty)} merges × ${formatPoints(pts)} pts` };
             }
             case 7: {
                 const total = actionList.reduce((sum, act) =>
-                    sum + getQty(`tech-qty-${act.name}`) * getPoints(`tech-pts-${act.name}`, act.defaultPoints), 0);
+                    sum + getQty(`tech-qty-${act.name}`,0,day) * getPoints(`tech-pts-${act.name}`, act.defaultPoints), 0);
                 return { points: total };
             }
             case 8: {
                 const total = actionList.reduce((sum, act) => {
-                    const amount = getQty(`spend-qty-${act.name}`);
+                    const amount = getQty(`spend-qty-${act.name}`,0,day);
                     const pts = getPoints(`spend-pts-${act.name}`, act.defaultPoints);
                     const units = Math.floor(amount / getSpendUnitSize(act.name));
                     return sum + units * pts;
@@ -234,7 +234,7 @@ function WarDayCalculator() {
                 return { points: total };
             }
             case 9: {
-                const tickets = getQty("skill-tickets-qty");
+                const tickets = getQty("skill-tickets-qty",0,day);
                 const cost = getCost("skillCost", groupDefaultCost);
                 const pts = getPoints("skill-summon-pts", customAct?.defaultPoints ?? 0);
                 const summons = cost > 0 ? Math.floor(tickets / cost) : 0;
@@ -245,7 +245,7 @@ function WarDayCalculator() {
                 };
             }
             case 10: {
-                const qty = getQty("skill-upgrade-qty");
+                const qty = getQty("skill-upgrade-qty",0,day);
                 const pts = getPoints("skill-upgrade-pts", customAct?.defaultPoints ?? 0);
                 return { points: qty * pts, detail: `${formatPoints(qty)} upgrades × ${formatPoints(pts)} pts` };
             }
@@ -256,21 +256,52 @@ function WarDayCalculator() {
 
     const totalPoints = filteredActions.reduce((sum, group) => sum + getGroupSummary(group).points, 0);
 
+    const totalWarPoints = warDaysActions.reduce((total, dayActions, index) => {
+    const dayNumber = index + 1;
+
+    const dayGroups = dayActions
+        .map(id => warActions.find(group => group.id === id))
+        .filter((group): group is WarGroup => group !== undefined);
+
+    const dayPoints = dayGroups.reduce(
+        (sum, group) => sum + getGroupSummary(group, dayNumber).points,
+        0
+    );
+
+        return total + dayPoints;
+    }, 0);
+
     return (
         <section className="flex flex-col gap-3 text-sm">
             <div className="flex flex-row gap-3 text-sm">
-               {
-               Array.from(warDaysActions.keys()).map((index)=>{
-                   const dayNumber = index + 1;
-                   return (
-                       <button type="button" key={index}
-                           className={`${selectedDay === dayNumber ? `bg-orange-400 border-orange-500 hover:bg-orange-300 hover:border-orange-500` : `bg-gray-400 border-gray-500`} flex flex-row justify-center items-center text-white font-bold py-2 px-4 transition duration-200 text-sm enabled:hover:cursor-pointer rounded ring-1 ring-black border-b-4 hover:bg-gray-300 hover:border-gray-400`} onClick={()=>handleDayChange(dayNumber)}
-                       >
-                           Day {dayNumber}
-                       </button>
-                   )
-               })
-               }
+                <div className="flex flex-row gap-3 text-sm">
+                    {
+                    Array.from(warDaysActions.keys()).map((index)=>{
+                        const dayNumber = index + 1;
+                        return (
+                            <button type="button" key={index}
+                                className={`${selectedDay === dayNumber ? `bg-orange-400 border-orange-500 hover:bg-orange-300 hover:border-orange-500` : `bg-gray-400 border-gray-500`} flex flex-row justify-center items-center text-white font-bold py-2 px-4 transition duration-200 text-sm enabled:hover:cursor-pointer rounded ring-1 ring-black border-b-4 hover:bg-gray-300 hover:border-gray-400`} onClick={()=>handleDayChange(dayNumber)}
+                            >
+                                Day {dayNumber}
+                            </button>
+                        )
+                    })
+                    }
+                </div>
+
+                    <div className="flex flex-row items-center justify-between gap-3 border-2 rounded px-4 bg-green-50 border-green-600">
+                        <div className="flex flex-row justify-center items-center">
+                            <div className="font-bold text-md">DAY {selectedDay} TOTAL</div>
+                        </div>
+                        <div className="font-black text-2xl">{formatPoints(totalPoints)}</div>
+                    </div>
+                    <div className="flex flex-row items-center justify-between gap-3 border-2 rounded px-4 bg-green-50 border-green-600">
+                        <div className="flex flex-row justify-center items-center">
+                            <div className="font-bold text-md">TOTAL WAR POINTS</div>
+                        </div>
+                        <div className="font-black text-2xl">{formatPoints(totalWarPoints)}</div>
+                    </div>
+               
             </div>
             <div className="border-2 rounded-md p-3 flex flex-col gap-4 shadow-lg/20">
                 {
@@ -572,7 +603,7 @@ function WarDayCalculator() {
                                                                 qtyKey,
                                                                 Math.max(0, Math.floor(Number(e.target.value) || 0))
                                                             )}
-                                                            className="border ml-1 px-1 w-24"
+                                                            className="border ml-1 px-1 w-24 rounded-sm"
                                                             min={0}
                                                             step={1}
                                                         />
