@@ -9,7 +9,7 @@ function AppFooter(){
                     Exclusively for POLSKAPL [PLPL] Forge Master Clan
                 </div>
                 <div className="text-black">
-                    App version: v0.02
+                    App version: v0.1
                 </div>
             </div>
         </>

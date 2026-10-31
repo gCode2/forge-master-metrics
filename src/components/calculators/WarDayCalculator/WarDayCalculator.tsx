@@ -1,5 +1,8 @@
 import { useState } from "react";
 import { forgeLevels, warActions, warDaysActions } from "../../../data/warDay";
+import NumberField from "./components/NumberField";
+import SectionSummary from "./components/SectionSummary";
+import { formatPoints } from "./utils";
 
 type WarGroup = (typeof warActions)[number];
 
@@ -24,47 +27,9 @@ const FORGE_CHANCE_KEYS = {
 
 const inputClass = "border px-1 w-25 rounded-sm";
 
-function formatPoints(value: number) {
-    return value.toLocaleString(undefined, { maximumFractionDigits: 2 });
-}
-
 function getSpendUnitSize(actionName: string) {
     const match = actionName.match(/Spend (\d+)/);
     return match ? Number(match[1]) : 1;
-}
-
-function NumberField({ label, value, onChange, width = "w-25" }: {
-    label: string;
-    value: number;
-    onChange: (value: number) => void;
-    width?: string;
-}) {
-    return (
-        <label>
-            {label}
-            <input
-                type="number"
-                min={0}
-                value={value}
-                onChange={(e) => onChange(Math.max(0, Math.floor(Number(e.target.value) || 0)))}
-                className={`border ml-2 px-2 ${width} rounded-sm`}
-            />
-        </label>
-    );
-}
-
-function SectionSummary({ points, detail }: { points: number; detail?: string }) {
-    return (
-        <div className="flex flex-row items-center justify-between gap-3 border-2 rounded px-4 py-2 bg-gray-100">
-            <div className="flex flex-col">
-                <span className="text-sm font-bold">SECTION SUMMARY</span>
-                {detail && <span className="text-xs text-zinc-500">{detail}</span>}
-            </div>
-            <span className="text-sm bg-orange-400 rounded-lg py-0.5 px-2 font-bold">
-                {formatPoints(points)} pts
-            </span>
-        </div>
-    );
 }
 
 function WarDayCalculator() {
