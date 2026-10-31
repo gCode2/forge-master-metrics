@@ -12,9 +12,13 @@ function NumberField({ label, value, onChange, width = "w-25" }: {
                 type="number"
                 min={0}
                 value={value}
-                onChange={(e) =>
-                    onChange(Math.max(0, Math.floor(Number(e.target.value) || 0)))
-                }
+                onChange={(e) => {
+                    const rawValue = e.target.value;
+                    console.log(rawValue)
+                    const parsed = rawValue === "" ? 0 : Number(rawValue);
+                    onChange(Math.max(0, Math.floor(parsed)));
+                }}
+                onFocus={(e) => e.target.select()}
                 className={`border px-2 py-1 ${width} max-w-full rounded-sm`}
             />
         </label>
