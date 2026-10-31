@@ -1,4 +1,4 @@
-import { Route, Routes } from "react-router"
+import { Route, Routes, Navigate } from "react-router"
 import DashboardPage from "./pages/DashboardPage"
 import LoginPage from "./pages/LoginPage"
 import RegisterPage from "./pages/RegisterPage"
@@ -37,7 +37,7 @@ function App() {
             <Route path="/charts" element={<ChartsPage/>}/>
           </Route>
         </Route>
-
+        <Route path="*" element={<Navigate to="/" replace/>}/>
       </Route>
     </Routes>
   )
