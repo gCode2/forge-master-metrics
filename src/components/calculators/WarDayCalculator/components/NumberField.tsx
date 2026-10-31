@@ -5,7 +5,7 @@ function NumberField({ label, value, onChange, width = "w-25" }: {
     width?: string;
 }) {
     return (
-        <label className="flex flex-row justify-between items-center gap-1 min-w-0 text-sm font-medium w-full bg-gray-50 p-1 border-1 border-gray-200">
+        <label className="flex flex-row justify-between items-center gap-1 min-w-0 text-sm font-medium w-full bg-gray-50 py-1 px-2 border-1 border-gray-200 rounded-sm">
             <span>{label}</span>
 
             <input

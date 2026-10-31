@@ -1,8 +1,9 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { forgeLevels, warActions, warDaysActions } from "../../../data/warDay";
 import NumberField from "./components/NumberField";
 import SectionSummary from "./components/SectionSummary";
 import { formatPoints } from "./utils";
+import type { CalculatorState } from "../../../types/types";
 
 type WarGroup = (typeof warActions)[number];
 
@@ -25,6 +26,20 @@ const FORGE_CHANCE_KEYS = {
     Divine: "divine",
 } as const;
 
+
+const DEFAULT_STATE: CalculatorState = {
+    selectedDay: 1,
+    quantities: {},
+    customPoints: {},
+    specialSettings: {
+        mountExtraChance: 0,
+        forgeExtraChance: 0,
+    },
+    selectedForgeLevel: 1,
+    showAdvancedMode: true,
+}
+const STORAGE_KEY = "war-day-calculator";
+
 const inputClass = "border px-1 w-25 rounded-sm";
 
 function getSpendUnitSize(actionName: string) {
@@ -33,37 +48,57 @@ function getSpendUnitSize(actionName: string) {
 }
 
 function WarDayCalculator() {
-    const [selectedDay, setSelectedDay] = useState(1);
+    const [calculatorState, setCalculatorState] = useState<CalculatorState>(()=>{
+        if(typeof window === "undefined") {
+            return DEFAULT_STATE;
+        }
+        try{
+            const saved = localStorage.getItem(STORAGE_KEY);
+            if(!saved) return DEFAULT_STATE;
 
-    const [quantities, setQuantities] = useState<Record<string, number>>({});
-    const [customPoints, setCustomPoints] = useState<Record<string, number>>({});
-    const [specialSettings, setSpecialSettings] = useState<Record<string, number>>({
-        mountExtraChance: 0,
-        forgeExtraChance: 0,
-    });
+            return {
+                ...DEFAULT_STATE,
+                ...JSON.parse(saved)
+            }
 
-    const [selectedForgeLevel, setSelectedForgeLevel] = useState(1);
+        }
+        catch{
+            return DEFAULT_STATE;
+        }
+    })
 
-    const [showAdvancedMode, setShowAdvancedMode] = useState(true);
+    useEffect(() => {
+        const timeout = setTimeout(() => {
+            localStorage.setItem(
+                STORAGE_KEY,
+                JSON.stringify(calculatorState)
+            );
+        }, 200);
 
-    const daysIds = warDaysActions[selectedDay - 1] || [];
+        return () => clearTimeout(timeout);
+    }, [calculatorState]);
 
-    const selectedForge = forgeLevels.find(level => level.level === selectedForgeLevel) ?? forgeLevels[0];
+    const daysIds = warDaysActions[calculatorState.selectedDay - 1] || [];
+
+    const selectedForge = forgeLevels.find(level => level.level === calculatorState.selectedForgeLevel) ?? forgeLevels[0];
 
     const filteredActions = daysIds
     .map(id => warActions.find(actionGroup => actionGroup.id === id))
     .filter((group): group is WarGroup => group !== undefined);
 
-    function handleDayChange(dayNumber: number){
-        setSelectedDay(dayNumber);
+    function handleDayChange(dayNumber: number) {
+        setCalculatorState(prev => ({
+            ...prev,
+            selectedDay: dayNumber,
+        }));
     }
 
-    function dayKey(key: string, day = selectedDay) {
+    function dayKey(key: string, day = calculatorState.selectedDay) {
         return `day${day}:${key}`;
     }
 
-    function getQty(key: string, defaultVal: number = 0, day = selectedDay) {
-        return quantities[dayKey(key, day)] ?? defaultVal;
+    function getQty(key: string, defaultVal: number = 0, day = calculatorState.selectedDay) {
+        return calculatorState.quantities[dayKey(key, day)] ?? defaultVal;
     }
 
     function toNonNegativeInteger(value: number) {
@@ -75,45 +110,54 @@ function WarDayCalculator() {
     function handleQuantityChange(key: string, value: number) {
         const fullKey = dayKey(key);
 
-        setQuantities(prev => ({
+        setCalculatorState(prev => ({
             ...prev,
-            [fullKey]: toNonNegativeInteger(value),
+            quantities: {
+                ...prev.quantities,
+                [fullKey]: toNonNegativeInteger(value),
+            },
         }));
     }
 
     function handlePointsChange(key: string, value: number) {
-        setCustomPoints(prev => ({
+        setCalculatorState(prev => ({
             ...prev,
-            [key]: toNonNegativeInteger(value),
+            customPoints: {
+                ...prev.customPoints,
+                [key]: toNonNegativeInteger(value),
+            },
         }));
     }
 
     function getPoints(key: string, defaultValue: number){
-        return customPoints[key] !== undefined ? customPoints[key] : defaultValue;
+        return calculatorState.customPoints[key] !== undefined ? calculatorState.customPoints[key] : defaultValue;
     }
 
     function handleSettingChange(key: string, value: number) {
-        setSpecialSettings(prev => ({
+        setCalculatorState(prev => ({
             ...prev,
-            [key]: toNonNegativeInteger(value),
+            specialSettings: {
+                ...prev.specialSettings,
+                [key]: toNonNegativeInteger(value),
+            },
         }));
     }
 
     function getCost(key: string, defaultVal: number = 1){
-        return specialSettings[key] !== undefined ? specialSettings[key] : defaultVal;
+        return calculatorState.specialSettings[key] !== undefined ? calculatorState.specialSettings[key] : defaultVal;
     }
 
-    function getExpectedMounts(day = selectedDay) {
+    function getExpectedMounts(day = calculatorState.selectedDay) {
         const mountGroup = warActions.find(g => g.id === 5);
         const defaultCost = (mountGroup as any)?.defaultCost ?? 1;
         const keys = getQty("mount-keys-qty", 0, day);
         const cost = getCost("mountCost", defaultCost);
-        const chance = specialSettings.mountExtraChance ?? 0;
+        const chance = calculatorState.specialSettings.mountExtraChance ?? 0;
         const summons = cost > 0 ? Math.floor(keys / cost) : 0;
         return Math.floor(summons * (1 + chance / 100));
     }
 
-    function getGroupSummary(group: WarGroup, day = selectedDay): { points: number; detail?: string } {
+    function getGroupSummary(group: WarGroup, day = calculatorState.selectedDay): { points: number; detail?: string } {
         const customAct = group.customAction;
         const actionList = group.actions || [];
         const groupDefaultCost = (group as any).defaultCost ?? 1;
@@ -121,7 +165,7 @@ function WarDayCalculator() {
         switch (group.id) {
             case 1: {
                 const hammers = getQty("forge-hammers",0,day);
-                const extraChance = specialSettings.forgeExtraChance ?? 0;
+                const extraChance = calculatorState.specialSettings.forgeExtraChance ?? 0;
 
                 const chance = extraChance / 100;
 
@@ -172,7 +216,7 @@ function WarDayCalculator() {
             case 5: {
                 const keys = getQty("mount-keys-qty",0,day);
                 const cost = getCost("mountCost", groupDefaultCost);
-                const chance = specialSettings.mountExtraChance ?? 0;
+                const chance = calculatorState.specialSettings.mountExtraChance ?? 0;
                 const pts = getPoints("mount-pts", customAct?.defaultPoints ?? 0);
                 const summons = cost > 0 ? Math.floor(keys / cost) : 0;
                 const expectedMounts = getExpectedMounts(day);
@@ -252,32 +296,36 @@ function WarDayCalculator() {
                     </div>
                     
                     <div className="text-zinc-500 text-xs sm:text-sm font-normal">
-                        {showAdvancedMode ? "Seems too complicated? Switch to Simple Mode" : "To specify more details (i.e. extra drop chances or forge level) enable the Advanced Mode"}
+                        {calculatorState.showAdvancedMode ? "Seems too complicated? Switch to Simple Mode" : "To specify more details (i.e. extra drop chances or forge level) enable the Advanced Mode"}
                     </div>
                 </div>
 
                 <div className="flex items-center gap-2 sm:gap-3 self-center sm:self-auto shrink-0">
-                    <span className={`text-sm ${!showAdvancedMode ? "font-bold text-gray-900" : "text-gray-500"}`}>
+                    <span className={`text-sm ${!calculatorState.showAdvancedMode ? "font-bold text-gray-900" : "text-gray-500"}`}>
                         Simple
                     </span>
 
                     <button
                         type="button"
-                        onClick={() => setShowAdvancedMode(prev => !prev)}
+                        onClick={() => {
+                            setCalculatorState(prev => ({
+                                ...prev,
+                                showAdvancedMode: !prev.showAdvancedMode,
+                        }));}}
                         className={`relative w-16 h-8 rounded-full transition-colors duration-200 ${
-                            showAdvancedMode ? "bg-orange-500" : "bg-gray-400"
+                            calculatorState.showAdvancedMode ? "bg-orange-500" : "bg-gray-400"
                         }`}
                         aria-label="Toggle calculator mode"
-                        aria-pressed={showAdvancedMode}
+                        aria-pressed={calculatorState.showAdvancedMode}
                     >
                         <span
                             className={`absolute top-1 left-1 w-6 h-6 bg-white rounded-full shadow transition-transform duration-200 ${
-                                showAdvancedMode ? "translate-x-8" : "translate-x-0"
+                                calculatorState.showAdvancedMode ? "translate-x-8" : "translate-x-0"
                             }`}
                         />
                     </button>
 
-                    <span className={`text-sm ${showAdvancedMode ? "font-bold text-gray-900" : "text-gray-500"}`}>
+                    <span className={`text-sm ${calculatorState.showAdvancedMode ? "font-bold text-gray-900" : "text-gray-500"}`}>
                         Advanced
                     </span>
                 </div>
@@ -299,7 +347,7 @@ function WarDayCalculator() {
                                     transition duration-200
                                     rounded ring-1 ring-black border-b-4
                                     text-xs hover:cursor-pointer
-                                    ${selectedDay === dayNumber
+                                    ${calculatorState.selectedDay === dayNumber
                                         ? "bg-orange-400 border-orange-500 hover:bg-orange-300"
                                         : "bg-gray-400 border-gray-500 hover:bg-gray-300"
                                     }
@@ -316,12 +364,12 @@ function WarDayCalculator() {
 
                     <div className="
                         flex items-center justify-between gap-2
-                        border-2 rounded px-3 py-2
+                        border-2 rounded px-3 py-2 sm:py-0
                         bg-green-50 border-green-600
                         min-w-0
                     ">
                         <span className="font-bold text-sm">
-                            DAY {selectedDay} TOTAL
+                            DAY {calculatorState.selectedDay} TOTAL
                         </span>
                         <span className="font-black text-xl sm:text-2xl tabular-nums">
                             {formatPoints(totalPoints)}
@@ -372,22 +420,26 @@ function WarDayCalculator() {
                                                     handleQuantityChange("forge-hammers", v)
                                                 }
                                             />
-                                            {showAdvancedMode && 
+                                            {calculatorState.showAdvancedMode && 
                                             <>
                                                 <NumberField
                                                 label="Extra chance (%):"
-                                                value={specialSettings.forgeExtraChance ?? 0}
+                                                value={calculatorState.specialSettings.forgeExtraChance ?? 0}
                                                 onChange={(v) =>
                                                     handleSettingChange("forgeExtraChance", v)
                                                 }
                                             />
 
-                                                <label className="flex flex-row gap-1 font-medium justify-center items-center">
+                                                <label className="flex flex-row gap-1 font-medium justify-between items-center font-medium w-full bg-gray-50 p-1 border-1 border-gray-200">
                                                     Forge level:
                                                     <select
-                                                        value={selectedForgeLevel}
-                                                        onChange={(e) =>
-                                                            setSelectedForgeLevel(Number(e.target.value))
+                                                        value={calculatorState.selectedForgeLevel}
+                                                        onChange={(e) => {
+                                                            setCalculatorState(prev => ({
+                                                                ...prev,
+                                                                selectedForgeLevel: Number(e.target.value),
+                                                            }));
+                                                        }
                                                         }
                                                         className="border rounded-sm px-2 py-1 bg-white"
                                                     >
@@ -423,7 +475,7 @@ function WarDayCalculator() {
                                                 </div>
                                             ))}
                                         </div>
-                                        {showAdvancedMode && 
+                                        {/* {calculatorState.showAdvancedMode && 
                                             <div className="border rounded p-3 flex flex-col gap-2">
                                                 <div className="font-semibold">
                                                     Equipment drop chances - Level {selectedForge.level}
@@ -478,8 +530,7 @@ function WarDayCalculator() {
                                                     );
                                                 })}
                                             </div>
-                                        }
-                                        
+                                        } */}
                                     </div>
                                 )}
                                 {group.id === 2 && customAct && (
@@ -573,7 +624,7 @@ function WarDayCalculator() {
                                             onChange={(v) => handleQuantityChange("mount-keys-qty", v)}
                                         />
                                         {
-                                            showAdvancedMode && <>
+                                            calculatorState.showAdvancedMode && <>
                                             <NumberField
                                                 label="Cost:"
                                                 value={getCost("mountCost", groupDefaultCost)}
@@ -581,7 +632,7 @@ function WarDayCalculator() {
                                             />
                                             <NumberField
                                                 label="Extra chance (%):"
-                                                value={specialSettings.mountExtraChance ?? 0}
+                                                value={calculatorState.specialSettings.mountExtraChance ?? 0}
                                                 onChange={(v) => handleSettingChange("mountExtraChance", v)}
                                             />
                                             
@@ -620,7 +671,7 @@ function WarDayCalculator() {
                                                 <div key={idx} className="flex flex-wrap items-end gap-3
                                                     border-b last:border-b-0 pb-3 last:pb-0">
                                                     <span className="w-full sm:w-36 font-semibold">{act.name}</span>
-                                                    <label className="flex flex-col gap-1">How many:
+                                                    <label className="flex flex-row justify-between sm:justify-center items-center gap-1 min-w-full sm:min-w-0">How many:
                                                         <input
                                                             type="number"
                                                             value={getQty(qtyKey)}
@@ -633,7 +684,7 @@ function WarDayCalculator() {
                                                             step={1}
                                                         />
                                                     </label>
-                                                    <label>Points:
+                                                    <label className="flex flex-row justify-between sm:justify-center items-center gap-1 min-w-full sm:min-w-0">Points:
                                                         <input
                                                             type="number"
                                                             value={getPoints(pointKey, act.defaultPoints)}
@@ -710,7 +761,7 @@ function WarDayCalculator() {
                                                 value={getQty("skill-tickets-qty")}
                                                 onChange={(v) => handleQuantityChange("skill-tickets-qty", v)}
                                             />
-                                            {showAdvancedMode && <>
+                                            {calculatorState.showAdvancedMode && <>
                                                 <NumberField
                                                 label="Cost:"
                                                 value={getCost("skillCost", groupDefaultCost)}
@@ -748,11 +799,9 @@ function WarDayCalculator() {
                         )
                     })
                 }
-
-                {/* TOTAL */}
                 <div className="flex flex-row items-center justify-between gap-3 border-2 rounded px-4 py-3 bg-green-50 border-green-600">
                     <div className="flex flex-col">
-                        <span className="font-bold text-md">DAY {selectedDay} TOTAL</span>
+                        <span className="font-bold text-md">DAY {calculatorState.selectedDay} TOTAL</span>
                         <span className="text-xs text-zinc-500">Expected points from all sections above</span>
                     </div>
                     <span className="font-black text-3xl">{formatPoints(totalPoints)}</span>

@@ -21,7 +21,7 @@ function SectionSummary({ points, detail }: { points: number; detail?: string })
                 )}
             </div>
             <div className="w-full flex flex-row justify-center sm:justify-end items-center">
-                <div className="text-sm bg-orange-400 rounded-lg
+                <div className="text-sm bg-orange-400 border-2 border-orange-500 rounded-lg
                 py-1 px-2 font-bold whitespace-nowrap
                 self-end sm:self-auto">
             

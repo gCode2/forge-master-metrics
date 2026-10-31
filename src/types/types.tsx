@@ -199,3 +199,12 @@ export type PlayerWarPoints = Record<
     isMenuOpened: boolean,
     setMenuOpened: (isMenuOpened: boolean)=>void;
  }
+
+ export type CalculatorState = {
+    selectedDay: number,
+    quantities: Record<string, number>,
+    customPoints: Record<string, number>,
+    specialSettings: Record<string,number>,
+    selectedForgeLevel: number,
+    showAdvancedMode: boolean,
+ }
