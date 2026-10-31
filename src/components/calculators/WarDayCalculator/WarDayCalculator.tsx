@@ -239,19 +239,24 @@ function WarDayCalculator() {
     }, 0);
 
     return (
-        <section className="flex flex-col gap-5 text-sm">
-            <div className="flex items-center justify-between border-2 rounded-lg p-3 bg-gray-50">
-                <div className="font-bold text-xl flex flex-col">
+        <section className="flex flex-col gap-4 sm:gap-5 text-sm min-w-0 w-full">
+            <div className="
+                flex flex-col sm:flex-row
+                items-start sm:items-center
+                justify-between gap-3
+                border-2 rounded-lg p-3 bg-gray-50
+            ">
+                <div className="font-bold text-lg sm:text-xl flex flex-col">
                     <div>
                         Calculator mode
                     </div>
                     
-                    <div className="text-zinc-500 text-sm font-normal">
+                    <div className="text-zinc-500 text-xs sm:text-sm font-normal">
                         {showAdvancedMode ? "Seems too complicated? Switch to Simple Mode" : "To specify more details (i.e. extra drop chances or forge level) enable the Advanced Mode"}
                     </div>
                 </div>
 
-                <div className="flex items-center gap-3">
+                <div className="flex items-center gap-2 sm:gap-3 self-center sm:self-auto shrink-0">
                     <span className={`text-sm ${!showAdvancedMode ? "font-bold text-gray-900" : "text-gray-500"}`}>
                         Simple
                     </span>
@@ -277,37 +282,71 @@ function WarDayCalculator() {
                     </span>
                 </div>
             </div>
-            <div className="flex flex-row justify-between gap-3 text-sm">
-                <div className="flex flex-row gap-3 text-sm">
-                    {
-                    Array.from(warDaysActions.keys()).map((index)=>{
+            <div className="flex flex-col sm:flex-row sm:justify-between gap-3 text-sm">
+
+                <div className="grid grid-cols-5 sm:flex sm:flex-row gap-2">
+                    {Array.from(warDaysActions.keys()).map((index) => {
                         const dayNumber = index + 1;
+
                         return (
-                            <button type="button" key={index}
-                                className={`${selectedDay === dayNumber ? `bg-orange-400 border-orange-500 hover:bg-orange-300 hover:border-orange-500` : `bg-gray-400 border-gray-500`} flex flex-row justify-center items-center text-white font-bold py-2 px-4 transition duration-200 text-sm enabled:hover:cursor-pointer rounded ring-1 ring-black border-b-4 hover:bg-gray-300 hover:border-gray-400`} onClick={()=>handleDayChange(dayNumber)}
+                            <button
+                                type="button"
+                                key={index}
+                                className={`
+                                    flex justify-center items-center
+                                    text-white font-bold
+                                    py-2 px-2 sm:px-4
+                                    transition duration-200
+                                    rounded ring-1 ring-black border-b-4
+                                    text-xs hover:cursor-pointer
+                                    ${selectedDay === dayNumber
+                                        ? "bg-orange-400 border-orange-500 hover:bg-orange-300"
+                                        : "bg-gray-400 border-gray-500 hover:bg-gray-300"
+                                    }
+                                `}
+                                onClick={() => handleDayChange(dayNumber)}
                             >
                                 Day {dayNumber}
                             </button>
-                        )
-                    })
-                    }
+                        );
+                    })}
                 </div>
-                <div className="flex flex-row gap-3">
-                    <div className="flex flex-row items-center justify-between gap-3 border-2 rounded px-4 bg-green-50 border-green-600">
-                        <div className="flex flex-row justify-center items-center">
-                            <div className="font-bold text-md">DAY {selectedDay} TOTAL</div>
-                        </div>
-                        <div className="font-black text-2xl">{formatPoints(totalPoints)}</div>
+
+                <div>
+
+                    <div className="
+                        flex items-center justify-between gap-2
+                        border-2 rounded px-3 py-2
+                        bg-green-50 border-green-600
+                        min-w-0
+                    ">
+                        <span className="font-bold text-sm">
+                            DAY {selectedDay} TOTAL
+                        </span>
+                        <span className="font-black text-xl sm:text-2xl tabular-nums">
+                            {formatPoints(totalPoints)}
+                        </span>
                     </div>
-                    <div className="flex flex-row items-center justify-between gap-3 border-2 rounded px-4 bg-orange-50 border-orange-400">
-                        <div className="flex flex-row justify-center items-center">
-                            <div className="font-bold text-md">TOTAL WAR POINTS</div>
-                        </div>
-                        <div className="font-black text-2xl">{formatPoints(totalWarPoints)}</div>
+
+                    <div className="
+                        flex items-center justify-between gap-2
+                        border-2 rounded px-3 py-2
+                        bg-orange-50 border-orange-400
+                        min-w-0 fixed bottom-4 left-1/2 -translate-x-1/2 z-50
+
+                        w-[calc(100%-2rem)] max-w-md
+                        rounded-xl border border-gray-300 shadow-xl backdrop-blur-md
+                        p-3 sm:p-4
+                    ">
+                        <span className="font-bold text-sm">
+                            TOTAL WAR POINTS
+                        </span>
+                        <span className="font-black text-xl sm:text-2xl tabular-nums">
+                            {formatPoints(totalWarPoints)}
+                        </span>
                     </div>
+
                 </div>
-                    
-               
             </div>
             <div className="border-2 rounded-md p-3 flex flex-col gap-4 shadow-lg/20">
                 {
@@ -336,14 +375,14 @@ function WarDayCalculator() {
                                             {showAdvancedMode && 
                                             <>
                                                 <NumberField
-                                                label="Extra forge chance (%):"
+                                                label="Extra chance (%):"
                                                 value={specialSettings.forgeExtraChance ?? 0}
                                                 onChange={(v) =>
                                                     handleSettingChange("forgeExtraChance", v)
                                                 }
                                             />
 
-                                                <label className="flex flex-col gap-1 font-medium">
+                                                <label className="flex flex-row gap-1 font-medium justify-center items-center">
                                                     Forge level:
                                                     <select
                                                         value={selectedForgeLevel}
@@ -365,7 +404,7 @@ function WarDayCalculator() {
                                         </div>
 
                                         <div className="border rounded p-3 flex flex-col gap-3">
-                                            <div className="font-semibold">
+                                            <div className="font-semibold text-lg">
                                                 Points per equipment tier
                                             </div>
 
@@ -374,7 +413,7 @@ function WarDayCalculator() {
                                                     key={tier.key}
                                                     className="flex flex-wrap items-center justify-between gap-3"
                                                 >
-                                                    <span>{tier.title}</span>
+                                                    <span className="text-xs sm:text-sm">{tier.title}</span>
 
                                                     <NumberField
                                                         label="Points:"
@@ -387,7 +426,7 @@ function WarDayCalculator() {
                                         {showAdvancedMode && 
                                             <div className="border rounded p-3 flex flex-col gap-2">
                                                 <div className="font-semibold">
-                                                    Equipment drop chances — Level {selectedForge.level}
+                                                    Equipment drop chances - Level {selectedForge.level}
                                                 </div>
 
                                                 {group.actions.map((act) => {
@@ -419,21 +458,21 @@ function WarDayCalculator() {
                                                                 {act.name}
                                                             </span>
 
-                                                            <div className="flex flex-wrap items-center gap-3 text-sm">
-                                                                <span className="text-zinc-600">
+                                                            <div className="flex flex-row justify-between sm:grid sm:grid-cols-[1fr_1fr_auto] items-center gap-3 text-sm w-full">
+                                                                <div className="text-zinc-600">
                                                                     Chance: {(chance * 100).toLocaleString(
                                                                         undefined,
                                                                         { maximumFractionDigits: 4 }
                                                                     )}%
-                                                                </span>
+                                                                </div>
 
-                                                                <span className="text-zinc-600">
+                                                                <div className="text-zinc-600">
                                                                     {formatPoints(points)} pts
-                                                                </span>
+                                                                </div>
 
-                                                                <span className="font-semibold">
+                                                                <div className="font-semibold">
                                                                     Expected: {formatPoints(expectedPoints)} pts
-                                                                </span>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     );
@@ -446,12 +485,12 @@ function WarDayCalculator() {
                                 {group.id === 2 && customAct && (
                                     <div className="flex flex-wrap gap-4 items-center">
                                         <NumberField
-                                            label="How many dungeon keys do you have?:"
+                                            label="Dungeon Keys:"
                                             value={getQty("dungeon-keys", 8)}
                                             onChange={(v) => handleQuantityChange("dungeon-keys", v)}
                                         />
                                         <NumberField
-                                            label="Points per 1 dungeon:"
+                                            label="Points:"
                                             value={getPoints("dungeon-pts", customAct.defaultPoints)}
                                             onChange={(v) => handlePointsChange("dungeon-pts", v)}
                                         />
@@ -465,9 +504,19 @@ function WarDayCalculator() {
                                             const pointKey = `egg-pts-${act.name}`;
 
                                             return (
-                                                <div key={idx} className="flex items-center gap-4">
-                                                    <span className="w-36">{act.name}</span>
-                                                    <label>How many you'll hatch?
+                                                <div
+                                                    key={idx}
+                                                    className="
+                                                        flex flex-wrap items-end gap-3
+                                                        border-b last:border-b-0 pb-3 last:pb-0
+                                                    "
+                                                >
+                                                    <span className="w-full sm:w-36 font-semibold">
+                                                        {act.name}
+                                                    </span>
+
+                                                    <label className="flex flex-col gap-1">
+                                                        Hatch:
                                                         <input
                                                             type="number"
                                                             value={getQty(qtyKey)}
@@ -475,22 +524,22 @@ function WarDayCalculator() {
                                                                 qtyKey,
                                                                 Math.max(0, Math.floor(Number(e.target.value) || 0))
                                                             )}
-                                                            className={`ml-1 ${inputClass}`}
+                                                            className="border px-2 w-24 rounded-sm"
                                                             min={0}
                                                             step={1}
                                                         />
                                                     </label>
-                                                    <label>Pts:
+
+                                                    <label className="flex flex-col gap-1">
+                                                        Points:
                                                         <input
                                                             type="number"
                                                             value={getPoints(pointKey, act.defaultPoints)}
-                                                            onChange={(e) =>
-                                                                handlePointsChange(
-                                                                    pointKey,
-                                                                    Math.max(0, Math.floor(Number(e.target.value) || 0))
-                                                                )
-                                                            }
-                                                            className={`ml-1 ${inputClass}`}
+                                                            onChange={(e) => handlePointsChange(
+                                                                pointKey,
+                                                                Math.max(0, Math.floor(Number(e.target.value) || 0))
+                                                            )}
+                                                            className="border px-2 w-24 rounded-sm"
                                                             min={0}
                                                             step={1}
                                                         />
@@ -504,12 +553,12 @@ function WarDayCalculator() {
                                 {group.id === 4 && customAct && (
                                     <div className="flex flex-wrap gap-4 items-center">
                                         <NumberField
-                                            label="How many pets can you merge?"
+                                            label="Pets to merge:"
                                             value={getQty("merge-pets-qty")}
                                             onChange={(v) => handleQuantityChange("merge-pets-qty", v)}
                                         />
                                         <NumberField
-                                            label="Pts per action:"
+                                            label="Points:"
                                             value={getPoints("merge-pets-pts", customAct.defaultPoints)}
                                             onChange={(v) => handlePointsChange("merge-pets-pts", v)}
                                         />
@@ -519,19 +568,19 @@ function WarDayCalculator() {
                                 {group.id === 5 && customAct && (
                                     <div className="flex flex-wrap gap-4 items-center">
                                         <NumberField
-                                            label="How many mount keys do you have?:"
+                                            label="Mount keys:"
                                             value={getQty("mount-keys-qty")}
                                             onChange={(v) => handleQuantityChange("mount-keys-qty", v)}
                                         />
                                         {
                                             showAdvancedMode && <>
                                             <NumberField
-                                                label="Cost per summon:"
+                                                label="Cost:"
                                                 value={getCost("mountCost", groupDefaultCost)}
                                                 onChange={(v) => handleSettingChange("mountCost", v)}
                                             />
                                             <NumberField
-                                                label="Extra mount chance (%):"
+                                                label="Extra chance (%):"
                                                 value={specialSettings.mountExtraChance ?? 0}
                                                 onChange={(v) => handleSettingChange("mountExtraChance", v)}
                                             />
@@ -539,7 +588,7 @@ function WarDayCalculator() {
                                             </>
                                         }
                                         <NumberField
-                                                label="Pts per action:"
+                                                label="Points:"
                                                 value={getPoints("mount-pts", customAct.defaultPoints)}
                                                 onChange={(v) => handlePointsChange("mount-pts", v)}
                                             />
@@ -549,12 +598,12 @@ function WarDayCalculator() {
                                 {group.id === 6 && customAct && (
                                     <div className="flex flex-wrap gap-4 items-center">
                                         <NumberField
-                                            label="How many mounts to merge?"
+                                            label="Mount merges:"
                                             value={getQty("merge-mounts-qty", Math.floor(getExpectedMounts()))}
                                             onChange={(v) => handleQuantityChange("merge-mounts-qty", v)}
                                         />
                                         <NumberField
-                                            label="Pts per action:"
+                                            label="Points:"
                                             value={getPoints("merge-mounts-pts", customAct.defaultPoints)}
                                             onChange={(v) => handlePointsChange("merge-mounts-pts", v)}
                                         />
@@ -568,9 +617,10 @@ function WarDayCalculator() {
                                             const pointKey = `tech-pts-${act.name}`;
 
                                             return (
-                                                <div key={idx} className="flex items-center gap-4">
-                                                    <span className="w-32">{act.name}</span>
-                                                    <label>How many times:
+                                                <div key={idx} className="flex flex-wrap items-end gap-3
+                                                    border-b last:border-b-0 pb-3 last:pb-0">
+                                                    <span className="w-full sm:w-36 font-semibold">{act.name}</span>
+                                                    <label className="flex flex-col gap-1">How many:
                                                         <input
                                                             type="number"
                                                             value={getQty(qtyKey)}
@@ -583,7 +633,7 @@ function WarDayCalculator() {
                                                             step={1}
                                                         />
                                                     </label>
-                                                    <label>Pts:
+                                                    <label>Points:
                                                         <input
                                                             type="number"
                                                             value={getPoints(pointKey, act.defaultPoints)}
@@ -611,9 +661,11 @@ function WarDayCalculator() {
                                             const pointKey = `spend-pts-${act.name}`;
 
                                             return (
-                                                <div key={idx} className="flex items-center gap-4">
-                                                    <span className="w-64">{act.name}</span>
-                                                    <label>Owned amount:
+                                                <div key={idx} className="flex flex-wrap items-end gap-3
+                                                    border-b last:border-b-0 pb-3 last:pb-0">
+                                                    <span className="w-full font-semibold">{act.name}</span>
+                                                    <label className="flex flex-col gap-1">
+                                                        Owned amount:
                                                         <input
                                                             type="number"
                                                             value={getQty(qtyKey)}
@@ -621,12 +673,12 @@ function WarDayCalculator() {
                                                                 qtyKey,
                                                                 Math.max(0, Math.floor(Number(e.target.value) || 0))
                                                             )}
-                                                            className="border ml-1 px-1 w-24 rounded-sm"
+                                                            className="border px-2 w-24 rounded-sm"
                                                             min={0}
                                                             step={1}
                                                         />
                                                     </label>
-                                                    <label>Pts per unit:
+                                                    <label className="flex flex-col gap-1">Points:
                                                         <input
                                                             type="number"
                                                             value={getPoints(pointKey, act.defaultPoints)}
@@ -641,7 +693,7 @@ function WarDayCalculator() {
                                                             step={1}
                                                         />
                                                     </label>
-                                                    <span className="text-xs text-zinc-500">
+                                                    <span className="text-xs text-zinc-500 w-full sm:w-auto">
                                                         = {formatPoints(Math.floor(getQty(qtyKey) / getSpendUnitSize(act.name)))} × {formatPoints(getPoints(pointKey, act.defaultPoints))} pts
                                                     </span>
                                                 </div>
@@ -654,13 +706,13 @@ function WarDayCalculator() {
                                     <div className="flex flex-col gap-3">
                                         <div className="flex flex-wrap gap-4 items-center">
                                             <NumberField
-                                                label="How many summon tickets do you have?:"
+                                                label="Summon Tickets:"
                                                 value={getQty("skill-tickets-qty")}
                                                 onChange={(v) => handleQuantityChange("skill-tickets-qty", v)}
                                             />
                                             {showAdvancedMode && <>
                                                 <NumberField
-                                                label="Cost per summon:"
+                                                label="Cost:"
                                                 value={getCost("skillCost", groupDefaultCost)}
                                                 onChange={(v) => handleSettingChange("skillCost", v)}
                                             />
@@ -668,24 +720,23 @@ function WarDayCalculator() {
                                             </>}
                                             
                                             <NumberField
-                                                label="Pts per skill:"
+                                                label="Points:"
                                                 value={getPoints("skill-summon-pts", customAct.defaultPoints)}
                                                 onChange={(v) => handlePointsChange("skill-summon-pts", v)}
                                             />
                                         </div>
-                                        <span className="text-xs text-gray-500">Note: 1 summon gives 5 skills - the calculation multiplies this automatically.</span>
                                     </div>
                                 )}
 
                                 {group.id === 10 && customAct && (
                                     <div className="flex flex-wrap gap-4 items-center">
                                         <NumberField
-                                            label="How many times can you upgrade?:"
+                                            label="Skills to upgrade:"
                                             value={getQty("skill-upgrade-qty")}
                                             onChange={(v) => handleQuantityChange("skill-upgrade-qty", v)}
                                         />
                                         <NumberField
-                                            label="Pts per action:"
+                                            label="Points:"
                                             value={getPoints("skill-upgrade-pts", customAct.defaultPoints)}
                                             onChange={(v) => handlePointsChange("skill-upgrade-pts", v)}
                                         />
