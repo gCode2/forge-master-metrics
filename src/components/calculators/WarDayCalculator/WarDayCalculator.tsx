@@ -79,6 +79,8 @@ function WarDayCalculator() {
 
     const [selectedForgeLevel, setSelectedForgeLevel] = useState(1);
 
+    const [showAdvancedMode, setShowAdvancedMode] = useState(true);
+
     const daysIds = warDaysActions[selectedDay - 1] || [];
 
     const selectedForge = forgeLevels.find(level => level.level === selectedForgeLevel) ?? forgeLevels[0];
@@ -272,8 +274,45 @@ function WarDayCalculator() {
     }, 0);
 
     return (
-        <section className="flex flex-col gap-3 text-sm">
-            <div className="flex flex-row gap-3 text-sm">
+        <section className="flex flex-col gap-5 text-sm">
+            <div className="flex items-center justify-between border-2 rounded-lg p-3 bg-gray-50">
+                <div className="font-bold text-xl flex flex-col">
+                    <div>
+                        Calculator mode
+                    </div>
+                    
+                    <div className="text-zinc-500 text-sm font-normal">
+                        {showAdvancedMode ? "Seems too complicated? Switch to Simple Mode" : "To specify more details (i.e. extra drop chances or forge level) enable the Advanced Mode"}
+                    </div>
+                </div>
+
+                <div className="flex items-center gap-3">
+                    <span className={`text-sm ${!showAdvancedMode ? "font-bold text-gray-900" : "text-gray-500"}`}>
+                        Simple
+                    </span>
+
+                    <button
+                        type="button"
+                        onClick={() => setShowAdvancedMode(prev => !prev)}
+                        className={`relative w-16 h-8 rounded-full transition-colors duration-200 ${
+                            showAdvancedMode ? "bg-orange-500" : "bg-gray-400"
+                        }`}
+                        aria-label="Toggle calculator mode"
+                        aria-pressed={showAdvancedMode}
+                    >
+                        <span
+                            className={`absolute top-1 left-1 w-6 h-6 bg-white rounded-full shadow transition-transform duration-200 ${
+                                showAdvancedMode ? "translate-x-8" : "translate-x-0"
+                            }`}
+                        />
+                    </button>
+
+                    <span className={`text-sm ${showAdvancedMode ? "font-bold text-gray-900" : "text-gray-500"}`}>
+                        Advanced
+                    </span>
+                </div>
+            </div>
+            <div className="flex flex-row justify-between gap-3 text-sm">
                 <div className="flex flex-row gap-3 text-sm">
                     {
                     Array.from(warDaysActions.keys()).map((index)=>{
@@ -288,19 +327,21 @@ function WarDayCalculator() {
                     })
                     }
                 </div>
-
+                <div className="flex flex-row gap-3">
                     <div className="flex flex-row items-center justify-between gap-3 border-2 rounded px-4 bg-green-50 border-green-600">
                         <div className="flex flex-row justify-center items-center">
                             <div className="font-bold text-md">DAY {selectedDay} TOTAL</div>
                         </div>
                         <div className="font-black text-2xl">{formatPoints(totalPoints)}</div>
                     </div>
-                    <div className="flex flex-row items-center justify-between gap-3 border-2 rounded px-4 bg-green-50 border-green-600">
+                    <div className="flex flex-row items-center justify-between gap-3 border-2 rounded px-4 bg-orange-50 border-orange-400">
                         <div className="flex flex-row justify-center items-center">
                             <div className="font-bold text-md">TOTAL WAR POINTS</div>
                         </div>
                         <div className="font-black text-2xl">{formatPoints(totalWarPoints)}</div>
                     </div>
+                </div>
+                    
                
             </div>
             <div className="border-2 rounded-md p-3 flex flex-col gap-4 shadow-lg/20">
@@ -327,7 +368,9 @@ function WarDayCalculator() {
                                                     handleQuantityChange("forge-hammers", v)
                                                 }
                                             />
-                                            <NumberField
+                                            {showAdvancedMode && 
+                                            <>
+                                                <NumberField
                                                 label="Extra forge chance (%):"
                                                 value={specialSettings.forgeExtraChance ?? 0}
                                                 onChange={(v) =>
@@ -335,22 +378,25 @@ function WarDayCalculator() {
                                                 }
                                             />
 
-                                            <label className="flex flex-col gap-1 font-medium">
-                                                Forge level:
-                                                <select
-                                                    value={selectedForgeLevel}
-                                                    onChange={(e) =>
-                                                        setSelectedForgeLevel(Number(e.target.value))
-                                                    }
-                                                    className="border rounded-sm px-2 py-1 bg-white"
-                                                >
-                                                    {forgeLevels.map((level) => (
-                                                        <option key={level.level} value={level.level}>
-                                                            Level {level.level}
-                                                        </option>
-                                                    ))}
-                                                </select>
-                                            </label>
+                                                <label className="flex flex-col gap-1 font-medium">
+                                                    Forge level:
+                                                    <select
+                                                        value={selectedForgeLevel}
+                                                        onChange={(e) =>
+                                                            setSelectedForgeLevel(Number(e.target.value))
+                                                        }
+                                                        className="border rounded-sm px-2 py-1 bg-white"
+                                                    >
+                                                        {forgeLevels.map((level) => (
+                                                            <option key={level.level} value={level.level}>
+                                                                Level {level.level}
+                                                            </option>
+                                                        ))}
+                                                    </select>
+                                                </label>
+                                            </>
+                                            }
+                                            
                                         </div>
 
                                         <div className="border rounded p-3 flex flex-col gap-3">
@@ -373,61 +419,63 @@ function WarDayCalculator() {
                                                 </div>
                                             ))}
                                         </div>
+                                        {showAdvancedMode && 
+                                            <div className="border rounded p-3 flex flex-col gap-2">
+                                                <div className="font-semibold">
+                                                    Equipment drop chances — Level {selectedForge.level}
+                                                </div>
 
-                                        <div className="border rounded p-3 flex flex-col gap-2">
-                                            <div className="font-semibold">
-                                                Equipment drop chances — Level {selectedForge.level}
-                                            </div>
+                                                {group.actions.map((act) => {
+                                                    const chanceKey =
+                                                        FORGE_CHANCE_KEYS[
+                                                            act.name as keyof typeof FORGE_CHANCE_KEYS
+                                                        ];
 
-                                            {group.actions.map((act) => {
-                                                const chanceKey =
-                                                    FORGE_CHANCE_KEYS[
-                                                        act.name as keyof typeof FORGE_CHANCE_KEYS
-                                                    ];
+                                                    const chance = chanceKey
+                                                        ? selectedForge.forgeChances[chanceKey]
+                                                        : 0;
 
-                                                const chance = chanceKey
-                                                    ? selectedForge.forgeChances[chanceKey]
-                                                    : 0;
+                                                    const tier = FORGE_TIERS.find(item =>
+                                                        item.names.includes(act.name)
+                                                    );
 
-                                                const tier = FORGE_TIERS.find(item =>
-                                                    item.names.includes(act.name)
-                                                );
+                                                    const points = tier
+                                                        ? getPoints(tier.key, tier.defaultPoints)
+                                                        : act.defaultPoints;
 
-                                                const points = tier
-                                                    ? getPoints(tier.key, tier.defaultPoints)
-                                                    : act.defaultPoints;
+                                                    const expectedPoints = chance * points;
 
-                                                const expectedPoints = chance * points;
-
-                                                return (
-                                                    <div
-                                                        key={act.name}
-                                                        className="flex flex-wrap items-center justify-between gap-3 border-b last:border-b-0 pb-2 last:pb-0"
-                                                    >
-                                                        <span className="font-medium">
-                                                            {act.name}
-                                                        </span>
-
-                                                        <div className="flex flex-wrap items-center gap-3 text-sm">
-                                                            <span className="text-zinc-600">
-                                                                Chance: {(chance * 100).toLocaleString(
-                                                                    undefined,
-                                                                    { maximumFractionDigits: 4 }
-                                                                )}%
+                                                    return (
+                                                        <div
+                                                            key={act.name}
+                                                            className="flex flex-wrap items-center justify-between gap-3 border-b last:border-b-0 pb-2 last:pb-0"
+                                                        >
+                                                            <span className="font-medium">
+                                                                {act.name}
                                                             </span>
 
-                                                            <span className="text-zinc-600">
-                                                                {formatPoints(points)} pts
-                                                            </span>
+                                                            <div className="flex flex-wrap items-center gap-3 text-sm">
+                                                                <span className="text-zinc-600">
+                                                                    Chance: {(chance * 100).toLocaleString(
+                                                                        undefined,
+                                                                        { maximumFractionDigits: 4 }
+                                                                    )}%
+                                                                </span>
 
-                                                            <span className="font-semibold">
-                                                                Expected: {formatPoints(expectedPoints)} pts
-                                                            </span>
+                                                                <span className="text-zinc-600">
+                                                                    {formatPoints(points)} pts
+                                                                </span>
+
+                                                                <span className="font-semibold">
+                                                                    Expected: {formatPoints(expectedPoints)} pts
+                                                                </span>
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                );
-                                            })}
-                                        </div>
+                                                    );
+                                                })}
+                                            </div>
+                                        }
+                                        
                                     </div>
                                 )}
                                 {group.id === 2 && customAct && (
@@ -510,21 +558,26 @@ function WarDayCalculator() {
                                             value={getQty("mount-keys-qty")}
                                             onChange={(v) => handleQuantityChange("mount-keys-qty", v)}
                                         />
+                                        {
+                                            showAdvancedMode && <>
+                                            <NumberField
+                                                label="Cost per summon:"
+                                                value={getCost("mountCost", groupDefaultCost)}
+                                                onChange={(v) => handleSettingChange("mountCost", v)}
+                                            />
+                                            <NumberField
+                                                label="Extra mount chance (%):"
+                                                value={specialSettings.mountExtraChance ?? 0}
+                                                onChange={(v) => handleSettingChange("mountExtraChance", v)}
+                                            />
+                                            
+                                            </>
+                                        }
                                         <NumberField
-                                            label="Cost per summon:"
-                                            value={getCost("mountCost", groupDefaultCost)}
-                                            onChange={(v) => handleSettingChange("mountCost", v)}
-                                        />
-                                        <NumberField
-                                            label="Extra mount chance (%):"
-                                            value={specialSettings.mountExtraChance ?? 0}
-                                            onChange={(v) => handleSettingChange("mountExtraChance", v)}
-                                        />
-                                        <NumberField
-                                            label="Pts per action:"
-                                            value={getPoints("mount-pts", customAct.defaultPoints)}
-                                            onChange={(v) => handlePointsChange("mount-pts", v)}
-                                        />
+                                                label="Pts per action:"
+                                                value={getPoints("mount-pts", customAct.defaultPoints)}
+                                                onChange={(v) => handlePointsChange("mount-pts", v)}
+                                            />
                                     </div>
                                 )}
 
@@ -640,11 +693,15 @@ function WarDayCalculator() {
                                                 value={getQty("skill-tickets-qty")}
                                                 onChange={(v) => handleQuantityChange("skill-tickets-qty", v)}
                                             />
-                                            <NumberField
+                                            {showAdvancedMode && <>
+                                                <NumberField
                                                 label="Cost per summon:"
                                                 value={getCost("skillCost", groupDefaultCost)}
                                                 onChange={(v) => handleSettingChange("skillCost", v)}
                                             />
+                                            
+                                            </>}
+                                            
                                             <NumberField
                                                 label="Pts per skill:"
                                                 value={getPoints("skill-summon-pts", customAct.defaultPoints)}
