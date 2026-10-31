@@ -91,14 +91,13 @@ function LoginPage() {
         className="flex flex-1 flex-col justify-center items-center h-full w-full p-6"
         onSubmit={handleSubmit}
       >
-        <div className="relative flex flex-col justify-center items-center border-2 py-5 px-14 rounded">
+        <div className="relative flex flex-col justify-center items-center border-2 py-7 sm:py-5 px-17 sm:px-14 rounded">
           <fieldset
             disabled={loading}
             className={`${
               loading ? "blur-[10px]" : ""
             } flex flex-col justify-center items-center`}
           >
-            {/* dont forget to include mobile in the styles */}
             <div className="font-black text-3xl mb-3">Log in</div>
 
             <div className="flex flex-col justify-center items-center gap-1 w-full">
@@ -150,8 +149,8 @@ function LoginPage() {
                 Home
               </Link>
             </div>
-            <div className="pt-2">
-              Dont have an account yet?{" "}
+            <div className="pt-2 flex flex-col sm:flex-row">
+              Don't have an account yet?{" "}
               <Link
                 className="text-blue-500"
                 to="/register"

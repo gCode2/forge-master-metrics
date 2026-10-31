@@ -65,9 +65,9 @@ function DashboardPage() {
     
     return (
         <main className="flex flex-1 w-full p-6">
-            <div className="flex flex-col text-center gap-2 w-full">
+            <div className="flex flex-col text-center gap-2 w-full justify-center sm:justify-start items-center">
                 {getOnboardingStep(claim, understood) !== "verified" && (
-                <div className="mb-8 text-center">
+                <div className="mb-4 text-center">
                     <h1 className="text-3xl font-bold">
                         Hey{" "}
                         <span className="text-orange-400">

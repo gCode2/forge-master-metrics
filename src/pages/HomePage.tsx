@@ -4,7 +4,7 @@ function HomePage(){
     return (
         <>
             <main className="flex flex-1 flex-col w-full justify-center items-center relative p-6">
-                <div className="flex items-center justify-center relative w-52 h-36">
+                <div className="flex items-center justify-center relative xs:w-full w-52 h-36">
                 <div className="carousel-image carousel-image-1">
                     <img
                         className="w-full h-full object-cover"
@@ -20,7 +20,7 @@ function HomePage(){
                     />
                 </div>
                 </div>
-                <div className="flex w-125 flex-col justify-center items-center text-center gap-4 relative">
+                <div className="flex xs:w-full sm:w-125 flex-col justify-center items-center text-center gap-4 relative">
                     <div className="text-5xl font-bold">
                         Forge Master Metrics
                     </div>

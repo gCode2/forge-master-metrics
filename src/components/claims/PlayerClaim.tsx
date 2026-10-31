@@ -50,7 +50,7 @@ function PlayerClaim({ onClaimCreated }: PlayerClaimProps) {
 
     return (
         <div className="flex flex-col gap-0.5 w-75">
-            <div>Find and pick your nickname from the list below to claim your identity.</div>
+            <div className="mb-2">Find and pick your nickname from the list below to claim your identity.</div>
             {error && <div className="text-red-500">{error}</div>}
             <ul className="flex flex-col gap-0.5">
                 {players.map((player) => (

@@ -53,242 +53,331 @@ function Dashboard({playerId} : DashboardProps){
     };
 
     if(error) return <>{error}</>
-    if(loading) return <>Loading...</>
+    if (loading) {
+        return (
+            <div className="flex w-full justify-center py-12">
+                Loading...
+            </div>
+        );
+    }
+    const tickInterval = Math.max(
+        0,
+        Math.ceil(warHistory.length / 5) - 1
+    );
 
     return (
-             <div className="flex flex-1 flex-col gap-2 w-full">
+            <div className="flex flex-col w-full min-w-0 gap-4">
 
-                <div className="grid grid-cols-[1fr_auto_auto] items-center border-2 rounded w-full h-23 shadow-lg/20 px-6">
-        
-                <div className="flex flex-col gap-1 justify-center items-start">
-                    <div>
-                        <span className="text-orange-400 text-4xl font-black">
-                            {data?.nickname} 
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-2 rounded-xl shadow-lg/20 p-4 sm:px-6 sm:py-5">
+
+                <div className="min-w-0">
+                    <div className="flex flex-wrap items-baseline gap-x-2">
+                        <span className="text-orange-400 text-3xl sm:text-4xl font-black break-all">
+                            {data?.nickname}
                         </span>
-                        <span className="text-xl">
+
+                        <span className="text-lg sm:text-xl">
                             / Dashboard
                         </span>
                     </div>
-                    <div className="ml-1">
+
+                    <div className="text-sm text-left sm:text-base mt-1">
                         Your performance across clan wars.
                     </div>
                 </div>
 
-                <div className="h-16 w-[2px] bg-gray-300 mx-8"></div>
-
-                <div className="flex flex-col gap-1 justify-center items-center">
-                    <div>
-                        {Boolean(data?.is_member) ? (
-                            <div className="flex justify-center items-center border-2 border-green-600 bg-green-300 rounded-xl p-2">
-                                <div className="flex flex-row gap-2 items-center justify-center">
-                                    <div className="flex w-3 h-3 bg-green-600 rounded-full"></div>
-                                    <div className="text-green-600 text-sm font-medium">
-                                        ACTIVE PLAYER
-                                    </div>
-                                </div>
-                            </div>
-                        ) : (
-                            <div className="flex justify-center items-center border-2 border-gray-600 bg-gray-300 rounded-xl p-2">
-                                <div className="flex flex-row gap-2 items-center justify-center">
-                                    <div className="flex w-3 h-3 bg-gray-600 rounded-full"></div>
-                                    <div className="text-gray-600 text-sm font-medium">
-                                        LEFT CLAN
-                                    </div>
-                                </div>
-                            </div>
-                        )}
-                    </div>
+                <div className="flex items-center sm:justify-end">
+                    {Boolean(data?.is_member) ? (
+                        <div className="flex items-center gap-2 border-2 border-green-600 bg-green-100 rounded-xl px-3 py-2">
+                            <div className="w-2.5 h-2.5 bg-green-600 rounded-full" />
+                            <span className="text-green-700 text-xs sm:text-sm font-bold whitespace-nowrap">
+                                ACTIVE PLAYER
+                            </span>
+                        </div>
+                    ) : (
+                        <div className="flex items-center gap-2 border-2 border-gray-500 bg-gray-200 rounded-xl px-3 py-2">
+                            <div className="w-2.5 h-2.5 bg-gray-600 rounded-full" />
+                            <span className="text-gray-600 text-xs sm:text-sm font-bold whitespace-nowrap">
+                                LEFT CLAN
+                            </span>
+                        </div>
+                    )}
                 </div>
 
             </div>
-            <div className="grid grid-cols-3 items-center border-2 rounded w-full h-12 shadow-lg/20 px-6">
-                <div>
-                    <div className="flex flex-row items-center justify-center gap-2">
-                        <div>
-                            <img src="/icons/swords.png" className="h-8 w-8"/>
-                        </div>
-                        <div>
-                            You've fought in <span className="font-bold text-orange-400">{data?.scored_wars_count}</span> wars
-                        </div>
-                    </div>
-                    
-                </div>
-                <div>
-                    <div className="flex flex-row items-center justify-center gap-2">
-                        <div>
-                            <img src="/icons/calendar.png" className="h-8 w-8"/>
-                        </div>
-                        <div>
-                            Last recorded war: #<span className="font-bold text-orange-400">{data?.last_scored_war_number}</span>
-                        </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 sm:gap-3">
+
+                <div className="flex items-center gap-3 border-2 rounded-xl shadow-lg/20 p-3 sm:p-4 justify-center items-center">
+                    <img src="/icons/swords.png" className="w-8 h-8 shrink-0" />
+                    <div className="text-sm">
+                        You've fought in{" "}
+                        <span className="font-bold text-orange-400">
+                            {data?.scored_wars_count}
+                        </span>{" "}
+                        wars
                     </div>
                 </div>
-                <div>
-                    <div className="flex flex-row items-center justify-center gap-2">
-                        <div>
-                            <img src="/icons/number-1.png" className="h-8 w-8"/>
-                        </div>
-                        <div>
-                            First appearance at war: #<span className="font-bold text-orange-400">{data?.first_scored_war_number}</span>
-                        </div>
+
+                <div className="flex items-center gap-3 border-2 rounded-xl shadow-lg/20 p-3 sm:p-4 justify-center items-center">
+                    <img src="/icons/calendar.png" className="w-8 h-8 shrink-0" />
+                    <div className="text-sm">
+                        Last recorded war:{" "}
+                        <span className="font-bold text-orange-400">
+                            #{data?.last_scored_war_number}
+                        </span>
                     </div>
                 </div>
+
+                <div className="flex items-center gap-3 border-2 rounded-xl shadow-lg/20 p-3 sm:p-4 justify-center items-center">
+                    <img src="/icons/number-1.png" className="w-8 h-8 shrink-0" />
+                    <div className="text-sm">
+                        First appearance:{" "}
+                        <span className="font-bold text-orange-400">
+                            #{data?.first_scored_war_number}
+                        </span>
+                    </div>
+                </div>
+
             </div>
-            <div className="flex flex-row items-center w-full h-26 gap-3">
-                <div className="flex flex-col items-center justify-center border-2 rounded w-full h-full shadow-lg/20">
-                        <div className="text-sm">
-                            TOTAL POINTS
-                        </div>
-                        <div className="font-black text-4xl">
-                            {formatNumber(Math.floor(Number(data?.total_points)))}
-                        </div>
-                        <div className="text-sm bg-orange-400 rounded-lg py-0.5 px-2 font-bold">
-                            CLAN RANK #{data?.total_points_rank}
-                        </div>
+
+            <div className="grid grid-cols-2 lg:grid-cols-3 gap-3">
+
+                <div className="flex flex-col items-center justify-center border-2 rounded-xl shadow-lg/20 p-3 sm:p-4 min-w-0">
+                    <div className="text-xs sm:text-sm text-center">
+                        TOTAL POINTS
+                    </div>
+
+                    <div className="font-black text-2xl sm:text-4xl my-1">
+                        {formatNumber(Math.floor(Number(data?.total_points)))}
+                    </div>
+
+                    <div className="text-[10px] sm:text-sm bg-orange-400 rounded-lg py-1 px-2 font-bold text-center">
+                        CLAN RANK #{data?.total_points_rank}
+                    </div>
                 </div>
-                <div className="flex flex-col items-center justify-center border-2 rounded w-full h-full shadow-lg/20">
-                        <div className="text-sm">
-                            AVERAGE POINTS
-                        </div>
-                        <div className="font-black text-4xl">
-                            {formatNumber(Math.floor(Number(data?.average_points)))}
-                        </div>
-                        <div className="text-sm bg-orange-400 rounded-lg py-0.5 px-2 font-bold">
-                            CLAN RANK #{data?.average_points_rank}
-                        </div>
+
+                <div className="flex flex-col items-center justify-center border-2 rounded-xl shadow-lg/20 p-3 sm:p-4 min-w-0">
+                    <div className="text-xs sm:text-sm text-center">
+                        AVERAGE POINTS
+                    </div>
+
+                    <div className="font-black text-2xl sm:text-4xl my-1">
+                        {formatNumber(Math.floor(Number(data?.average_points)))}
+                    </div>
+
+                    <div className="text-[10px] sm:text-sm bg-orange-400 rounded-lg py-1 px-2 font-bold text-center">
+                        CLAN RANK #{data?.average_points_rank}
+                    </div>
                 </div>
-                <div className="flex flex-col items-center justify-center border-2 rounded w-full h-full shadow-lg/20">
-                        <div className="text-sm">
-                            LAST 3 WARS AVERAGE
-                        </div>
-                        <div className="font-black text-4xl">
-                            {formatNumber(Math.floor(Number(data?.average_last_3)))}
-                        </div>
-                        <div className="text-sm bg-orange-400 rounded-lg py-0.5 px-2 font-bold">
-                            CLAN RANK #{data?.average_last_3_rank}
-                        </div>
+
+                <div className="col-span-2 lg:col-span-1 flex flex-col items-center justify-center border-2 rounded-xl shadow-lg/20 p-3 sm:p-4 min-w-0">
+                    <div className="text-xs sm:text-sm text-center">
+                        LAST 3 WARS AVERAGE
+                    </div>
+
+                    <div className="font-black text-2xl sm:text-4xl my-1">
+                        {formatNumber(Math.floor(Number(data?.average_last_3)))}
+                    </div>
+
+                    <div className="text-[10px] sm:text-sm bg-orange-400 rounded-lg py-1 px-2 font-bold text-center">
+                        CLAN RANK #{data?.average_last_3_rank}
+                    </div>
                 </div>
-                
+
             </div>
-            <div className="grid grid-cols-3 items-center w-full gap-3">
-                        <div className="flex flex-col border-2 rounded h-81 shadow-lg/20 col-span-2 px-6 py-3 gap-2">
-                        <div className="flex flex-row items-center justify-left gap-3 h-15 px-5">
-                            <div>
-                                <img src="/icons/bar-chart.png" className="h-11 w-11"/>
-                            </div>
-                            <div className="text-left">
-                                <div className="font-bold text-xl">
+
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-3">
+
+                <div className="flex flex-col border-2 rounded-xl shadow-lg/20 p-3 sm:p-5 lg:col-span-2 min-w-0">
+
+                    <div className="flex items-center gap-3 mb-3">
+                        <img
+                            src="/icons/bar-chart.png"
+                            className="w-9 h-9 sm:w-11 sm:h-11"
+                        />
+
+                        <div>
+                            <div className="font-bold text-lg text-left sm:text-xl">
                                 WAR HISTORY
-                                </div>
-                                <div className="text-sm">
+                            </div>
+
+                            <div className="text-xs sm:text-sm text-gray-500">
                                 Points scored in each war
-                                </div>
                             </div>
                         </div>
-                        <div className="w-full h-56">
-                            <ResponsiveContainer width="100%" height="100%" className="focus:outline-none">
-                                <LineChart data={warHistory} margin={{top: 16, right:20, left:12, bottom: 8}}className="focus:outline-none">
-                                    <CartesianGrid vertical={true} horizontal={true} />
-                                    <XAxis 
-                                        style={{ fontSize: "10px" }} 
-                                        dataKey="war_number" 
-                                        tickFormatter={(value) => `War #${value}`} 
-                                        interval={0} // Wymusza pokazanie wszystkich etykiet na osi X
+                    </div>
+
+                    {warHistory.length > 0 ? (
+                        <div className="w-full min-w-0 h-[260px] sm:h-[300px]">
+
+                            <ResponsiveContainer width="100%" height="100%">
+                                <LineChart
+                                    data={warHistory}
+                                    margin={{
+                                        top: 15,
+                                        right: 10,
+                                        left: -10,
+                                        bottom: 5
+                                    }}
+                                >
+                                    <CartesianGrid
+                                        strokeDasharray="3 3"
+                                        vertical={false}
+                                        stroke="#e5e7eb"
                                     />
-                                    <YAxis 
+
+                                    <XAxis
+                                        dataKey="war_number"
+                                        tickFormatter={(value) => `#${value}`}
+                                        interval={tickInterval}
+                                        tick={{ fontSize: 12 }}
+                                        tickMargin={8}
+                                        axisLine={false}
+                                        tickLine={false}
+                                    />
+
+                                    <YAxis
                                         tickFormatter={(value) => {
-                                            if (value >= 1_000_000) return `${(value / 1_000_000).toFixed(1)}M`;
-                                            if (value >= 1_000) return `${(value / 1_000).toFixed(0)}k`;
+                                            if (value >= 1_000_000) {
+                                                return `${(value / 1_000_000).toFixed(1)}M`;
+                                            }
+
+                                            if (value >= 1_000) {
+                                                return `${(value / 1_000).toFixed(0)}k`;
+                                            }
+
                                             return value;
                                         }}
-                                        width={50}
+                                        width={45}
+                                        tick={{ fontSize: 10 }}
+                                        axisLine={false}
+                                        tickLine={false}
                                     />
+
                                     <Tooltip
+                                        contentStyle={{
+                                            borderRadius: "10px",
+                                            border: "1px solid #e5e7eb",
+                                            fontSize: "12px"
+                                        }}
                                         labelFormatter={(value) => `War #${value}`}
                                         formatter={(value) => [
                                             Number(value).toLocaleString(),
-                                            "Points",
+                                            "Points"
                                         ]}
                                     />
+
                                     <Line
                                         type="monotone"
                                         dataKey="points"
                                         stroke="#f97316"
                                         strokeWidth={3}
-                                        dot={{ r: 4 }}
-                                        activeDot={{ r: 6 }}
+                                        dot={{ r: 3, fill: "#f97316" }}
+                                        activeDot={{
+                                            r: 6,
+                                            fill: "#f97316",
+                                            stroke: "#fff",
+                                            strokeWidth: 2
+                                        }}
                                         connectNulls={false}
                                     />
-                                </LineChart> 
+
+                                </LineChart>
                             </ResponsiveContainer>
+
                         </div>
-                            </div>
-                        <div className="flex flex-col gap-3">
-                            <div className="flex flex-row items-center justify-between gap-2 border-2 rounded h-25 shadow-lg/20 px-6 bg-green-50">
-                                <div>
-                                        <img src="/icons/trophy.png" className="h-13 w-13"/> 
-                                </div>
-                                <div className="flex-2 flex-col justify-left text-left px-2">
-                                    <div className="font-bold text-md stext-stroke-3">
-                                    PERSONAL BEST
-                                    </div>
-                                    <div>
-                                        {formatNumber(Math.floor(Number(data?.highest_points)))} points
-                                    </div>
-                                    <div className="text-zinc-500 text-xs">
-                                        in War <span className="font-bold">#{data?.highest_war_number}</span>
-                                    </div>
-                                </div>
-                                <div className="justify-center items-center border-2 border-green-600 bg-green-300 rounded-lg py-1 px-2">
-                                    
-                                        <div className="text-green-600 text-sm font-medium">
-                                            HIGHEST SCORE
-                                        </div>
-                                </div>
-                            </div>
-                            <div className="flex flex-row items-center justify-between gap-2 border-2 rounded h-25 shadow-lg/20 px-6 bg-gray-100">
+                    ) : (
+                        <div className="flex items-center justify-center h-[260px] text-sm text-gray-400">
+                            No war history available.
+                        </div>
+                    )}
 
-                                <div>
-                                    <img src="/icons/broken-shield.png" className="h-13 w-13"/>
-                                </div>
-                                <div className="flex-2 flex-col justify-left text-left px-2">
-                                    <div className="font-bold text-md stext-stroke-3">
-                                        LOWEST SCORE
-                                    </div>
-                                    <div>
-                                        {formatNumber(Math.floor(Number(data?.lowest_points)))} points
-                                    </div>
-                                    <div className="text-zinc-500 text-xs">
-                                        in War <span className="font-bold">#{data?.lowest_war_number}</span>
-                                    </div>
-                                </div>
-                                <div className="justify-center items-center border-2 border-gray-500 bg-gray-300 rounded-lg py-1 px-2">
-                                    
-                                        <div className="text-gray-500 text-sm font-medium">
-                                            LOWEST SCORE
-                                        </div>
-                                </div>
-                            </div>
-                            <div className="flex flex-row items-center justify-between gap-2 border-2 rounded h-25 shadow-lg/20 px-6">
+                </div>
 
-                                <div>
-                                    <img src="/icons/clan.png" className="h-13 w-13"/>
-                                </div>
-                                <div className="flex-2 flex-col justify-left text-left px-2">
-                                    <div className="font-bold text-md stext-stroke-3">
-                                        CLAN STATS
-                                    </div>
-                                </div>
-                                <div className="justify-center items-center border-2 border-orange-500 rounded-lg py-1 px-2">
-                                    
-                                        <div className="text-orange-500 text-sm font-medium">
-                                            SEE MORE
-                                        </div>
-                                </div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-3">
+
+                    <div className="flex items-center justify-between gap-2 border-2 rounded-xl shadow-lg/20 p-4 bg-green-50 min-w-0">
+
+                        <img
+                            src="/icons/trophy.png"
+                            className="w-10 h-10 sm:w-12 sm:h-12 shrink-0"
+                        />
+
+                        <div className="flex-1 min-w-0">
+                            <div className="font-bold text-sm sm:text-base">
+                                PERSONAL BEST
+                            </div>
+
+                            <div className="font-semibold">
+                                {formatNumber(Math.floor(Number(data?.highest_points)))} points
+                            </div>
+
+                            <div className="text-zinc-500 text-xs">
+                                in War #{data?.highest_war_number}
                             </div>
                         </div>
-                        
+
+                        <div className="hidden sm:block text-[10px] font-bold text-green-700 bg-green-200 border border-green-600 rounded-lg px-2 py-1 text-center">
+                            BEST SCORE
+                        </div>
+
+                    </div>
+
+                    <div className="flex items-center justify-between gap-2 border-2 rounded-xl shadow-lg/20 p-4 bg-gray-100 min-w-0">
+
+                        <img
+                            src="/icons/broken-shield.png"
+                            className="w-10 h-10 sm:w-12 sm:h-12 shrink-0"
+                        />
+
+                        <div className="flex-1 min-w-0">
+                            <div className="font-bold text-sm sm:text-base">
+                                LOWEST SCORE
+                            </div>
+
+                            <div className="font-semibold">
+                                {formatNumber(Math.floor(Number(data?.lowest_points)))} points
+                            </div>
+
+                            <div className="text-zinc-500 text-xs">
+                                in War #{data?.lowest_war_number}
+                            </div>
+                        </div>
+
+                        <div className="hidden sm:block text-[10px] font-bold text-gray-600 bg-gray-300 border border-gray-500 rounded-lg px-2 py-1 text-center">
+                            LOWEST
+                        </div>
+
+                    </div>
+
+                    <div className="flex items-center justify-between gap-3 border-2 rounded-xl shadow-lg/20 p-4 min-w-0 sm:col-span-2 lg:col-span-1">
+
+                        <img
+                            src="/icons/clan.png"
+                            className="w-10 h-10 sm:w-12 sm:h-12 shrink-0"
+                        />
+
+                        <div className="flex-1 min-w-0">
+                            <div className="font-bold text-sm sm:text-base">
+                                CLAN STATS
+                            </div>
+
+                            <div className="text-xs text-gray-500">
+                                Check clan performance
+                            </div>
+                        </div>
+
+                        <div className="text-xs font-bold text-orange-500 border-2 border-orange-500 rounded-lg py-2 px-3 whitespace-nowrap">
+                            SEE MORE
+                        </div>
+
+                    </div>
+
+                </div>
+
             </div>
+
         </div>
     )
 }

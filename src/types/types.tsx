@@ -194,3 +194,8 @@ export type PlayerWarPoints = Record<
     underworld: number,
     divine: number
  }
+
+ export interface AppNavigationProps{
+    isMenuOpened: boolean,
+    setMenuOpened: (isMenuOpened: boolean)=>void;
+ }

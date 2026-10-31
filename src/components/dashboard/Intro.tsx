@@ -3,9 +3,9 @@ import type { IntroProps } from "../../types/types";
 function Intro({understoodHandler} : IntroProps){
     return (
     <>
-    <div className="flex flex-col gap-2">
-        <div>
-                        Before we proceed, we need to verify your in-game identity
+    <div className="flex flex-col gap-2 justify-center items-center">
+                    <div>
+                        Before we proceed, verify your in-game identity.
                     </div>
                     <div>
                         You will be presented with a list of players, from which you need to find your nickname and tap <span className="text-green-500">"claim"</span> in order to get full access to this app.

@@ -1,7 +1,7 @@
 function AppFooter(){
     return (
         <>
-            <div className="border-t-2 flex flex-row p-2 gap-3 justify-around items-center shadow-[0_-15px_15px_-3px_rgba(0,0,0,0.1)] text-sm">
+            <div className="border-t-2 flex flex-col sm:flex-row p-2 gap-1 sm:gap-3 justify-around items-center shadow-[0_-15px_15px_-3px_rgba(0,0,0,0.1)] text-sm">
                 <div>
                     Made by <span className="text-orange-400"> gCode2</span>
                 </div>
