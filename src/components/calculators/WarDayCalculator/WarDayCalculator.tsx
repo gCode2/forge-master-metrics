@@ -575,6 +575,7 @@ function WarDayCalculator() {
                                                                 qtyKey,
                                                                 Math.max(0, Math.floor(Number(e.target.value) || 0))
                                                             )}
+                                                            onFocus={(e) => e.target.select()}
                                                             className="border px-2 w-24 rounded-sm"
                                                             min={0}
                                                             step={1}
@@ -590,6 +591,7 @@ function WarDayCalculator() {
                                                                 pointKey,
                                                                 Math.max(0, Math.floor(Number(e.target.value) || 0))
                                                             )}
+                                                            onFocus={(e) => e.target.select()}
                                                             className="border px-2 w-24 rounded-sm"
                                                             min={0}
                                                             step={1}
@@ -679,6 +681,7 @@ function WarDayCalculator() {
                                                                 qtyKey,
                                                                 Math.max(0, Math.floor(Number(e.target.value) || 0))
                                                             )}
+                                                            onFocus={(e) => e.target.select()}
                                                             className={`ml-1 ${inputClass}`}
                                                             min={0}
                                                             step={1}
@@ -694,6 +697,7 @@ function WarDayCalculator() {
                                                                     Math.max(0, Math.floor(Number(e.target.value) || 0))
                                                                 )
                                                             }
+                                                            onFocus={(e) => e.target.select()}
                                                             className={`ml-1 ${inputClass}`}
                                                             min={0}
                                                             step={1}
@@ -724,6 +728,7 @@ function WarDayCalculator() {
                                                                 qtyKey,
                                                                 Math.max(0, Math.floor(Number(e.target.value) || 0))
                                                             )}
+                                                            onFocus={(e) => e.target.select()}
                                                             className="border px-2 w-24 rounded-sm"
                                                             min={0}
                                                             step={1}
@@ -739,6 +744,7 @@ function WarDayCalculator() {
                                                                     Math.max(0, Math.floor(Number(e.target.value) || 0))
                                                                 )
                                                             }
+                                                            onFocus={(e) => e.target.select()}
                                                             className={`ml-1 ${inputClass}`}
                                                             min={0}
                                                             step={1}

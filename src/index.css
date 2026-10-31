@@ -30,6 +30,9 @@
 }
 html, body{
     font-family: var(--main-font);
+    width:100%;
+    max-width:100%;
+    overflow-x:clip;
 }
 button, 
 input, 

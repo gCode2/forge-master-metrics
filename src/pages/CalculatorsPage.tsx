@@ -77,8 +77,8 @@ function CalculatorsPage () {
                     </div>
                 </div>
             </div>
-            <div className="border-2 rounded flex flex-row text-2xl gap-3 p-6 shadow-lg/20 ">
-                <div>
+            <div className="border-2 rounded flex flex-row text-2xl gap-4 p-6 shadow-lg/20 ">
+                <div className="h-16 w-16shrink-0">
                     <img src="/icons/gear.png" className="h-16 w-16"/>
                 </div>
                 <div className="flex flex-col">
