@@ -434,7 +434,7 @@ function WarDayCalculator() {
                                             border-2 rounded px-3 py-2
                                             bg-orange-50 border-orange-400
                                             min-w-0 fixed bottom-4 left-1/2 -translate-x-1/2 z-50
-
+                                            pb-[env(safe-area-inset-bottom)]
                                             w-[calc(100%-2rem)] max-w-md
                                             rounded-xl border border-gray-300 shadow-xl backdrop-blur-md
                                             p-3 sm:p-4
