@@ -863,7 +863,7 @@ function WarDayCalculator() {
                                             <span className="font-bold text-md">DAY {calculatorState.selectedDay} TOTAL</span>
                                             <span className="text-xs text-zinc-500">Expected points from all sections above</span>
                                         </div>
-                                        <span className="font-black text-3xl">{formatPoints(totalPoints)}</span>
+                                        <span className="font-black text-xl sm:text-3xl">{formatPoints(totalPoints)}</span>
                                     </div>
                                 </div>
                             </section>
