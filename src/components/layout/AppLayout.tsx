@@ -1,6 +1,7 @@
 import { Outlet } from "react-router";
 import AppHeader from "./AppHeader";
 import AppFooter from "./AppFooter";
+import PwaInstallPrompt from "./PwaInstallPrompt";
 
 function AppLayout(){
     return (
@@ -10,6 +11,7 @@ function AppLayout(){
                 <Outlet/>
                 <AppFooter/>
             </div>
+            <PwaInstallPrompt/>
         </>
     )
     
