@@ -22,24 +22,7 @@ function CalculatorsPage () {
             </div>
             <div className="w-full flex flex-col gap-3">
                 <div className="border-2 rounded flex flex-row text-base sm:text-2xl gap-3 p-3 sm:p-6 shadow-lg/20 w-full min-w-0">
-                    <div className="flex flex-col gap-1 w-full">
-                        <div className="flex flex-row justify-start items-center gap-5">
-                            <div className="h-16 w-16 sm:h-25 sm:w-25 shrink-0">
-                                <img src="/icons/war_points.png" className="h-16 w-16 sm:h-25 sm:w-25 shrink-0"/>
-                            </div>
-                            <div className="flex flex-col">
-                                <div className="font-bold">
-                                War Points Calculator
-                                </div>
-                                <div className="text-sm text-zinc-500">
-                                    Calculate how many points you'll earn in a war based on your bonuses and available resources.
-                                </div>
-                            </div>
-                        </div>
-                        <div className="mt-6 w-full">
-                            <WarDayCalculator/>
-                        </div>
-                    </div>
+                    <WarDayCalculator/>
                 </div>
                 <div className="border-2 rounded flex flex-row text-base sm:text-2xl gap-3 p-3 sm:p-6 shadow-lg/20 w-full min-w-0">
                     <div className="flex flex-col gap-1 w-full">

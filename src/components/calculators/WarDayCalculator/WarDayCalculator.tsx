@@ -67,6 +67,8 @@ function WarDayCalculator() {
         }
     })
 
+    const [isConfirmingReset, setConfirmingReset] = useState(false);
+
     useEffect(() => {
         const timeout = setTimeout(() => {
             localStorage.setItem(
@@ -77,6 +79,15 @@ function WarDayCalculator() {
 
         return () => clearTimeout(timeout);
     }, [calculatorState]);
+
+    useEffect(()=>{
+        if(isConfirmingReset){
+            const timer = setTimeout(()=>{
+                setConfirmingReset(false);
+            }, 3000)
+            return ()=>clearTimeout(timer);
+        }
+    }, [isConfirmingReset])
 
     const daysIds = warDaysActions[calculatorState.selectedDay - 1] || [];
 
@@ -127,6 +138,17 @@ function WarDayCalculator() {
                 [key]: toNonNegativeInteger(value),
             },
         }));
+    }
+
+    function handleCalculatorReset(){
+        if(isConfirmingReset){
+            setCalculatorState(DEFAULT_STATE);
+            setConfirmingReset(false);
+        } else{
+            setConfirmingReset(true)
+        }
+        
+        
     }
 
     function getPoints(key: string, defaultValue: number){
@@ -283,537 +305,571 @@ function WarDayCalculator() {
     }, 0);
 
     return (
-        <section className="flex flex-col gap-4 sm:gap-5 text-sm min-w-0 w-full">
-            <div className="
-                flex flex-col sm:flex-row
-                items-start sm:items-center
-                justify-between gap-3
-                border-2 rounded-lg p-3 bg-gray-50
-            ">
-                <div className="font-bold text-lg sm:text-xl flex flex-col">
-                    <div>
-                        Calculator mode
-                    </div>
-                    
-                    <div className="text-zinc-500 text-xs sm:text-sm font-normal">
-                        {calculatorState.showAdvancedMode ? "Seems too complicated? Switch to Simple Mode" : "To specify more details (i.e. extra drop chances or forge level) enable the Advanced Mode"}
-                    </div>
-                </div>
 
-                <div className="flex items-center gap-2 sm:gap-3 self-center sm:self-auto shrink-0">
-                    <span className={`text-sm ${!calculatorState.showAdvancedMode ? "font-bold text-gray-900" : "text-gray-500"}`}>
-                        Simple
-                    </span>
-
-                    <button
-                        type="button"
-                        onClick={() => {
-                            setCalculatorState(prev => ({
-                                ...prev,
-                                showAdvancedMode: !prev.showAdvancedMode,
-                        }));}}
-                        className={`relative w-16 h-8 rounded-full transition-colors duration-200 ${
-                            calculatorState.showAdvancedMode ? "bg-orange-500" : "bg-gray-400"
-                        }`}
-                        aria-label="Toggle calculator mode"
-                        aria-pressed={calculatorState.showAdvancedMode}
-                    >
-                        <span
-                            className={`absolute top-1 left-1 w-6 h-6 bg-white rounded-full shadow transition-transform duration-200 ${
-                                calculatorState.showAdvancedMode ? "translate-x-8" : "translate-x-0"
-                            }`}
-                        />
-                    </button>
-
-                    <span className={`text-sm ${calculatorState.showAdvancedMode ? "font-bold text-gray-900" : "text-gray-500"}`}>
-                        Advanced
-                    </span>
-                </div>
-            </div>
-            <div className="flex flex-col sm:flex-row sm:justify-between gap-3 text-sm">
-
-                <div className="grid grid-cols-5 sm:flex sm:flex-row gap-2">
-                    {Array.from(warDaysActions.keys()).map((index) => {
-                        const dayNumber = index + 1;
-
-                        return (
-                            <button
-                                type="button"
-                                key={index}
-                                className={`
+        <div className="flex flex-col gap-1 w-full">
+                        <div className="flex flex-col sm:flex-row justify-center sm:justify-start items-center gap-2 sm:gap-5">
+                            <div className="h-16 w-16 sm:h-25 sm:w-25 shrink-0">
+                                <img src="/icons/war_points.png" className="h-16 w-16 sm:h-25 sm:w-25 shrink-0"/>
+                            </div>
+                            <div className="flex flex-col justify-center items-center sm:justify-start sm:items-start">
+                                <div className="font-bold">
+                                War Points Calculator
+                                </div>
+                                <div className="text-sm text-zinc-500 text-center sm:text-left">
+                                    Calculate how many points you'll earn in a war based on your bonuses and available resources.
+                                </div>
+                            </div>
+                            <div className="flex sm:ml-auto">
+                                <button
+                                    type="button"
+                                    className={`
                                     flex justify-center items-center
                                     text-white font-bold
                                     py-2 px-2 sm:px-4
-                                    transition duration-200
-                                    rounded ring-1 ring-black border-b-4
-                                    text-xs hover:cursor-pointer
-                                    ${calculatorState.selectedDay === dayNumber
-                                        ? "bg-orange-400 border-orange-500 hover:bg-orange-300"
-                                        : "bg-gray-400 border-gray-500 hover:bg-gray-300"
-                                    }
-                                `}
-                                onClick={() => handleDayChange(dayNumber)}
-                            >
-                                Day {dayNumber}
-                            </button>
-                        );
-                    })}
-                </div>
+                                    transition duration-300
+                                    rounded ring-1 ring-black border-b-4 w-26 sm:w-31
+                                    text-xs min-w-max hover:cursor-pointer ${isConfirmingReset ? "bg-red-500 border-red-600 hover:border-red-500 hover:bg-red-400" : "bg-red-400 border-red-500 hover:border-red-400 hover:bg-red-300"}`}
+                                    onClick={handleCalculatorReset}>
+                                        {isConfirmingReset ? "Are you sure? " : "Reset calculator"}
+                                </button>
+                            </div>
+                        </div>
+                        <div className="mt-6 w-full">
+                            <section className="flex flex-col gap-4 sm:gap-5 text-sm min-w-0 w-full">
+            
+                                <div className="
+                                    flex flex-col sm:flex-row
+                                    items-start sm:items-center
+                                    justify-between gap-3
+                                    border-2 rounded-lg p-3 bg-gray-50
+                                ">
+                                    <div className="font-bold text-lg sm:text-xl flex flex-col justify-center sm:justify-start items-center sm:items-start w-full">
+                                        <div>
+                                            Calculator mode
+                                        </div>
+                                        
+                                        <div className="text-zinc-500 text-xs sm:text-sm font-normal">
+                                            {calculatorState.showAdvancedMode ? "Seems too complicated? Switch to Simple Mode" : "To specify more details (i.e. extra drop chances or forge level) enable the Advanced Mode"}
+                                        </div>
+                                    </div>
 
-                <div>
+                                    <div className="flex items-center gap-2 sm:gap-3 self-center sm:self-auto shrink-0">
+                                        <span className={`text-sm ${!calculatorState.showAdvancedMode ? "font-bold text-gray-900" : "text-gray-500"}`}>
+                                            Simple
+                                        </span>
 
-                    <div className="
-                        flex items-center justify-between gap-2
-                        border-2 rounded px-3 py-2 sm:py-0
-                        bg-green-50 border-green-600
-                        min-w-0
-                    ">
-                        <span className="font-bold text-sm">
-                            DAY {calculatorState.selectedDay} TOTAL
-                        </span>
-                        <span className="font-black text-xl sm:text-2xl tabular-nums">
-                            {formatPoints(totalPoints)}
-                        </span>
-                    </div>
+                                        <button
+                                            type="button"
+                                            onClick={() => {
+                                                setCalculatorState(prev => ({
+                                                    ...prev,
+                                                    showAdvancedMode: !prev.showAdvancedMode,
+                                            }));}}
+                                            className={`relative w-16 h-8 rounded-full transition-colors duration-200 ${
+                                                calculatorState.showAdvancedMode ? "bg-orange-500" : "bg-gray-400"
+                                            }`}
+                                            aria-label="Toggle calculator mode"
+                                            aria-pressed={calculatorState.showAdvancedMode}
+                                        >
+                                            <span
+                                                className={`absolute top-1 left-1 w-6 h-6 bg-white rounded-full shadow transition-transform duration-200 ${
+                                                    calculatorState.showAdvancedMode ? "translate-x-8" : "translate-x-0"
+                                                }`}
+                                            />
+                                        </button>
 
-                    <div className="
-                        flex items-center justify-between gap-2
-                        border-2 rounded px-3 py-2
-                        bg-orange-50 border-orange-400
-                        min-w-0 fixed bottom-4 left-1/2 -translate-x-1/2 z-50
-
-                        w-[calc(100%-2rem)] max-w-md
-                        rounded-xl border border-gray-300 shadow-xl backdrop-blur-md
-                        p-3 sm:p-4
-                    ">
-                        <span className="font-bold text-sm">
-                            TOTAL WAR POINTS
-                        </span>
-                        <span className="font-black text-xl sm:text-2xl tabular-nums">
-                            {formatPoints(totalWarPoints)}
-                        </span>
-                    </div>
-
-                </div>
-            </div>
-            <div className="border-2 rounded-md p-3 flex flex-col gap-4 shadow-lg/20">
-                {
-                    filteredActions.map(group => {
-                        const customAct = group.customAction;
-                        const actionList = group.actions || [];
-                        const groupDefaultCost = (group as any).defaultCost ?? 1;
-                        const summary = getGroupSummary(group);
-
-                        return(
-                            <div key={group.id} className="border-b pb-4 flex flex-col gap-3">
-                                <div className="text-xl font-bold">
-                                    {group.name}
+                                        <span className={`text-sm ${calculatorState.showAdvancedMode ? "font-bold text-gray-900" : "text-gray-500"}`}>
+                                            Advanced
+                                        </span>
+                                    </div>
                                 </div>
+                                <div className="flex flex-col sm:flex-row sm:justify-between gap-3 text-sm">
 
-                                {group.id === 1 && (
-                                    <div className="flex flex-col gap-4">
-                                        <div className="flex flex-wrap items-end gap-4">
-                                            <NumberField
-                                                label="Number of hammers:"
-                                                value={getQty("forge-hammers")}
-                                                onChange={(v) =>
-                                                    handleQuantityChange("forge-hammers", v)
-                                                }
-                                            />
-                                            {calculatorState.showAdvancedMode && 
-                                            <>
-                                                <NumberField
-                                                label="Extra chance (%):"
-                                                value={calculatorState.specialSettings.forgeExtraChance ?? 0}
-                                                onChange={(v) =>
-                                                    handleSettingChange("forgeExtraChance", v)
-                                                }
-                                            />
+                                    <div className="grid grid-cols-5 sm:flex sm:flex-row gap-2">
+                                        {Array.from(warDaysActions.keys()).map((index) => {
+                                            const dayNumber = index + 1;
 
-                                                <label className="flex flex-row gap-1 font-medium justify-between items-center font-medium w-full bg-gray-50 p-1 border-1 border-gray-200">
-                                                    Forge level:
-                                                    <select
-                                                        value={calculatorState.selectedForgeLevel}
-                                                        onChange={(e) => {
-                                                            setCalculatorState(prev => ({
-                                                                ...prev,
-                                                                selectedForgeLevel: Number(e.target.value),
-                                                            }));
+                                            return (
+                                                <button
+                                                    type="button"
+                                                    key={index}
+                                                    className={`
+                                                        flex justify-center items-center
+                                                        text-white font-bold
+                                                        py-2 px-2 sm:px-4
+                                                        transition duration-200
+                                                        rounded ring-1 ring-black border-b-4
+                                                        text-xs hover:cursor-pointer
+                                                        ${calculatorState.selectedDay === dayNumber
+                                                            ? "bg-orange-400 border-orange-500 hover:bg-orange-300"
+                                                            : "bg-gray-400 border-gray-500 hover:bg-gray-300"
                                                         }
-                                                        }
-                                                        className="border rounded-sm px-2 py-1 bg-white"
-                                                    >
-                                                        {forgeLevels.map((level) => (
-                                                            <option key={level.level} value={level.level}>
-                                                                Level {level.level}
-                                                            </option>
-                                                        ))}
-                                                    </select>
-                                                </label>
-                                            </>
-                                            }
-                                            
-                                        </div>
-
-                                        <div className="border rounded p-3 flex flex-col gap-3">
-                                            <div className="font-semibold text-lg">
-                                                Points per equipment tier
-                                            </div>
-
-                                            {FORGE_TIERS.map((tier) => (
-                                                <div
-                                                    key={tier.key}
-                                                    className="flex flex-wrap items-center justify-between gap-3"
+                                                    `}
+                                                    onClick={() => handleDayChange(dayNumber)}
                                                 >
-                                                    <span className="text-xs sm:text-sm">{tier.title}</span>
+                                                    Day {dayNumber}
+                                                </button>
+                                            );
+                                        })}
+                                    </div>
 
-                                                    <NumberField
-                                                        label="Points:"
-                                                        value={getPoints(tier.key, tier.defaultPoints)}
-                                                        onChange={(v) => handlePointsChange(tier.key, v)}
-                                                    />
-                                                </div>
-                                            ))}
+                                    <div>
+
+                                        <div className="
+                                            flex items-center justify-between gap-2
+                                            border-2 rounded px-3 py-2 sm:py-0
+                                            bg-green-50 border-green-600
+                                            min-w-0
+                                        ">
+                                            <span className="font-bold text-sm">
+                                                DAY {calculatorState.selectedDay} TOTAL
+                                            </span>
+                                            <span className="font-black text-xl sm:text-2xl tabular-nums">
+                                                {formatPoints(totalPoints)}
+                                            </span>
                                         </div>
-                                        {/* {calculatorState.showAdvancedMode && 
-                                            <div className="border rounded p-3 flex flex-col gap-2">
-                                                <div className="font-semibold">
-                                                    Equipment drop chances - Level {selectedForge.level}
-                                                </div>
 
-                                                {group.actions.map((act) => {
-                                                    const chanceKey =
-                                                        FORGE_CHANCE_KEYS[
-                                                            act.name as keyof typeof FORGE_CHANCE_KEYS
-                                                        ];
+                                        <div className="
+                                            flex items-center justify-between gap-2
+                                            border-2 rounded px-3 py-2
+                                            bg-orange-50 border-orange-400
+                                            min-w-0 fixed bottom-4 left-1/2 -translate-x-1/2 z-50
 
-                                                    const chance = chanceKey
-                                                        ? selectedForge.forgeChances[chanceKey]
-                                                        : 0;
+                                            w-[calc(100%-2rem)] max-w-md
+                                            rounded-xl border border-gray-300 shadow-xl backdrop-blur-md
+                                            p-3 sm:p-4
+                                        ">
+                                            <span className="font-bold text-sm">
+                                                TOTAL WAR POINTS
+                                            </span>
+                                            <span className="font-black text-xl sm:text-2xl tabular-nums">
+                                                {formatPoints(totalWarPoints)}
+                                            </span>
+                                        </div>
 
-                                                    const tier = FORGE_TIERS.find(item =>
-                                                        item.names.includes(act.name)
-                                                    );
+                                    </div>
+                                </div>
+                                <div className="border-2 rounded-md p-3 flex flex-col gap-4 shadow-lg/20">
+                                    {
+                                        filteredActions.map(group => {
+                                            const customAct = group.customAction;
+                                            const actionList = group.actions || [];
+                                            const groupDefaultCost = (group as any).defaultCost ?? 1;
+                                            const summary = getGroupSummary(group);
 
-                                                    const points = tier
-                                                        ? getPoints(tier.key, tier.defaultPoints)
-                                                        : act.defaultPoints;
+                                            return(
+                                                <div key={group.id} className="border-b pb-4 flex flex-col gap-3">
+                                                    <div className="text-xl font-bold">
+                                                        {group.name}
+                                                    </div>
 
-                                                    const expectedPoints = chance * points;
+                                                    {group.id === 1 && (
+                                                        <div className="flex flex-col gap-4">
+                                                            <div className="flex flex-wrap items-end gap-4">
+                                                                <NumberField
+                                                                    label="Number of hammers:"
+                                                                    value={getQty("forge-hammers")}
+                                                                    onChange={(v) =>
+                                                                        handleQuantityChange("forge-hammers", v)
+                                                                    }
+                                                                />
+                                                                {calculatorState.showAdvancedMode && 
+                                                                <>
+                                                                    <NumberField
+                                                                    label="Extra chance (%):"
+                                                                    value={calculatorState.specialSettings.forgeExtraChance ?? 0}
+                                                                    onChange={(v) =>
+                                                                        handleSettingChange("forgeExtraChance", v)
+                                                                    }
+                                                                />
 
-                                                    return (
-                                                        <div
-                                                            key={act.name}
-                                                            className="flex flex-wrap items-center justify-between gap-3 border-b last:border-b-0 pb-2 last:pb-0"
-                                                        >
-                                                            <span className="font-medium">
-                                                                {act.name}
-                                                            </span>
+                                                                    <label className="flex flex-row gap-1 font-medium justify-between items-center font-medium w-full bg-gray-50 p-1 border-1 border-gray-200">
+                                                                        Forge level:
+                                                                        <select
+                                                                            value={calculatorState.selectedForgeLevel}
+                                                                            onChange={(e) => {
+                                                                                setCalculatorState(prev => ({
+                                                                                    ...prev,
+                                                                                    selectedForgeLevel: Number(e.target.value),
+                                                                                }));
+                                                                            }
+                                                                            }
+                                                                            className="border rounded-sm px-2 py-1 bg-white"
+                                                                        >
+                                                                            {forgeLevels.map((level) => (
+                                                                                <option key={level.level} value={level.level}>
+                                                                                    Level {level.level}
+                                                                                </option>
+                                                                            ))}
+                                                                        </select>
+                                                                    </label>
+                                                                </>
+                                                                }
+                                                                
+                                                            </div>
 
-                                                            <div className="flex flex-row justify-between sm:grid sm:grid-cols-[1fr_1fr_auto] items-center gap-3 text-sm w-full">
-                                                                <div className="text-zinc-600">
-                                                                    Chance: {(chance * 100).toLocaleString(
-                                                                        undefined,
-                                                                        { maximumFractionDigits: 4 }
-                                                                    )}%
+                                                            <div className="border rounded p-3 flex flex-col gap-3">
+                                                                <div className="font-semibold text-lg">
+                                                                    Points per equipment tier
                                                                 </div>
 
-                                                                <div className="text-zinc-600">
-                                                                    {formatPoints(points)} pts
-                                                                </div>
+                                                                {FORGE_TIERS.map((tier) => (
+                                                                    <div
+                                                                        key={tier.key}
+                                                                        className="flex flex-wrap items-center justify-between gap-3"
+                                                                    >
+                                                                        <span className="text-xs sm:text-sm">{tier.title}</span>
 
-                                                                <div className="font-semibold">
-                                                                    Expected: {formatPoints(expectedPoints)} pts
+                                                                        <NumberField
+                                                                            label="Points:"
+                                                                            value={getPoints(tier.key, tier.defaultPoints)}
+                                                                            onChange={(v) => handlePointsChange(tier.key, v)}
+                                                                        />
+                                                                    </div>
+                                                                ))}
+                                                            </div>
+                                                            {/* {calculatorState.showAdvancedMode && 
+                                                                <div className="border rounded p-3 flex flex-col gap-2">
+                                                                    <div className="font-semibold">
+                                                                        Equipment drop chances - Level {selectedForge.level}
+                                                                    </div>
+
+                                                                    {group.actions.map((act) => {
+                                                                        const chanceKey =
+                                                                            FORGE_CHANCE_KEYS[
+                                                                                act.name as keyof typeof FORGE_CHANCE_KEYS
+                                                                            ];
+
+                                                                        const chance = chanceKey
+                                                                            ? selectedForge.forgeChances[chanceKey]
+                                                                            : 0;
+
+                                                                        const tier = FORGE_TIERS.find(item =>
+                                                                            item.names.includes(act.name)
+                                                                        );
+
+                                                                        const points = tier
+                                                                            ? getPoints(tier.key, tier.defaultPoints)
+                                                                            : act.defaultPoints;
+
+                                                                        const expectedPoints = chance * points;
+
+                                                                        return (
+                                                                            <div
+                                                                                key={act.name}
+                                                                                className="flex flex-wrap items-center justify-between gap-3 border-b last:border-b-0 pb-2 last:pb-0"
+                                                                            >
+                                                                                <span className="font-medium">
+                                                                                    {act.name}
+                                                                                </span>
+
+                                                                                <div className="flex flex-row justify-between sm:grid sm:grid-cols-[1fr_1fr_auto] items-center gap-3 text-sm w-full">
+                                                                                    <div className="text-zinc-600">
+                                                                                        Chance: {(chance * 100).toLocaleString(
+                                                                                            undefined,
+                                                                                            { maximumFractionDigits: 4 }
+                                                                                        )}%
+                                                                                    </div>
+
+                                                                                    <div className="text-zinc-600">
+                                                                                        {formatPoints(points)} pts
+                                                                                    </div>
+
+                                                                                    <div className="font-semibold">
+                                                                                        Expected: {formatPoints(expectedPoints)} pts
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        );
+                                                                    })}
                                                                 </div>
+                                                            } */}
+                                                        </div>
+                                                    )}
+                                                    {group.id === 2 && customAct && (
+                                                        <div className="flex flex-wrap gap-4 items-center">
+                                                            <NumberField
+                                                                label="Dungeon Keys:"
+                                                                value={getQty("dungeon-keys", 8)}
+                                                                onChange={(v) => handleQuantityChange("dungeon-keys", v)}
+                                                            />
+                                                            <NumberField
+                                                                label="Points:"
+                                                                value={getPoints("dungeon-pts", customAct.defaultPoints)}
+                                                                onChange={(v) => handlePointsChange("dungeon-pts", v)}
+                                                            />
+                                                        </div>
+                                                    )}
+
+                                                    {group.id === 3 && (
+                                                        <div className="flex flex-col gap-2">
+                                                            {actionList.map((act, idx) => {
+                                                                const qtyKey = `egg-qty-${act.name}`;
+                                                                const pointKey = `egg-pts-${act.name}`;
+
+                                                                return (
+                                                                    <div
+                                                                        key={idx}
+                                                                        className="
+                                                                            flex flex-wrap items-end gap-3
+                                                                            border-b last:border-b-0 pb-3 last:pb-0
+                                                                        "
+                                                                    >
+                                                                        <span className="w-full sm:w-36 font-semibold">
+                                                                            {act.name}
+                                                                        </span>
+
+                                                                        <label className="flex flex-col gap-1">
+                                                                            Hatch:
+                                                                            <input
+                                                                                type="number"
+                                                                                value={getQty(qtyKey)}
+                                                                                onChange={(e) => handleQuantityChange(
+                                                                                    qtyKey,
+                                                                                    Math.max(0, Math.floor(Number(e.target.value) || 0))
+                                                                                )}
+                                                                                onFocus={(e) => e.target.select()}
+                                                                                className="border px-2 w-24 rounded-sm"
+                                                                                min={0}
+                                                                                step={1}
+                                                                            />
+                                                                        </label>
+
+                                                                        <label className="flex flex-col gap-1">
+                                                                            Points:
+                                                                            <input
+                                                                                type="number"
+                                                                                value={getPoints(pointKey, act.defaultPoints)}
+                                                                                onChange={(e) => handlePointsChange(
+                                                                                    pointKey,
+                                                                                    Math.max(0, Math.floor(Number(e.target.value) || 0))
+                                                                                )}
+                                                                                onFocus={(e) => e.target.select()}
+                                                                                className="border px-2 w-24 rounded-sm"
+                                                                                min={0}
+                                                                                step={1}
+                                                                            />
+                                                                        </label>
+                                                                    </div>
+                                                                );
+                                                            })}
+                                                        </div>
+                                                    )}
+
+                                                    {group.id === 4 && customAct && (
+                                                        <div className="flex flex-wrap gap-4 items-center">
+                                                            <NumberField
+                                                                label="Pets to merge:"
+                                                                value={getQty("merge-pets-qty")}
+                                                                onChange={(v) => handleQuantityChange("merge-pets-qty", v)}
+                                                            />
+                                                            <NumberField
+                                                                label="Points:"
+                                                                value={getPoints("merge-pets-pts", customAct.defaultPoints)}
+                                                                onChange={(v) => handlePointsChange("merge-pets-pts", v)}
+                                                            />
+                                                        </div>
+                                                    )}
+
+                                                    {group.id === 5 && customAct && (
+                                                        <div className="flex flex-wrap gap-4 items-center">
+                                                            <NumberField
+                                                                label="Mount keys:"
+                                                                value={getQty("mount-keys-qty")}
+                                                                onChange={(v) => handleQuantityChange("mount-keys-qty", v)}
+                                                            />
+                                                            {
+                                                                calculatorState.showAdvancedMode && <>
+                                                                <NumberField
+                                                                    label="Cost:"
+                                                                    value={getCost("mountCost", groupDefaultCost)}
+                                                                    onChange={(v) => handleSettingChange("mountCost", v)}
+                                                                />
+                                                                <NumberField
+                                                                    label="Extra chance (%):"
+                                                                    value={calculatorState.specialSettings.mountExtraChance ?? 0}
+                                                                    onChange={(v) => handleSettingChange("mountExtraChance", v)}
+                                                                />
+                                                                
+                                                                </>
+                                                            }
+                                                            <NumberField
+                                                                    label="Points:"
+                                                                    value={getPoints("mount-pts", customAct.defaultPoints)}
+                                                                    onChange={(v) => handlePointsChange("mount-pts", v)}
+                                                                />
+                                                        </div>
+                                                    )}
+
+                                                    {group.id === 6 && customAct && (
+                                                        <div className="flex flex-wrap gap-4 items-center">
+                                                            <NumberField
+                                                                label="Mount merges:"
+                                                                value={getQty("merge-mounts-qty", Math.floor(getExpectedMounts()))}
+                                                                onChange={(v) => handleQuantityChange("merge-mounts-qty", v)}
+                                                            />
+                                                            <NumberField
+                                                                label="Points:"
+                                                                value={getPoints("merge-mounts-pts", customAct.defaultPoints)}
+                                                                onChange={(v) => handlePointsChange("merge-mounts-pts", v)}
+                                                            />
+                                                        </div>
+                                                    )}
+
+                                                    {group.id === 7 && (
+                                                        <div className="flex flex-col gap-2">
+                                                            {actionList.map((act, idx) => {
+                                                                const qtyKey = `tech-qty-${act.name}`;
+                                                                const pointKey = `tech-pts-${act.name}`;
+
+                                                                return (
+                                                                    <div key={idx} className="flex flex-wrap items-end gap-3
+                                                                        border-b last:border-b-0 pb-3 last:pb-0">
+                                                                        <span className="w-full sm:w-36 font-semibold">{act.name}</span>
+                                                                        <label className="flex flex-row justify-between sm:justify-center items-center gap-1 min-w-full sm:min-w-0">How many:
+                                                                            <input
+                                                                                type="number"
+                                                                                value={getQty(qtyKey)}
+                                                                                onChange={(e) => handleQuantityChange(
+                                                                                    qtyKey,
+                                                                                    Math.max(0, Math.floor(Number(e.target.value) || 0))
+                                                                                )}
+                                                                                onFocus={(e) => e.target.select()}
+                                                                                className={`ml-1 ${inputClass}`}
+                                                                                min={0}
+                                                                                step={1}
+                                                                            />
+                                                                        </label>
+                                                                        <label className="flex flex-row justify-between sm:justify-center items-center gap-1 min-w-full sm:min-w-0">Points:
+                                                                            <input
+                                                                                type="number"
+                                                                                value={getPoints(pointKey, act.defaultPoints)}
+                                                                                onChange={(e) =>
+                                                                                    handlePointsChange(
+                                                                                        pointKey,
+                                                                                        Math.max(0, Math.floor(Number(e.target.value) || 0))
+                                                                                    )
+                                                                                }
+                                                                                onFocus={(e) => e.target.select()}
+                                                                                className={`ml-1 ${inputClass}`}
+                                                                                min={0}
+                                                                                step={1}
+                                                                            />
+                                                                        </label>
+                                                                    </div>
+                                                                );
+                                                            })}
+                                                        </div>
+                                                    )}
+
+                                                    {group.id === 8 && (
+                                                        <div className="flex flex-col gap-2">
+                                                            {actionList.map((act, idx) => {
+                                                                const qtyKey = `spend-qty-${act.name}`;
+                                                                const pointKey = `spend-pts-${act.name}`;
+
+                                                                return (
+                                                                    <div key={idx} className="flex flex-wrap items-end gap-3
+                                                                        border-b last:border-b-0 pb-3 last:pb-0">
+                                                                        <span className="w-full font-semibold">{act.name}</span>
+                                                                        <label className="flex flex-col gap-1">
+                                                                            Owned amount:
+                                                                            <input
+                                                                                type="number"
+                                                                                value={getQty(qtyKey)}
+                                                                                onChange={(e) => handleQuantityChange(
+                                                                                    qtyKey,
+                                                                                    Math.max(0, Math.floor(Number(e.target.value) || 0))
+                                                                                )}
+                                                                                onFocus={(e) => e.target.select()}
+                                                                                className="border px-2 w-24 rounded-sm"
+                                                                                min={0}
+                                                                                step={1}
+                                                                            />
+                                                                        </label>
+                                                                        <label className="flex flex-col gap-1">Points:
+                                                                            <input
+                                                                                type="number"
+                                                                                value={getPoints(pointKey, act.defaultPoints)}
+                                                                                onChange={(e) =>
+                                                                                    handlePointsChange(
+                                                                                        pointKey,
+                                                                                        Math.max(0, Math.floor(Number(e.target.value) || 0))
+                                                                                    )
+                                                                                }
+                                                                                onFocus={(e) => e.target.select()}
+                                                                                className={`ml-1 ${inputClass}`}
+                                                                                min={0}
+                                                                                step={1}
+                                                                            />
+                                                                        </label>
+                                                                        <span className="text-xs text-zinc-500 w-full sm:w-auto">
+                                                                            = {formatPoints(Math.floor(getQty(qtyKey) / getSpendUnitSize(act.name)))} × {formatPoints(getPoints(pointKey, act.defaultPoints))} pts
+                                                                        </span>
+                                                                    </div>
+                                                                );
+                                                            })}
+                                                        </div>
+                                                    )}
+
+                                                    {group.id === 9 && customAct && (
+                                                        <div className="flex flex-col gap-3">
+                                                            <div className="flex flex-wrap gap-4 items-center">
+                                                                <NumberField
+                                                                    label="Summon Tickets:"
+                                                                    value={getQty("skill-tickets-qty")}
+                                                                    onChange={(v) => handleQuantityChange("skill-tickets-qty", v)}
+                                                                />
+                                                                {calculatorState.showAdvancedMode && <>
+                                                                    <NumberField
+                                                                    label="Cost:"
+                                                                    value={getCost("skillCost", groupDefaultCost)}
+                                                                    onChange={(v) => handleSettingChange("skillCost", v)}
+                                                                />
+                                                                
+                                                                </>}
+                                                                
+                                                                <NumberField
+                                                                    label="Points:"
+                                                                    value={getPoints("skill-summon-pts", customAct.defaultPoints)}
+                                                                    onChange={(v) => handlePointsChange("skill-summon-pts", v)}
+                                                                />
                                                             </div>
                                                         </div>
-                                                    );
-                                                })}
-                                            </div>
-                                        } */}
-                                    </div>
-                                )}
-                                {group.id === 2 && customAct && (
-                                    <div className="flex flex-wrap gap-4 items-center">
-                                        <NumberField
-                                            label="Dungeon Keys:"
-                                            value={getQty("dungeon-keys", 8)}
-                                            onChange={(v) => handleQuantityChange("dungeon-keys", v)}
-                                        />
-                                        <NumberField
-                                            label="Points:"
-                                            value={getPoints("dungeon-pts", customAct.defaultPoints)}
-                                            onChange={(v) => handlePointsChange("dungeon-pts", v)}
-                                        />
-                                    </div>
-                                )}
+                                                    )}
 
-                                {group.id === 3 && (
-                                    <div className="flex flex-col gap-2">
-                                        {actionList.map((act, idx) => {
-                                            const qtyKey = `egg-qty-${act.name}`;
-                                            const pointKey = `egg-pts-${act.name}`;
+                                                    {group.id === 10 && customAct && (
+                                                        <div className="flex flex-wrap gap-4 items-center">
+                                                            <NumberField
+                                                                label="Skills to upgrade:"
+                                                                value={getQty("skill-upgrade-qty")}
+                                                                onChange={(v) => handleQuantityChange("skill-upgrade-qty", v)}
+                                                            />
+                                                            <NumberField
+                                                                label="Points:"
+                                                                value={getPoints("skill-upgrade-pts", customAct.defaultPoints)}
+                                                                onChange={(v) => handlePointsChange("skill-upgrade-pts", v)}
+                                                            />
+                                                        </div>
+                                                    )}
 
-                                            return (
-                                                <div
-                                                    key={idx}
-                                                    className="
-                                                        flex flex-wrap items-end gap-3
-                                                        border-b last:border-b-0 pb-3 last:pb-0
-                                                    "
-                                                >
-                                                    <span className="w-full sm:w-36 font-semibold">
-                                                        {act.name}
-                                                    </span>
-
-                                                    <label className="flex flex-col gap-1">
-                                                        Hatch:
-                                                        <input
-                                                            type="number"
-                                                            value={getQty(qtyKey)}
-                                                            onChange={(e) => handleQuantityChange(
-                                                                qtyKey,
-                                                                Math.max(0, Math.floor(Number(e.target.value) || 0))
-                                                            )}
-                                                            onFocus={(e) => e.target.select()}
-                                                            className="border px-2 w-24 rounded-sm"
-                                                            min={0}
-                                                            step={1}
-                                                        />
-                                                    </label>
-
-                                                    <label className="flex flex-col gap-1">
-                                                        Points:
-                                                        <input
-                                                            type="number"
-                                                            value={getPoints(pointKey, act.defaultPoints)}
-                                                            onChange={(e) => handlePointsChange(
-                                                                pointKey,
-                                                                Math.max(0, Math.floor(Number(e.target.value) || 0))
-                                                            )}
-                                                            onFocus={(e) => e.target.select()}
-                                                            className="border px-2 w-24 rounded-sm"
-                                                            min={0}
-                                                            step={1}
-                                                        />
-                                                    </label>
+                                                    <SectionSummary points={summary.points} detail={summary.detail} />
                                                 </div>
-                                            );
-                                        })}
-                                    </div>
-                                )}
-
-                                {group.id === 4 && customAct && (
-                                    <div className="flex flex-wrap gap-4 items-center">
-                                        <NumberField
-                                            label="Pets to merge:"
-                                            value={getQty("merge-pets-qty")}
-                                            onChange={(v) => handleQuantityChange("merge-pets-qty", v)}
-                                        />
-                                        <NumberField
-                                            label="Points:"
-                                            value={getPoints("merge-pets-pts", customAct.defaultPoints)}
-                                            onChange={(v) => handlePointsChange("merge-pets-pts", v)}
-                                        />
-                                    </div>
-                                )}
-
-                                {group.id === 5 && customAct && (
-                                    <div className="flex flex-wrap gap-4 items-center">
-                                        <NumberField
-                                            label="Mount keys:"
-                                            value={getQty("mount-keys-qty")}
-                                            onChange={(v) => handleQuantityChange("mount-keys-qty", v)}
-                                        />
-                                        {
-                                            calculatorState.showAdvancedMode && <>
-                                            <NumberField
-                                                label="Cost:"
-                                                value={getCost("mountCost", groupDefaultCost)}
-                                                onChange={(v) => handleSettingChange("mountCost", v)}
-                                            />
-                                            <NumberField
-                                                label="Extra chance (%):"
-                                                value={calculatorState.specialSettings.mountExtraChance ?? 0}
-                                                onChange={(v) => handleSettingChange("mountExtraChance", v)}
-                                            />
-                                            
-                                            </>
-                                        }
-                                        <NumberField
-                                                label="Points:"
-                                                value={getPoints("mount-pts", customAct.defaultPoints)}
-                                                onChange={(v) => handlePointsChange("mount-pts", v)}
-                                            />
-                                    </div>
-                                )}
-
-                                {group.id === 6 && customAct && (
-                                    <div className="flex flex-wrap gap-4 items-center">
-                                        <NumberField
-                                            label="Mount merges:"
-                                            value={getQty("merge-mounts-qty", Math.floor(getExpectedMounts()))}
-                                            onChange={(v) => handleQuantityChange("merge-mounts-qty", v)}
-                                        />
-                                        <NumberField
-                                            label="Points:"
-                                            value={getPoints("merge-mounts-pts", customAct.defaultPoints)}
-                                            onChange={(v) => handlePointsChange("merge-mounts-pts", v)}
-                                        />
-                                    </div>
-                                )}
-
-                                {group.id === 7 && (
-                                    <div className="flex flex-col gap-2">
-                                        {actionList.map((act, idx) => {
-                                            const qtyKey = `tech-qty-${act.name}`;
-                                            const pointKey = `tech-pts-${act.name}`;
-
-                                            return (
-                                                <div key={idx} className="flex flex-wrap items-end gap-3
-                                                    border-b last:border-b-0 pb-3 last:pb-0">
-                                                    <span className="w-full sm:w-36 font-semibold">{act.name}</span>
-                                                    <label className="flex flex-row justify-between sm:justify-center items-center gap-1 min-w-full sm:min-w-0">How many:
-                                                        <input
-                                                            type="number"
-                                                            value={getQty(qtyKey)}
-                                                            onChange={(e) => handleQuantityChange(
-                                                                qtyKey,
-                                                                Math.max(0, Math.floor(Number(e.target.value) || 0))
-                                                            )}
-                                                            onFocus={(e) => e.target.select()}
-                                                            className={`ml-1 ${inputClass}`}
-                                                            min={0}
-                                                            step={1}
-                                                        />
-                                                    </label>
-                                                    <label className="flex flex-row justify-between sm:justify-center items-center gap-1 min-w-full sm:min-w-0">Points:
-                                                        <input
-                                                            type="number"
-                                                            value={getPoints(pointKey, act.defaultPoints)}
-                                                            onChange={(e) =>
-                                                                handlePointsChange(
-                                                                    pointKey,
-                                                                    Math.max(0, Math.floor(Number(e.target.value) || 0))
-                                                                )
-                                                            }
-                                                            onFocus={(e) => e.target.select()}
-                                                            className={`ml-1 ${inputClass}`}
-                                                            min={0}
-                                                            step={1}
-                                                        />
-                                                    </label>
-                                                </div>
-                                            );
-                                        })}
-                                    </div>
-                                )}
-
-                                {group.id === 8 && (
-                                    <div className="flex flex-col gap-2">
-                                        {actionList.map((act, idx) => {
-                                            const qtyKey = `spend-qty-${act.name}`;
-                                            const pointKey = `spend-pts-${act.name}`;
-
-                                            return (
-                                                <div key={idx} className="flex flex-wrap items-end gap-3
-                                                    border-b last:border-b-0 pb-3 last:pb-0">
-                                                    <span className="w-full font-semibold">{act.name}</span>
-                                                    <label className="flex flex-col gap-1">
-                                                        Owned amount:
-                                                        <input
-                                                            type="number"
-                                                            value={getQty(qtyKey)}
-                                                            onChange={(e) => handleQuantityChange(
-                                                                qtyKey,
-                                                                Math.max(0, Math.floor(Number(e.target.value) || 0))
-                                                            )}
-                                                            onFocus={(e) => e.target.select()}
-                                                            className="border px-2 w-24 rounded-sm"
-                                                            min={0}
-                                                            step={1}
-                                                        />
-                                                    </label>
-                                                    <label className="flex flex-col gap-1">Points:
-                                                        <input
-                                                            type="number"
-                                                            value={getPoints(pointKey, act.defaultPoints)}
-                                                            onChange={(e) =>
-                                                                handlePointsChange(
-                                                                    pointKey,
-                                                                    Math.max(0, Math.floor(Number(e.target.value) || 0))
-                                                                )
-                                                            }
-                                                            onFocus={(e) => e.target.select()}
-                                                            className={`ml-1 ${inputClass}`}
-                                                            min={0}
-                                                            step={1}
-                                                        />
-                                                    </label>
-                                                    <span className="text-xs text-zinc-500 w-full sm:w-auto">
-                                                        = {formatPoints(Math.floor(getQty(qtyKey) / getSpendUnitSize(act.name)))} × {formatPoints(getPoints(pointKey, act.defaultPoints))} pts
-                                                    </span>
-                                                </div>
-                                            );
-                                        })}
-                                    </div>
-                                )}
-
-                                {group.id === 9 && customAct && (
-                                    <div className="flex flex-col gap-3">
-                                        <div className="flex flex-wrap gap-4 items-center">
-                                            <NumberField
-                                                label="Summon Tickets:"
-                                                value={getQty("skill-tickets-qty")}
-                                                onChange={(v) => handleQuantityChange("skill-tickets-qty", v)}
-                                            />
-                                            {calculatorState.showAdvancedMode && <>
-                                                <NumberField
-                                                label="Cost:"
-                                                value={getCost("skillCost", groupDefaultCost)}
-                                                onChange={(v) => handleSettingChange("skillCost", v)}
-                                            />
-                                            
-                                            </>}
-                                            
-                                            <NumberField
-                                                label="Points:"
-                                                value={getPoints("skill-summon-pts", customAct.defaultPoints)}
-                                                onChange={(v) => handlePointsChange("skill-summon-pts", v)}
-                                            />
+                                            )
+                                        })
+                                    }
+                                    <div className="flex flex-row items-center justify-between gap-3 border-2 rounded px-4 py-3 bg-green-50 border-green-600">
+                                        <div className="flex flex-col">
+                                            <span className="font-bold text-md">DAY {calculatorState.selectedDay} TOTAL</span>
+                                            <span className="text-xs text-zinc-500">Expected points from all sections above</span>
                                         </div>
+                                        <span className="font-black text-3xl">{formatPoints(totalPoints)}</span>
                                     </div>
-                                )}
-
-                                {group.id === 10 && customAct && (
-                                    <div className="flex flex-wrap gap-4 items-center">
-                                        <NumberField
-                                            label="Skills to upgrade:"
-                                            value={getQty("skill-upgrade-qty")}
-                                            onChange={(v) => handleQuantityChange("skill-upgrade-qty", v)}
-                                        />
-                                        <NumberField
-                                            label="Points:"
-                                            value={getPoints("skill-upgrade-pts", customAct.defaultPoints)}
-                                            onChange={(v) => handlePointsChange("skill-upgrade-pts", v)}
-                                        />
-                                    </div>
-                                )}
-
-                                <SectionSummary points={summary.points} detail={summary.detail} />
-                            </div>
-                        )
-                    })
-                }
-                <div className="flex flex-row items-center justify-between gap-3 border-2 rounded px-4 py-3 bg-green-50 border-green-600">
-                    <div className="flex flex-col">
-                        <span className="font-bold text-md">DAY {calculatorState.selectedDay} TOTAL</span>
-                        <span className="text-xs text-zinc-500">Expected points from all sections above</span>
+                                </div>
+                            </section>
+                        </div>
                     </div>
-                    <span className="font-black text-3xl">{formatPoints(totalPoints)}</span>
-                </div>
-            </div>
-        </section>
+        
     );
 }
 
