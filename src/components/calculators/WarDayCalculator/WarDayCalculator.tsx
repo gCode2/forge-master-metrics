@@ -430,14 +430,13 @@ function WarDayCalculator() {
                                         </div>
 
                                         <div className="
-                                            flex items-center justify-between gap-2
-                                            border-2 rounded px-3 py-2
-                                            bg-orange-50 border-orange-400
-                                            min-w-0 fixed bottom-4 left-1/2 -translate-x-1/2 z-50
-                                            pb-[env(safe-area-inset-bottom)]
+                                            flex flex-row items-center justify-between gap-2
+                                            fixed bottom-4 left-1/2 -translate-x-1/2 z-50
                                             w-[calc(100%-2rem)] max-w-md
-                                            rounded-xl border border-gray-300 shadow-xl backdrop-blur-md
-                                            p-3 sm:p-4
+                                            bg-orange-50 border-2 border-orange-400 rounded-xl
+                                            shadow-xl backdrop-blur-md
+                                            px-4 py-3 sm:py-4
+                                            mb-[env(safe-area-inset-bottom)]
                                         ">
                                             <span className="font-bold text-sm">
                                                 TOTAL WAR POINTS
