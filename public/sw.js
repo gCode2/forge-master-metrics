@@ -1,5 +1,5 @@
 
-const CACHE_NAME = 'forge-master-metrics-shell-v1';
+const CACHE_NAME = 'forge-master-metrics-shell-v2';
 
 const APP_SHELL = [
   '/',
