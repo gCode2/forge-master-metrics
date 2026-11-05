@@ -6,7 +6,7 @@ function AppHeader() {
     const [isMenuOpened, setMenuOpened] = useState(false);
 
     return (
-        <header className="relative w-full border-b-2 shadow-lg/20 bg-white z-50 pt-[env(safe-area-inset-top)]">
+        <header className="relative w-full border-b-2 shadow-lg/20 bg-white z-100 pt-[env(safe-area-inset-top)]">
             <div className="h-20 flex flex-row-reverse md:flex-row px-6 items-center justify-between">
 
                 <div className="flex flex-row items-center justify-center gap-2">
