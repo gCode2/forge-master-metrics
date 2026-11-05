@@ -8,11 +8,12 @@ import {
 } from "../../lib/pwaInstall";
 import { useAuth } from "../../hooks/useAuth";
 import { supabase } from "../../lib/supabase";
-import { Link, useNavigate } from "react-router";
+import { NavLink, useNavigate } from "react-router";
 import type { AppNavigationProps } from "../../types/types";
 
 function AppNavigation({ isMenuOpened, setMenuOpened }: AppNavigationProps) {
     const { user } = useAuth();
+
     const navigate = useNavigate();
 
     const [installAvailable, setInstallAvailable] = useState(canInstall());
@@ -67,7 +68,14 @@ function AppNavigation({ isMenuOpened, setMenuOpened }: AppNavigationProps) {
     };
 
     const buttonStyles =
-        "flex flex-row justify-center items-center bg-zinc-400 hover:bg-zinc-300 text-white font-bold py-2 px-4 border-b-4 border-zinc-700 hover:border-zinc-500 transition duration-200 hover:cursor-pointer rounded ring-1 ring-black w-full md:w-auto text-center";
+        "flex flex-row justify-center items-center text-white font-bold py-2 px-4 border-b-4 transition duration-200 hover:cursor-pointer rounded ring-1 ring-black w-full md:w-auto text-center";
+
+
+    const getNavLinkStyles = ({ isActive }: { isActive:boolean }) => `${buttonStyles} ${
+        isActive
+            ? "bg-orange-400 border-orange-600 hover:bg-orange-300 hover:border-orange-400"
+            : "bg-zinc-400 hover:bg-zinc-300 border-zinc-600 hover:border-zinc-500"
+    }`;
 
     return (
         <>
@@ -92,47 +100,71 @@ function AppNavigation({ isMenuOpened, setMenuOpened }: AppNavigationProps) {
                     md:static md:flex md:flex-row md:w-auto md:bg-transparent md:border-none md:shadow-none md:p-0
                 `}
             >
-                <Link
+                <NavLink
                     to={user ? "/dashboard" : "/"}
-                    className={buttonStyles}
+                    className={getNavLinkStyles}
                     onClick={closeMenu}
                 >
                     Home
-                </Link>
+                </NavLink>
 
                 {user ? (
                     <>
-                        <Link to="/players" className={buttonStyles} onClick={closeMenu}>
+                        <NavLink
+                            to="/players"
+                            className={getNavLinkStyles}
+                            onClick={closeMenu}
+                        >
                             Players
-                        </Link>
-                        <Link to="/wars" className={buttonStyles} onClick={closeMenu}>
+                        </NavLink>
+                        <NavLink
+                            to="/wars"
+                            className={getNavLinkStyles}
+                            onClick={closeMenu}
+                        >
                             Wars
-                        </Link>
-                        <Link to="/charts" className={buttonStyles} onClick={closeMenu}>
+                        </NavLink>
+                        <NavLink
+                            to="/charts"
+                            className={getNavLinkStyles}
+                            onClick={closeMenu}
+                        >
                             Charts
-                        </Link>
-                        <Link to="/calculators" className={buttonStyles} onClick={closeMenu}>
+                        </NavLink>
+                        <NavLink
+                            to="/calculators"
+                            className={getNavLinkStyles}
+                            onClick={closeMenu}
+                        >
                             Calculators
-                        </Link>
-                        <button className={buttonStyles} onClick={handleLogout}>
+                        </NavLink>
+                        <button className={`${buttonStyles} bg-red-400 hover:bg-red-300 border-red-600 hover:border-red-500`} onClick={handleLogout}>
                             Log out
                         </button>
                     </>
                 ) : (
                     <>
-                        <Link to="/login" className={buttonStyles} onClick={closeMenu}>
+                        <NavLink
+                            to="/login"
+                            className={getNavLinkStyles}
+                            onClick={closeMenu}
+                        >
                             Log in
-                        </Link>
-                        <Link to="/register" className={buttonStyles} onClick={closeMenu}>
+                        </NavLink>
+                        <NavLink
+                            to="/register"
+                            className={getNavLinkStyles}
+                            onClick={closeMenu}
+                        >
                             Sign up
-                        </Link>
+                        </NavLink>
                     </>
                 )}
 
                 {!isStandalone && (
                     <button
                         onClick={handleInstall}
-                        className={`${buttonStyles} gap-2`}
+                        className={`${buttonStyles} gap-2 bg-blue-400 hover:bg-blue-300 border-blue-600 hover:border-blue-500`}
                         aria-label="Install application"
                     >
                         <IoDownloadOutline className="text-xl" />
