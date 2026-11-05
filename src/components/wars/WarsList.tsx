@@ -13,8 +13,8 @@ function WarsList({ wars }: WarsListProps) {
                 <div>War Number</div>
                 <div>Enemy Clan</div>
                 <div>Total Points</div>
-                <div>Participants</div>
                 <div>War Result</div>
+                <div>Participants</div>
                 <div>Action</div>
             </div>
 
