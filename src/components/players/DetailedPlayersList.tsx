@@ -134,7 +134,7 @@ function DetailedPlayersList({
                                             border-2 border-black
                                             px-1 py-2
                                             text-center text-white
-                                            rounded-md sticky top-14
+                                            rounded-md sticky top-14.5
                                         `}
                                     >
                                         <div className="flex items-center justify-between gap-1">

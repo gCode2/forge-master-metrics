@@ -16,7 +16,7 @@ function AppHeader() {
                     <img src={applogo} alt="Logo" className="w-12 h-12 md:w-18 md:h-18 p-1 md:p-2" />
                 </div>
 
-                <div className="flex w-full">
+                <div className="flex flex-col sm:flex-row w-full justify-start sm:justify-end">
                     <AppNavigation 
                         isMenuOpened={isMenuOpened} 
                         setMenuOpened={setMenuOpened} 
