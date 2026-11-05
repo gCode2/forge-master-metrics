@@ -87,7 +87,7 @@ function AppNavigation({ isMenuOpened, setMenuOpened }: AppNavigationProps) {
 
             <div
                 className={`
-                    absolute top-20 left-0 w-full bg-white border-b-2 shadow-xl p-4 flex-col gap-3 z-40
+                    absolute top-full left-0 w-full bg-white border-b-2 shadow-xl p-4 flex-col gap-3 z-40
                     ${isMenuOpened ? "flex" : "hidden"}
                     md:static md:flex md:flex-row md:w-auto md:bg-transparent md:border-none md:shadow-none md:p-0
                 `}
