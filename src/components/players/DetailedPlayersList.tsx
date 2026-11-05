@@ -66,19 +66,8 @@ function DetailedPlayersList({
                     text-xs sm:text-sm
                 ">
 
-                    <thead className="
-                    sticky 
-                    top-0 
-                    z-30 
-                    before:absolute 
-                    before:-inset-x-1
-                    before:-top-1
-                    before:-bottom-0.25
-                    before:-z-10 
-                    before:bg-white 
-                    before:content-['']">
-
-                        <tr>
+                    <thead>
+                        <tr className="h-14">
 
                             <th
                                 rowSpan={2}
@@ -113,7 +102,7 @@ function DetailedPlayersList({
                             <th
                                 colSpan={wars.length}
                                 className="
-                                    border-2 px-3 py-3
+                                    sticky border-2 px-3 py-3
                                     text-left sm:text-center rounded-md
                                     bg-white text-lg sm:text-xl
                                     relative
@@ -131,7 +120,7 @@ function DetailedPlayersList({
                                 </span>
                             </th>
                         </tr>
-                        <tr>
+                        <tr className="h-12">
                             {wars.map((war) => (
                                 <th
                                     key={war.id}
@@ -145,7 +134,7 @@ function DetailedPlayersList({
                                         border-2 border-black
                                         px-1 py-2
                                         text-center text-white
-                                        rounded-md
+                                        rounded-md sticky
                                     `}
                                 >
                                     <div className="flex items-center justify-between gap-1">
