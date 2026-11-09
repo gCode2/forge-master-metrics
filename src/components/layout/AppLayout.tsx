@@ -6,7 +6,12 @@ import PwaInstallPrompt from "./PwaInstallPrompt";
 function AppLayout(){
     return (
         <>
-            <div className="flex flex-col min-h-screen w-full overflow-x-hidden pt-20">
+            <div
+                className="flex flex-col min-h-screen w-full overflow-x-hidden"
+                style={{
+                    paddingTop: "calc(5rem + env(safe-area-inset-top))"
+                }}
+            >
                 <AppHeader/>
                 <Outlet/>
                 <AppFooter/>
