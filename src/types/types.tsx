@@ -91,6 +91,7 @@ export interface PlayersListProps{
     sortHandler: (field: SortField)=>void;
     sortOrder: string | null;
     sortField: string | null;
+    claimedPlayerId: string | null;
 }
 export interface PlayerRowProps{
     player: PlayerStats
@@ -102,6 +103,7 @@ export interface DetailedPlayersListProps{
     sortOrder: string | null;
     sortField: string | null;
     sortHandler:(field: SortField) => void;
+    claimedPlayerId: string | null;
 }
 export interface WarColumn {
     id: string;

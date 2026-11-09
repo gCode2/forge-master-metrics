@@ -2,7 +2,6 @@ import { Link } from "react-router";
 import type { DetailedPlayersListProps } from "../../types/types";
 import { MdOpenInNew } from "react-icons/md";
 import { FaSort, FaSortDown, FaSortUp } from "react-icons/fa";
-import { useAuth } from "../../hooks/useAuth";
 
 function formatCompactPoints(
     value: number | string | null | undefined
@@ -32,9 +31,9 @@ function DetailedPlayersList({
     pointsByPlayer,
     sortOrder,
     sortField,
-    sortHandler
+    sortHandler,
+    claimedPlayerId
 }: DetailedPlayersListProps) {
-    const {claimedPlayerId} = useAuth();
     if (wars.length === 0) {
         return <p>No wars available.</p>;
     }

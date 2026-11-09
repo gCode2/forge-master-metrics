@@ -3,6 +3,7 @@ import { supabase } from "../lib/supabase";
 import type { PlayerStats, PlayerWarPoints, SortField, WarColumn } from "../types/types";
 import PlayersList from "../components/players/PlayersList";
 import DetailedPlayersList from "../components/players/DetailedPlayersList";
+import { useAuth } from "../hooks/useAuth";
 
 function PlayersPage(){
     const [players, setPlayers] = useState<PlayerStats[]>([]);
@@ -21,6 +22,8 @@ function PlayersPage(){
 
     const [sortOrder, setSortOrder] = useState<string | null>("desc");
     const [sortField, setSortField] = useState<SortField | null>("last_3_avg");
+
+    const {claimedPlayerId} = useAuth();
 
     function handleSort(field: SortField){
         if(sortField === field){
@@ -227,7 +230,7 @@ function PlayersPage(){
                 <div className="w-full text-center">
                     
                     {selectedType === "General" ? (
-                        <PlayersList players={sortedPlayers} sortHandler={handleSort} sortOrder={sortOrder} sortField={sortField}/>
+                        <PlayersList players={sortedPlayers} sortHandler={handleSort} sortOrder={sortOrder} sortField={sortField} claimedPlayerId={claimedPlayerId}/>
                     ) : detailsLoading ? (
                         <div className="p-6">Loading war details...</div>
                     ) : detailsError ? (
@@ -248,6 +251,7 @@ function PlayersPage(){
                             sortOrder={sortOrder}
                             sortField={sortField}
                             sortHandler={handleSort}
+                            claimedPlayerId={claimedPlayerId}
                         />
                     )}
                     
