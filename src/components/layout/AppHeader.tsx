@@ -31,7 +31,7 @@ function AppHeader() {
 
         return (
         <header
-            className={`fixed top-0 left-0 w-full z-50 border-b-2 shadow-lg/20 bg-white transition-transform duration-300 ${
+            className={`fixed top-0 left-0 w-full z-100 border-b-2 shadow-lg/20 bg-white transition-transform duration-300 ${
                 isVisible ? "translate-y-0" : "-translate-y-full"
             }`}
             style={{
