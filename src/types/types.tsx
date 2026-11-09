@@ -13,6 +13,7 @@ export interface AuthContextValue {
     user: User | null;
     session: Session | null;
     profile: Profile | null;
+    claimedPlayerId: string | null;
     loading: boolean;
 }
 export interface AuthProviderProps{

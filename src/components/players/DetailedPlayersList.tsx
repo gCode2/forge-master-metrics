@@ -2,6 +2,7 @@ import { Link } from "react-router";
 import type { DetailedPlayersListProps } from "../../types/types";
 import { MdOpenInNew } from "react-icons/md";
 import { FaSort, FaSortDown, FaSortUp } from "react-icons/fa";
+import { useAuth } from "../../hooks/useAuth";
 
 function formatCompactPoints(
     value: number | string | null | undefined
@@ -33,7 +34,7 @@ function DetailedPlayersList({
     sortField,
     sortHandler
 }: DetailedPlayersListProps) {
-
+    const {claimedPlayerId} = useAuth();
     if (wars.length === 0) {
         return <p>No wars available.</p>;
     }
@@ -147,7 +148,7 @@ function DetailedPlayersList({
                                                     w-6 shrink-0
                                                     flex justify-center items-center
                                                     border-b-4 ring-1 ring-black
-                                                    text-black
+                                                    text-black hover:cursor-pointer
                                                     ${
                                                         sortField === `war:${war.war_number}`
                                                             ? (
@@ -169,14 +170,12 @@ function DetailedPlayersList({
                         </thead>
                         <tbody>
                             {players.map((player) => (
-                                <tr key={player.player_id}>
+                                <tr key={player.player_id} className={`${claimedPlayerId === player.player_id && "bg-green-100"}`}>
                                     <th
                                         scope="row"
-                                        className={`
-                                            ${player.is_member
+                                        className={`${claimedPlayerId === player.player_id ? "bg-green-100" : player.is_member
                                                 ? "bg-white"
-                                                : "bg-gray-300"
-                                            }
+                                                : "bg-gray-300"}
                                             sticky 
                                             left-0 
                                             z-20
