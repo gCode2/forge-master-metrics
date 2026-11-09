@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from "react";
 import { IoMenu, IoClose, IoDownloadOutline } from "react-icons/io5";
 import {
@@ -95,9 +94,16 @@ function AppNavigation({ isMenuOpened, setMenuOpened }: AppNavigationProps) {
 
             <div
                 className={`
-                    absolute top-full left-0 w-full bg-white border-b-2 shadow-xl p-4 flex-col gap-3 z-40
-                    ${isMenuOpened ? "flex" : "hidden"}
-                    md:static md:flex md:flex-row md:w-auto md:bg-transparent md:border-none md:shadow-none md:p-0
+                    absolute top-full left-0 w-full bg-white border-b-2 shadow-xl
+                    flex flex-col gap-3 z-40 overflow-hidden
+                    transition-all duration-300 ease-in-out
+                    ${isMenuOpened
+                        ? "max-h-[500px] opacity-100 p-4"
+                        : "max-h-0 opacity-0 p-0"
+                    }
+                    md:static md:flex md:flex-row md:w-auto md:max-h-none
+                    md:overflow-visible md:opacity-100 md:bg-transparent
+                    md:border-none md:shadow-none md:p-0
                 `}
             >
                 <NavLink
