@@ -8,9 +8,9 @@ function PlayersList({
     players,
     sortHandler,
     sortOrder,
-    sortField
+    sortField,
+    claimedPlayerId
 }: PlayersListProps) {
-
     const columns: { label: string; mobileLabel: string; field: SortField }[] = [
         { label: "Nickname", mobileLabel: "Nickname", field: "nickname" },
         { label: "Total points", mobileLabel: "Total", field: "total" },
@@ -85,7 +85,7 @@ function PlayersList({
                         className={`
                             border-2 rounded-xl
                             shadow-sm p-3
-                            ${player.is_member ? "bg-white" : "bg-gray-200"}
+                            ${claimedPlayerId === player.player_id ? "bg-green-100" : player.is_member ? "bg-white" : "bg-gray-200"}
                         `}
                     >
 
@@ -216,6 +216,7 @@ function PlayersList({
                             <PlayerRow
                                 key={player.player_id}
                                 player={player}
+                                claimedPlayerId={claimedPlayerId}
                             />
                         ))}
                     </tbody>

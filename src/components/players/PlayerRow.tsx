@@ -2,7 +2,7 @@ import { MdOpenInNew } from "react-icons/md";
 import type { PlayerRowProps } from "../../types/types";
 import { Link } from "react-router";
 
-function PlayerRow({player}:PlayerRowProps){
+function PlayerRow({player, claimedPlayerId}:PlayerRowProps){
     const formatNumber = (value: number | string | undefined | null) => {
         if (value === undefined || value === null) return "0";
         const num = Number(value);
@@ -11,10 +11,10 @@ function PlayerRow({player}:PlayerRowProps){
     };
     return (
         <>
-            <tr className="border-2 font-bold">
+            <tr className={`${claimedPlayerId === player.player_id ? "bg-green-100" : player.is_member ? "bg-white" : "bg-gray-300"} border-2 font-bold`}>
                 <th
                                     scope="row"
-                                    className={`${player.is_member ? "bg-white" : "bg-gray-300" } sticky left-0 z-10 border-2 border-gray-500 px-3 py-2 text-left rounded-md grid grid-cols-2 gap-2`}
+                                    className={`sticky left-0 z-10 border-2 border-gray-500 px-3 py-2 text-left rounded-md grid grid-cols-2 gap-2`}
                                 >
                                     <div className="text-left">
                                         {player.nickname}

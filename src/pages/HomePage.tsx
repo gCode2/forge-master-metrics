@@ -3,7 +3,7 @@ import { Link } from "react-router";
 function HomePage(){
     return (
         <>
-            <main className="flex flex-1 flex-col w-full justify-center items-center relative p-6">
+            <main className="flex flex-1 flex-col w-full justify-center items-center relative p-4 sm:p-6">
                 <div className="flex items-center justify-center relative xs:w-full w-52 h-36">
                 <div className="carousel-image carousel-image-1">
                     <img

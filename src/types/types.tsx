@@ -13,6 +13,7 @@ export interface AuthContextValue {
     user: User | null;
     session: Session | null;
     profile: Profile | null;
+    claimedPlayerId: string | null;
     loading: boolean;
 }
 export interface AuthProviderProps{
@@ -90,9 +91,11 @@ export interface PlayersListProps{
     sortHandler: (field: SortField)=>void;
     sortOrder: string | null;
     sortField: string | null;
+    claimedPlayerId: string | null;
 }
 export interface PlayerRowProps{
-    player: PlayerStats
+    player: PlayerStats;
+    claimedPlayerId: string | null;
 }
 export interface DetailedPlayersListProps{
     players: PlayerStats[];
@@ -101,6 +104,7 @@ export interface DetailedPlayersListProps{
     sortOrder: string | null;
     sortField: string | null;
     sortHandler:(field: SortField) => void;
+    claimedPlayerId: string | null;
 }
 export interface WarColumn {
     id: string;
