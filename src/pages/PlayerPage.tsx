@@ -89,7 +89,7 @@ function PlayerPage() {
     );
 
     return (
-        <main className="flex w-full p-6">
+        <main className="flex w-full p-4 sm:p-6">
             <div className="flex flex-col w-full min-w-0 gap-4">
 
                 <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-2 rounded-xl shadow-lg/20 p-4 sm:px-6 sm:py-5">

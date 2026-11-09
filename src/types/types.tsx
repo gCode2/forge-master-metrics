@@ -94,7 +94,8 @@ export interface PlayersListProps{
     claimedPlayerId: string | null;
 }
 export interface PlayerRowProps{
-    player: PlayerStats
+    player: PlayerStats;
+    claimedPlayerId: string | null;
 }
 export interface DetailedPlayersListProps{
     players: PlayerStats[];

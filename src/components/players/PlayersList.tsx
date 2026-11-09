@@ -3,7 +3,6 @@ import type { PlayersListProps, SortField } from "../../types/types";
 import PlayerRow from "./PlayerRow";
 import { Link } from "react-router";
 import { MdOpenInNew } from "react-icons/md";
-import { useAuth } from "../../hooks/useAuth";
 
 function PlayersList({
     players,
@@ -217,6 +216,7 @@ function PlayersList({
                             <PlayerRow
                                 key={player.player_id}
                                 player={player}
+                                claimedPlayerId={claimedPlayerId}
                             />
                         ))}
                     </tbody>
