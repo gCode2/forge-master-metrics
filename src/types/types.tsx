@@ -212,3 +212,7 @@ export type PlayerWarPoints = Record<
     selectedForgeLevel: number,
     showAdvancedMode: boolean,
  }
+ export interface SearchBarProps{
+    searchText: string,
+    changeHandler: (text:string) => void
+ }

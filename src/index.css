@@ -43,8 +43,8 @@ textarea {
 }
 
 .carousel-image {
-    --orbit-radius: 3.5rem;   /* jak daleko elementy odchodzą na boki */
-    --orbit-half: 4s;       /* czas przejścia z lewej na prawą; pełny obieg = 2x */
+    --orbit-radius: 3.5rem;
+    --orbit-half: 4s;
 
     position: absolute;
     display: flex;
@@ -65,7 +65,7 @@ textarea {
     will-change: translate, scale, filter, opacity;
 }
 
-/* drugi element jest przesunięty o pół cyklu (przeciwna faza) */
+
 .carousel-image-1 {
     animation-delay: 0s, 0s;
 }
@@ -74,14 +74,13 @@ textarea {
     animation-delay: calc(var(--orbit-half) * -1), calc(var(--orbit-half) * -1);
 }
 
-/* ruch lewo <-> prawo (alternate + ease-in-out daje sinusoidalny ruch) */
+
 @keyframes orbit-x {
     from { translate: calc(var(--orbit-radius) * -1) 0; }
     to   { translate: var(--orbit-radius) 0; }
 }
 
-/* głębia: na środku jeden jest z przodu (duży, ostry),
-   drugi z tyłu (mały, rozmyty); zamiana następuje na krańcach */
+
 @keyframes orbit-depth {
     0%, 100% { scale: 1;    filter: blur(0);   opacity: 1;    z-index: 3; }
     25%      { scale: 1.12; filter: blur(0);   opacity: 1;    z-index: 3; } /* z przodu */
@@ -93,4 +92,9 @@ textarea {
     .carousel-image { animation: none; }
     .carousel-image-1 { translate: -3.5rem 0; }
     .carousel-image-2 { translate: 3.5rem 0; }
+}
+input[type="search"]::-webkit-search-cancel-button {
+    cursor: pointer;
+    filter: grayscale(1);
+    opacity: 0.6;
 }

@@ -4,6 +4,7 @@ import type { PlayerStats, PlayerWarPoints, SortField, WarColumn } from "../type
 import PlayersList from "../components/players/PlayersList";
 import DetailedPlayersList from "../components/players/DetailedPlayersList";
 import { useAuth } from "../hooks/useAuth";
+import SearchBar from "../components/players/SearchBar";
 
 function PlayersPage(){
     const [players, setPlayers] = useState<PlayerStats[]>([]);
@@ -19,6 +20,17 @@ function PlayersPage(){
     const [detailsError, setDetailsError] = useState<string | null>(null);
     const [detailsLoaded, setDetailsLoaded] = useState(false);
 
+    const [searchText, setSearchText] = useState("");
+
+    const [showAbsentPlayers, setShowAbsentPlayers] = useState(()=>{
+        const savedValue = localStorage.getItem("showAbsentPlayers");
+
+        return savedValue === null ? true : savedValue === "true";
+    })
+
+    useEffect(()=>{
+        localStorage.setItem("showAbsentPlayers", String(showAbsentPlayers))
+    }, [showAbsentPlayers]);
 
     const [sortOrder, setSortOrder] = useState<string | null>("desc");
     const [sortField, setSortField] = useState<SortField | null>("last_3_avg");
@@ -59,7 +71,7 @@ function PlayersPage(){
                 const pointsA = pointsByPlayer[a.player_id]?.[war.id];
                 const pointsB = pointsByPlayer[b.player_id]?.[war.id];
 
-                if(pointsA == null && pointsB === null) return 0;
+                if(pointsA == null && pointsB == null) return 0;
                 if(pointsA == null) return 1;
                 if(pointsB == null) return -1;
 
@@ -87,6 +99,19 @@ function PlayersPage(){
             })
         }
     , [players, sortField, sortOrder, pointsByPlayer, wars])
+
+
+    const filteredPlayers = useMemo(() => {
+        const normalizedSearch = searchText.trim().toLowerCase();
+
+        return sortedPlayers.filter(player => {
+            const matchesNickname = player.nickname
+                .toLowerCase()
+                .includes(normalizedSearch);
+
+            return matchesNickname && (showAbsentPlayers || player.is_member);
+        });
+    }, [sortedPlayers, searchText, showAbsentPlayers]);
 
     const loadPlayers = useCallback(
         async () => {
@@ -196,17 +221,43 @@ function PlayersPage(){
     return (
         <>
             <div className="min-h-full flex-1 flex-col justify-center items-center gap-2">
-                <div className="flex flex-col justify-center items-center">
+                <div className="flex flex-col justify-center items-center gap-3">
 
                     <div className="text-3xl font-bold pt-5 pb-2">
                         Players War Stats
+                    </div>
+                    <div>
+                        <SearchBar searchText={searchText} changeHandler={setSearchText}/>
+                    </div>
+                    <div>
+                        <div className="flex items-center gap-2 sm:gap-3 self-center sm:self-auto shrink-0">
+                                        <span className={`text-sm ${!showAbsentPlayers ? "text-gray-500" : "font-bold text-gray-900"}`}>
+                                            {!showAbsentPlayers ? "Absent hidden" : "Absent visible"}
+                                        </span>
+
+                                        <button
+                                            type="button"
+                                            onClick={() => setShowAbsentPlayers(prev => !prev)}
+                                            className={`relative w-16 h-8 rounded-full transition-colors duration-200 ${
+                                                showAbsentPlayers ? "bg-orange-500" : "bg-gray-400"
+                                            }`}
+                                            aria-label="Toggle absent players visibility"
+                                            aria-pressed={showAbsentPlayers}
+                                        >
+                                            <span
+                                                className={`absolute top-1 left-1 w-6 h-6 bg-white rounded-full shadow transition-transform duration-200 ${
+                                                    showAbsentPlayers ? "translate-x-8" : "translate-x-0"
+                                                }`}
+                                            />
+                                        </button>
+                                    </div>
                     </div>
                     <div className="flex flex-row gap-3">
                         <button 
                             className={`${baseButtonClasses} ${
                                 selectedType === "General" 
                                     ? "bg-orange-400 border-b-4 border-orange-600 hover:bg-orange-300 hover:border-orange-500"
-                                    : "bg-zinc-400 border-b-4 border-zinc-700 hover:bg-zinc-300 hover:border-zinc-500"
+                                    : "bg-zinc-400 border-b-4 border-zinc-600 hover:bg-zinc-300 hover:border-zinc-500"
                             }`} 
                             onClick={() => handleTypeChange("General")}
                         >
@@ -217,7 +268,7 @@ function PlayersPage(){
                             className={`${baseButtonClasses} ${
                                 selectedType === "Wars Details" 
                                     ? "bg-orange-400 border-b-4 border-orange-600 hover:bg-orange-300 hover:border-orange-500" 
-                                    : "bg-zinc-400 border-b-4 border-zinc-700 hover:bg-zinc-300 hover:border-zinc-500"
+                                    : "bg-zinc-400 border-b-4 border-zinc-600 hover:bg-zinc-300 hover:border-zinc-500"
                             }`} 
                             onClick={() => handleTypeChange("Wars Details")}
                         >
@@ -230,7 +281,7 @@ function PlayersPage(){
                 <div className="w-full text-center">
                     
                     {selectedType === "General" ? (
-                        <PlayersList players={sortedPlayers} sortHandler={handleSort} sortOrder={sortOrder} sortField={sortField} claimedPlayerId={claimedPlayerId}/>
+                        <PlayersList players={filteredPlayers} sortHandler={handleSort} sortOrder={sortOrder} sortField={sortField} claimedPlayerId={claimedPlayerId}/>
                     ) : detailsLoading ? (
                         <div className="p-6">Loading war details...</div>
                     ) : detailsError ? (
@@ -245,7 +296,7 @@ function PlayersPage(){
                         </div>
                     ) : (
                         <DetailedPlayersList
-                            players={sortedPlayers}
+                            players={filteredPlayers}
                             wars={wars}
                             pointsByPlayer={pointsByPlayer}
                             sortOrder={sortOrder}
