@@ -94,7 +94,5 @@ textarea {
     .carousel-image-2 { translate: 3.5rem 0; }
 }
 input[type="search"]::-webkit-search-cancel-button {
-    cursor: pointer;
-    filter: grayscale(1);
-    opacity: 0.6;
+    -webkit-appearance: none;
 }
