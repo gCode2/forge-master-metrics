@@ -55,7 +55,11 @@ function PlayerPage() {
             navigate("/players");
         }
 
-        setWarHistory(data?.v_player_war_history ?? []);
+        setWarHistory(
+            [...(data?.v_player_war_history ?? [])].sort(
+                (a, b) => a.war_number - b.war_number
+            )
+        );
     }
 
     useEffect(() => {

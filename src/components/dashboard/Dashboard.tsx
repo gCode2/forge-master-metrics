@@ -31,19 +31,27 @@ function Dashboard({playerId} : DashboardProps){
         setLoading(false);
     }
 
-    async function getWarHistory(){
-        const {data, error} = await supabase.from("v_player_war_history").select("war_number, points").eq("player_id", playerId);
-        if(error){
+    async function getWarHistory() {
+        const { data, error } = await supabase
+            .from("v_player_war_history")
+            .select("war_number, points")
+            .eq("player_id", playerId)
+            .order("war_number", { ascending: true });
+
+        if (error) {
             console.error("Failed to load war history:", error);
             setError("Failed to load war history");
+            return;
         }
-        setWarHistory(data ?? []);
+
+        const history = (data ?? []) as unknown as PlayerWarHistory[];
+        setWarHistory([...history].sort((a, b) => a.war_number - b.war_number));
     }
 
     useEffect(()=>{
         getDashboardInfo();
         getWarHistory();
-    }, [])
+    }, [playerId])
 
     const formatNumber = (value: number | string | undefined | null) => {
         if (value === undefined || value === null) return "0";

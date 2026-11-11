@@ -72,7 +72,8 @@ export interface PlayerStats{
     player_id: string,
     rank_id: string | null,
     rank_name: string | null,
-    rank_sort_order: string | null,
+    rank_sort_order: number | null,
+    // 
     scored_wars_count: number,
     total_points: number,
     total_points_rank: number
