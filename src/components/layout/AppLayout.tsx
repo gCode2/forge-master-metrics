@@ -7,7 +7,7 @@ function AppLayout(){
     return (
         <>
             <div
-                className="flex flex-col min-h-screen w-full overflow-x-hidden"
+                className="flex flex-col min-h-screen w-full overflow-x-clip"
                 style={{
                     paddingTop: "calc(5rem + env(safe-area-inset-top))"
                 }}

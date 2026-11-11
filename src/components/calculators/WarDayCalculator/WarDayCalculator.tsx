@@ -305,188 +305,146 @@ function WarDayCalculator() {
     }, 0);
 
     return (
-
         <div className="flex flex-col gap-1 w-full">
-                        <div className="flex flex-col sm:flex-row justify-center sm:justify-start items-center gap-2 sm:gap-5">
-                            <div className="h-16 w-16 sm:h-25 sm:w-25 shrink-0">
-                                <img src="/icons/war_points.png" className="h-16 w-16 sm:h-25 sm:w-25 shrink-0"/>
-                            </div>
-                            <div className="flex flex-col justify-center items-center sm:justify-start sm:items-start">
-                                <div className="font-bold">
-                                War Points Calculator
+            <div className="flex flex-col sm:flex-row justify-center sm:justify-start items-center gap-2 sm:gap-5">
+                <div className="h-16 w-16 sm:h-25 sm:w-25 shrink-0">
+                    <img src="/icons/war_points.png" className="h-16 w-16 sm:h-25 sm:w-25 shrink-0"/>
+                </div>
+                <div className="flex flex-col justify-center items-center sm:justify-start sm:items-start">
+                    <div className="font-bold">
+                        War Points Calculator
+                    </div>
+                    <div className="text-sm text-zinc-500 text-center sm:text-left">
+                        Calculate how many points you'll earn in a war based on your bonuses and available resources.
+                    </div>
+                </div>
+                <div className="flex sm:ml-auto">
+                    <button
+                        type="button"
+                        className={`
+                        flex justify-center items-center
+                        text-white font-bold
+                        py-2 px-2 sm:px-4
+                        transition duration-300
+                        rounded ring-1 ring-black border-b-4 w-26 sm:w-31
+                        text-xs min-w-max hover:cursor-pointer ${isConfirmingReset ? "bg-red-500 border-red-600 hover:border-red-500 hover:bg-red-400" : "bg-red-400 border-red-500 hover:border-red-400 hover:bg-red-300"}`}
+                        onClick={handleCalculatorReset}>
+                            {isConfirmingReset ? "Are you sure? " : "Reset calculator"}
+                    </button>
+                </div>
+            </div>
+            <div className="mt-6 w-full">
+                <section className="flex flex-col gap-4 sm:gap-5 text-sm min-w-0 w-full">
+                    <div className="
+                        flex flex-col sm:flex-row
+                        items-start sm:items-center
+                        justify-between gap-3
+                        border-2 rounded-lg p-3 bg-gray-50">
+                            <div className="font-bold text-lg sm:text-xl flex flex-col justify-center sm:justify-start items-center sm:items-start w-full">
+                                <div>
+                                    Calculator mode
                                 </div>
-                                <div className="text-sm text-zinc-500 text-center sm:text-left">
-                                    Calculate how many points you'll earn in a war based on your bonuses and available resources.
+                                <div className="text-zinc-500 text-xs sm:text-sm font-normal">
+                                    {calculatorState.showAdvancedMode ? "Seems too complicated? Switch to Simple Mode" : "To specify more details (i.e. extra drop chances or forge level) enable the Advanced Mode"}
                                 </div>
                             </div>
-                            <div className="flex sm:ml-auto">
+                            <div className="flex items-center gap-2 sm:gap-3 self-center sm:self-auto shrink-0">
+                                <span className={`text-sm ${!calculatorState.showAdvancedMode ? "font-bold text-gray-900" : "text-gray-500"}`}>
+                                    Simple
+                                </span>
                                 <button
                                     type="button"
-                                    className={`
-                                    flex justify-center items-center
-                                    text-white font-bold
-                                    py-2 px-2 sm:px-4
-                                    transition duration-300
-                                    rounded ring-1 ring-black border-b-4 w-26 sm:w-31
-                                    text-xs min-w-max hover:cursor-pointer ${isConfirmingReset ? "bg-red-500 border-red-600 hover:border-red-500 hover:bg-red-400" : "bg-red-400 border-red-500 hover:border-red-400 hover:bg-red-300"}`}
-                                    onClick={handleCalculatorReset}>
-                                        {isConfirmingReset ? "Are you sure? " : "Reset calculator"}
-                                </button>
-                            </div>
-                        </div>
-                        <div className="mt-6 w-full">
-                            <section className="flex flex-col gap-4 sm:gap-5 text-sm min-w-0 w-full">
-            
-                                <div className="
-                                    flex flex-col sm:flex-row
-                                    items-start sm:items-center
-                                    justify-between gap-3
-                                    border-2 rounded-lg p-3 bg-gray-50
-                                ">
-                                    <div className="font-bold text-lg sm:text-xl flex flex-col justify-center sm:justify-start items-center sm:items-start w-full">
-                                        <div>
-                                            Calculator mode
-                                        </div>
-                                        
-                                        <div className="text-zinc-500 text-xs sm:text-sm font-normal">
-                                            {calculatorState.showAdvancedMode ? "Seems too complicated? Switch to Simple Mode" : "To specify more details (i.e. extra drop chances or forge level) enable the Advanced Mode"}
-                                        </div>
-                                    </div>
-
-                                    <div className="flex items-center gap-2 sm:gap-3 self-center sm:self-auto shrink-0">
-                                        <span className={`text-sm ${!calculatorState.showAdvancedMode ? "font-bold text-gray-900" : "text-gray-500"}`}>
-                                            Simple
-                                        </span>
-
-                                        <button
-                                            type="button"
-                                            onClick={() => {
-                                                setCalculatorState(prev => ({
-                                                    ...prev,
-                                                    showAdvancedMode: !prev.showAdvancedMode,
-                                            }));}}
-                                            className={`relative w-16 h-8 rounded-full transition-colors duration-200 ${
-                                                calculatorState.showAdvancedMode ? "bg-orange-500" : "bg-gray-400"
-                                            }`}
-                                            aria-label="Toggle calculator mode"
-                                            aria-pressed={calculatorState.showAdvancedMode}
-                                        >
-                                            <span
-                                                className={`absolute top-1 left-1 w-6 h-6 bg-white rounded-full shadow transition-transform duration-200 ${
-                                                    calculatorState.showAdvancedMode ? "translate-x-8" : "translate-x-0"
+                                    onClick={() => {
+                                        setCalculatorState(prev => ({
+                                            ...prev,
+                                            showAdvancedMode: !prev.showAdvancedMode,
+                                        }));}}
+                                    className={`relative w-16 h-8 rounded-full transition-colors duration-200 ${
+                                    calculatorState.showAdvancedMode ? "bg-orange-500" : "bg-gray-400"}`}
+                                    aria-label="Toggle calculator mode"
+                                    aria-pressed={calculatorState.showAdvancedMode}>
+                                        <span
+                                            className={`absolute top-1 left-1 w-6 h-6 bg-white rounded-full shadow transition-transform duration-200 ${
+                                                calculatorState.showAdvancedMode ? "translate-x-8" : "translate-x-0"
                                                 }`}
                                             />
+                                </button>
+                                <span className={`text-sm ${calculatorState.showAdvancedMode ? "font-bold text-gray-900" : "text-gray-500"}`}>
+                                    Advanced
+                                </span>
+                            </div>
+                    </div>
+                    <div className="flex flex-col sm:flex-row sm:justify-between gap-3 text-sm">
+                        <div className="grid grid-cols-5 sm:flex sm:flex-row gap-2">
+                            {Array.from(warDaysActions.keys()).map((index) => {
+                                const dayNumber = index + 1;
+                                    return (
+                                        <button
+                                        type="button"
+                                        key={index}
+                                        className={`
+                                        flex justify-center items-center
+                                        text-white font-bold py-2 px-2 sm:px-4
+                                        transition duration-200
+                                        rounded ring-1 ring-black border-b-4
+                                        text-xs hover:cursor-pointer
+                                        ${calculatorState.selectedDay === dayNumber
+                                            ? "bg-orange-400 border-orange-500 hover:bg-orange-300"
+                                            : "bg-gray-400 border-gray-500 hover:bg-gray-300"}
+                                        `}
+                                        onClick={() => handleDayChange(dayNumber)}>
+                                            Day {dayNumber}
                                         </button>
-
-                                        <span className={`text-sm ${calculatorState.showAdvancedMode ? "font-bold text-gray-900" : "text-gray-500"}`}>
-                                            Advanced
-                                        </span>
-                                    </div>
-                                </div>
-                                <div className="flex flex-col sm:flex-row sm:justify-between gap-3 text-sm">
-
-                                    <div className="grid grid-cols-5 sm:flex sm:flex-row gap-2">
-                                        {Array.from(warDaysActions.keys()).map((index) => {
-                                            const dayNumber = index + 1;
-
-                                            return (
-                                                <button
-                                                    type="button"
-                                                    key={index}
-                                                    className={`
-                                                        flex justify-center items-center
-                                                        text-white font-bold
-                                                        py-2 px-2 sm:px-4
-                                                        transition duration-200
-                                                        rounded ring-1 ring-black border-b-4
-                                                        text-xs hover:cursor-pointer
-                                                        ${calculatorState.selectedDay === dayNumber
-                                                            ? "bg-orange-400 border-orange-500 hover:bg-orange-300"
-                                                            : "bg-gray-400 border-gray-500 hover:bg-gray-300"
-                                                        }
-                                                    `}
-                                                    onClick={() => handleDayChange(dayNumber)}
-                                                >
-                                                    Day {dayNumber}
-                                                </button>
-                                            );
-                                        })}
-                                    </div>
-
-                                    <div>
-
-                                        <div className="
-                                            flex items-center justify-between gap-2
-                                            border-2 rounded px-3 py-2 sm:py-0
-                                            bg-green-50 border-green-600
-                                            min-w-0
-                                        ">
-                                            <span className="font-bold text-sm">
-                                                DAY {calculatorState.selectedDay} TOTAL
-                                            </span>
-                                            <span className="font-black text-xl sm:text-2xl tabular-nums">
-                                                {formatPoints(totalPoints)}
-                                            </span>
+                                    );
+                                })}
+                        </div>
+                        <div>
+                            <div className="
+                                flex items-center justify-between gap-2
+                                border-2 rounded px-3 py-2 sm:py-0
+                                bg-green-50 border-green-600 min-w-0">
+                                    <span className="font-bold text-sm">
+                                        DAY {calculatorState.selectedDay} TOTAL
+                                    </span>
+                                    <span className="font-black text-xl sm:text-2xl tabular-nums">
+                                        {formatPoints(totalPoints)}
+                                    </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="border-2 rounded-md p-3 flex flex-col gap-4 shadow-lg/20">
+                        {filteredActions.map(group => {
+                            const customAct = group.customAction;
+                            const actionList = group.actions || [];
+                            const groupDefaultCost = (group as any).defaultCost ?? 1;
+                            const summary = getGroupSummary(group);
+                                return(
+                                    <div key={group.id} className="border-b pb-4 flex flex-col gap-3">
+                                        <div className="text-xl font-bold">
+                                            {group.name}
                                         </div>
-
-                                        <div className="
-                                            flex flex-row items-center justify-between gap-2
-                                            fixed bottom-4 left-1/2 -translate-x-1/2 z-50
-                                            w-[calc(100%-2rem)] max-w-md
-                                            bg-orange-50 border-2 border-orange-400 rounded-xl
-                                            shadow-xl backdrop-blur-md
-                                            px-4 py-3 sm:py-4
-                                            mb-[env(safe-area-inset-bottom)]
-                                        ">
-                                            <span className="font-bold text-sm">
-                                                TOTAL WAR POINTS
-                                            </span>
-                                            <span className="font-black text-xl sm:text-2xl tabular-nums">
-                                                {formatPoints(totalWarPoints)}
-                                            </span>
-                                        </div>
-
-                                    </div>
-                                </div>
-                                <div className="border-2 rounded-md p-3 flex flex-col gap-4 shadow-lg/20">
-                                    {
-                                        filteredActions.map(group => {
-                                            const customAct = group.customAction;
-                                            const actionList = group.actions || [];
-                                            const groupDefaultCost = (group as any).defaultCost ?? 1;
-                                            const summary = getGroupSummary(group);
-
-                                            return(
-                                                <div key={group.id} className="border-b pb-4 flex flex-col gap-3">
-                                                    <div className="text-xl font-bold">
-                                                        {group.name}
-                                                    </div>
-
-                                                    {group.id === 1 && (
-                                                        <div className="flex flex-col gap-4">
-                                                            <div className="flex flex-wrap items-end gap-4">
-                                                                <NumberField
-                                                                    label="Number of hammers:"
-                                                                    value={getQty("forge-hammers")}
-                                                                    onChange={(v) =>
-                                                                        handleQuantityChange("forge-hammers", v)
-                                                                    }
-                                                                />
-                                                                {calculatorState.showAdvancedMode && 
-                                                                <>
-                                                                    <NumberField
-                                                                    label="Extra chance (%):"
-                                                                    value={calculatorState.specialSettings.forgeExtraChance ?? 0}
-                                                                    onChange={(v) =>
-                                                                        handleSettingChange("forgeExtraChance", v)
-                                                                    }
-                                                                />
-
-                                                                    <label className="flex flex-row gap-1 font-medium justify-between items-center font-medium w-full bg-gray-50 p-1 border-1 border-gray-200">
-                                                                        Forge level:
-                                                                        <select
-                                                                            value={calculatorState.selectedForgeLevel}
-                                                                            onChange={(e) => {
+                                        {group.id === 1 && (
+                                            <div className="flex flex-col gap-4">
+                                                <div className="flex flex-wrap items-end gap-4">
+                                                    <NumberField
+                                                        label="Number of hammers:"
+                                                        value={getQty("forge-hammers")}
+                                                        onChange={(v) =>
+                                                        handleQuantityChange("forge-hammers", v)}
+                                                    />
+                                                    {calculatorState.showAdvancedMode && 
+                                                        <>
+                                                        <NumberField
+                                                            label="Extra chance (%):"
+                                                            value={calculatorState.specialSettings.forgeExtraChance ?? 0}
+                                                            onChange={(v) =>
+                                                            handleSettingChange("forgeExtraChance", v)}
+                                                            />
+                                                            <label className="flex flex-row gap-1 font-medium justify-between items-center font-medium w-full bg-gray-50 p-1 border-1 border-gray-200">
+                                                                Forge level:
+                                                                    <select
+                                                                        value={calculatorState.selectedForgeLevel}
+                                                                        onChange={(e) => {
                                                                                 setCalculatorState(prev => ({
                                                                                     ...prev,
                                                                                     selectedForgeLevel: Number(e.target.value),
@@ -527,62 +485,6 @@ function WarDayCalculator() {
                                                                     </div>
                                                                 ))}
                                                             </div>
-                                                            {/* {calculatorState.showAdvancedMode && 
-                                                                <div className="border rounded p-3 flex flex-col gap-2">
-                                                                    <div className="font-semibold">
-                                                                        Equipment drop chances - Level {selectedForge.level}
-                                                                    </div>
-
-                                                                    {group.actions.map((act) => {
-                                                                        const chanceKey =
-                                                                            FORGE_CHANCE_KEYS[
-                                                                                act.name as keyof typeof FORGE_CHANCE_KEYS
-                                                                            ];
-
-                                                                        const chance = chanceKey
-                                                                            ? selectedForge.forgeChances[chanceKey]
-                                                                            : 0;
-
-                                                                        const tier = FORGE_TIERS.find(item =>
-                                                                            item.names.includes(act.name)
-                                                                        );
-
-                                                                        const points = tier
-                                                                            ? getPoints(tier.key, tier.defaultPoints)
-                                                                            : act.defaultPoints;
-
-                                                                        const expectedPoints = chance * points;
-
-                                                                        return (
-                                                                            <div
-                                                                                key={act.name}
-                                                                                className="flex flex-wrap items-center justify-between gap-3 border-b last:border-b-0 pb-2 last:pb-0"
-                                                                            >
-                                                                                <span className="font-medium">
-                                                                                    {act.name}
-                                                                                </span>
-
-                                                                                <div className="flex flex-row justify-between sm:grid sm:grid-cols-[1fr_1fr_auto] items-center gap-3 text-sm w-full">
-                                                                                    <div className="text-zinc-600">
-                                                                                        Chance: {(chance * 100).toLocaleString(
-                                                                                            undefined,
-                                                                                            { maximumFractionDigits: 4 }
-                                                                                        )}%
-                                                                                    </div>
-
-                                                                                    <div className="text-zinc-600">
-                                                                                        {formatPoints(points)} pts
-                                                                                    </div>
-
-                                                                                    <div className="font-semibold">
-                                                                                        Expected: {formatPoints(expectedPoints)} pts
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-                                                                        );
-                                                                    })}
-                                                                </div>
-                                                            } */}
                                                         </div>
                                                     )}
                                                     {group.id === 2 && customAct && (
@@ -864,9 +766,28 @@ function WarDayCalculator() {
                                         </div>
                                         <span className="font-black text-xl sm:text-3xl">{formatPoints(totalPoints)}</span>
                                     </div>
+                                    <div className="
+                                        sticky bottom-[calc(1rem+env(safe-area-inset-bottom))] z-50
+                                        self-center flex flex-row items-center justify-between gap-2
+                                        w-[calc(100%-2rem)] max-w-md
+                                        bg-orange-50 border-2 border-orange-400 rounded-xl w-full
+                                        shadow-xl backdrop-blur-md
+                                        px-4 py-3 sm:py-4">
+                                            
+                                                <span className="font-bold text-sm">
+                                                    TOTAL WAR POINTS
+                                                </span>
+                                                <span className="font-black text-xl sm:text-2xl tabular-nums">
+                                                    {formatPoints(totalWarPoints)}
+                                                </span>
+                                            
+                                            
+                                    </div>
                                 </div>
+                                
                             </section>
                         </div>
+                        
                     </div>
         
     );
