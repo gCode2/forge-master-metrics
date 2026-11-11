@@ -260,7 +260,7 @@ export interface petChancesType{
     setMenuOpened: (isMenuOpened: boolean)=>void;
  }
 
- export type CalculatorState = {
+ export type WarCalculatorState = {
     selectedDay: number,
     quantities: Record<string, number>,
     customPoints: Record<string, number>,
@@ -268,6 +268,12 @@ export interface petChancesType{
     selectedForgeLevel: number,
     showAdvancedMode: boolean,
  }
+
+ export type AscendCalculatorState = {
+    selectedResource: string,
+    
+ }
+
  export interface SearchBarProps{
     searchText: string,
     changeHandler: (text:string) => void

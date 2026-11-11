@@ -1,4 +1,111 @@
+import { useState } from "react";
+import type { AscendCalculatorState } from "../../../types/types";
+import { ascendResources } from "../../../data/ascend";
+
+const DEFAULT_STATE: AscendCalculatorState = {
+    selectedResource: "Forge",
+
+}
+
 function AscendCalculator(){
+    const [calculatorState, setCalculatorState] = useState<AscendCalculatorState>(DEFAULT_STATE);
+
+
+    function renderResourceContent(resource:string){
+        switch(resource){
+                                    case "Forge":
+                                        return (
+                                            <div>
+                                                <div className="text-xl font-bold">
+                                                    Forge
+                                                </div>
+                                                <div>
+                                                    <div>
+                                                        How many coins
+                                                    </div>
+                                                    <div>
+                                                        Forge speed up %
+                                                    </div>
+                                                    <div>
+                                                        Forge cost decrease %
+                                                    </div>
+                                                    <div>
+                                                        Using gems?
+                                                    </div>
+                                                </div>
+                                                <div>
+                                                    Summary
+                                                </div>
+                                            </div>
+                                        )
+                                    case "Skills":
+                                        return (
+                                            <div>
+                                                <div className="text-xl font-bold">
+                                                    Skills
+                                                </div>
+                                                <div>
+                                                    <div>
+                                                        How many tickets
+                                                    </div>
+                                                    <div>
+                                                        Ticket cost / Ticket disconut %
+                                                    </div>
+                                                </div>
+                                                <div>
+                                                    Summary
+                                                </div>
+                                            </div>
+                                        )
+                                    case "Pets":
+                                        return (
+                                            <div>
+                                                <div className="text-xl font-bold">
+                                                    Pets
+                                                </div>
+                                                <div>
+                                                    <div>
+                                                        How many eggs
+                                                    </div>
+                                                    <div>
+                                                        Summon cost / Summon disconut %
+                                                    </div>
+                                                </div>
+                                                <div>
+                                                    Summary
+                                                </div>
+                                            </div>
+                                        )
+                                    case "Mounts":
+                                        return (
+                                            <div>
+                                                <div className="text-xl font-bold">
+                                                    Mounts
+                                                </div>
+                                                <div>
+                                                    <div>
+                                                        How many clockwiders
+                                                    </div>
+                                                    <div>
+                                                        Summon cost / Summon disconut %
+                                                    </div>
+                                                </div>
+                                                <div>
+                                                    Summary
+                                                </div>
+                                            </div>
+                                        )
+                                    default:
+                                        return (
+                                            <div>
+                                            <div className="text-xl font-bold">
+                                                Couldn't load resource form
+                                            </div>
+                                            </div>
+                                        )
+                                }
+    }
+
     return (
         <>
             <div className="flex flex-col gap-1 w-full">
@@ -21,24 +128,24 @@ function AscendCalculator(){
                             <label className="flex flex-row gap-1 font-medium justify-between items-center font-medium w-full bg-gray-50 p-1 border-1 border-gray-200">
                                 Select a resource
                                 <select
-                                    value={0}
-                                    onChange={(e) => {
-                                    // setCalculatorState(prev => ({
-                                    //     ...prev,
-                                    //     selectedForgeLevel: Number(e.target.value),
-                                    // }));
-                                    }
-                                    }
-                                    className="border rounded-sm px-2 py-1 bg-white"
-                                                                        >
-                                    {/* {forgeLevels.map((level) => (
-                                        <option key={level.level} value={level.level}>
-                                        Level {level.level}
+                                    value={calculatorState.selectedResource}
+                                    onChange={(e)=>{
+                                        setCalculatorState(prev=> ({
+                                            ...prev,
+                                            selectedResource: e.target.value
+                                        }))
+                                    }}
+                                    className="border rounded-sm px-2 py-1 bg-white">
+                                    {ascendResources.map(resource=> (
+                                        <option key={resource.id} value={resource.resource}>
+                                            {resource.resource}
                                         </option>
-                                    ))} */}
+                                    ))}
                                 </select>
                             </label>
-
+                            <div className="flex flex-col gap-3">
+                                {renderResourceContent(calculatorState.selectedResource)}
+                            </div>
                         </div>
                     </section>
                 </div>

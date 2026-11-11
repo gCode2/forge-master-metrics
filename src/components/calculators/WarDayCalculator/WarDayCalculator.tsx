@@ -3,7 +3,7 @@ import { warActions, warDaysActions } from "../../../data/warDay";
 import NumberField from "./components/NumberField";
 import SectionSummary from "./components/SectionSummary";
 import { formatPoints } from "./utils";
-import type { CalculatorState } from "../../../types/types";
+import type { WarCalculatorState } from "../../../types/types";
 import { forgeLevels } from "../../../data/resourceData";
 
 type WarGroup = (typeof warActions)[number];
@@ -28,7 +28,7 @@ const FORGE_CHANCE_KEYS = {
 } as const;
 
 
-const DEFAULT_STATE: CalculatorState = {
+const DEFAULT_STATE: WarCalculatorState = {
     selectedDay: 1,
     quantities: {},
     customPoints: {},
@@ -49,7 +49,7 @@ function getSpendUnitSize(actionName: string) {
 }
 
 function WarDayCalculator() {
-    const [calculatorState, setCalculatorState] = useState<CalculatorState>(()=>{
+    const [calculatorState, setCalculatorState] = useState<WarCalculatorState>(()=>{
         if(typeof window === "undefined") {
             return DEFAULT_STATE;
         }
