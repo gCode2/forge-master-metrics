@@ -44,7 +44,10 @@ function PlayerPage() {
         const { data, error } =
             await supabase.from("players")
                 .select(`id, v_player_war_history ( war_number, points)`)
-                .eq("nickname", nickname).single();
+                .eq("nickname", nickname).order("war_number", {
+                    referencedTable: "v_player_war_history",
+                    ascending: true
+                }).single();
 
         if (error) {
             console.error("Failed to load war history:", error);
