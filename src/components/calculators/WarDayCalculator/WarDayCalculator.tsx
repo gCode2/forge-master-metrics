@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
-import { forgeLevels, warActions, warDaysActions } from "../../../data/warDay";
+import { warActions, warDaysActions } from "../../../data/warDay";
 import NumberField from "./components/NumberField";
 import SectionSummary from "./components/SectionSummary";
 import { formatPoints } from "./utils";
 import type { CalculatorState } from "../../../types/types";
+import { forgeLevels } from "../../../data/resourceData";
 
 type WarGroup = (typeof warActions)[number];
 

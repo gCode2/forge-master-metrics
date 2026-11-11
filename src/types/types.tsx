@@ -184,6 +184,7 @@ export type PlayerWarPoints = Record<
     level: number,
     totalCost: number | null,
     gemCost: number | null,
+    time: number | null,
     forgeChances: forgeChancesType
  }
 
@@ -198,6 +199,60 @@ export type PlayerWarPoints = Record<
     quantum: number,
     underworld: number,
     divine: number
+ }
+
+  export interface skillLevelType{
+    level:number,
+    summon: number | null,
+    totalSummon: number | null,
+    cost: number | null,
+    totalCost: number | null,
+    skillsChances: skillChancesType
+ }
+
+ export interface skillChancesType{
+    common: number,
+    rare: number,
+    epic: number,
+    legendary: number,
+    ultimate: number,
+    mythic: number,
+ }
+
+export interface mountLevelType{
+    level:number,
+    summon: number | null,
+    totalSummon: number | null,
+    cost: number | null,
+    totalCost: number | null,
+    mountsChances: mountChancesType
+ }
+
+export interface mountChancesType{
+    common: number,
+    rare: number,
+    epic: number,
+    legendary: number,
+    ultimate: number,
+    mythic: number,
+ }
+
+ export interface petLevelType{
+    level:number,
+    summon: number | null,
+    totalSummon: number | null,
+    cost: number | null,
+    totalCost: number | null,
+    petChances: petChancesType
+ }
+
+export interface petChancesType{
+    common: number,
+    rare: number,
+    epic: number,
+    legendary: number,
+    ultimate: number,
+    mythic: number,
  }
 
  export interface AppNavigationProps{
