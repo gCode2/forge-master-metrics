@@ -5,7 +5,7 @@ function CalculatorsPage () {
 
     return (
         <>
-        <main className="flex flex-1 flex-col w-full p-4 sm:p-6 gap-2">
+        <main className="flex flex-1 flex-col w-full py-4 px-3 sm:p-6 gap-2">
             <div className="flex flex-col gap-2 w-full">
                 <div className="flex flex-row gap-3 items-center border-2 rounded w-full min-h-24 shadow-lg/20 px-3 sm:px-6 py-3">
                 <img src="/icons/calculator.png" className="h-12 w-12 sm:h-16 sm:w-16 shrink-0" />

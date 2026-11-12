@@ -37,7 +37,6 @@ function PwaInstallPrompt() {
             setInstallAvailable(canInstall());
         });
     }, []);
-    // localStorage.removeItem(DISMISSED_KEY)
     const closePrompt = () => {
         localStorage.setItem(DISMISSED_KEY, "true");
         setDismissed(true);
