@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { warActions, warDaysActions } from "../../../data/warDay";
-import NumberField from "./components/NumberField";
-import SectionSummary from "./components/SectionSummary";
-import { formatPoints } from "./utils";
+import NumberField from "../components/NumberField";
+import SectionSummary from "../components/SectionSummary";
+import { formatPoints } from "../utils";
 import type { WarCalculatorState } from "../../../types/types";
 import { forgeLevels } from "../../../data/resourceData";
 
