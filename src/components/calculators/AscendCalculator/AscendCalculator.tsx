@@ -1,114 +1,157 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import type { AscendCalculatorState } from "../../../types/types";
 import { ascendResources } from "../../../data/ascend";
 import NumberField from "../components/NumberField";
 
 const DEFAULT_STATE: AscendCalculatorState = {
     selectedResource: "Forge",
-
+    resourceQuantities: {},
+    resourceCosts: {},
+    resourceSpeedUps: {}
 }
+
+// const STORAGE_KEY = "ascend-calculator";
 
 function AscendCalculator(){
     const [calculatorState, setCalculatorState] = useState<AscendCalculatorState>(DEFAULT_STATE);
+    const [isConfirmingReset, setConfirmingReset] = useState(false);
 
+
+
+    useEffect(()=>{
+        if(isConfirmingReset){
+            const timer = setTimeout(()=>{
+                setConfirmingReset(false);
+            }, 3000)
+            return ()=> clearTimeout(timer);
+        }
+    }, [isConfirmingReset])
+
+    function toNonNegativeInteger(value: number) {
+        return Number.isFinite(value)
+            ? Math.max(0, Math.floor(value))
+            : 0;
+    }
+
+    function handleQuantityChange(key:string, value: number){
+        setCalculatorState(prev=>({
+            ...prev,
+            resourceQuantities: {
+                ...prev.resourceQuantities,
+                [key]: toNonNegativeInteger(value)
+            }
+        }))
+    }
+
+    function getResourceQuantity(key:string, defaultVal: number = 0){
+        console.log(key);
+        console.log(calculatorState.resourceQuantities)
+        return calculatorState.resourceQuantities[key] ?? defaultVal;
+    }
 
     function renderResourceContent(resource:string){
         switch(resource){
-                                    case "Forge":
-                                        return (
-                                            <div>
-                                                <div className="text-xl font-bold">
-                                                    Forge
-                                                </div>
-                                                <div className="flex flex-col gap-3">
-                                                    <div>
-                                                        <NumberField label="Coins:" value={3} onChange={()=>{}}/>
-                                                    </div>
-                                                    <div>
-                                                        <NumberField label="Forge speed up (%)" value={3} onChange={()=>{}}/>
-                                                    </div>
-                                                    <div>
-                                                        <NumberField label="Forge cost decrease (%)" value={3} onChange={()=>{}}/>
-                                                    </div>
-                                                    <div>
-                                                        Using gems?
-                                                        slider
-                                                    </div>
-                                                </div>
-                                                <div>
-                                                    Summary + info
-                                                </div>
-                                            </div>
-                                        )
-                                    case "Skills":
-                                        return (
-                                            <div>
-                                                <div className="text-xl font-bold">
-                                                    Skills
-                                                </div>
-                                                <div className="flex flex-col gap-3">
-                                                    <div>
-                                                        <NumberField label="Tickets:" value={3} onChange={()=>{}}/>
-                                                    </div>
-                                                    <div>
-                                                        <NumberField label="Summon cost:" value={3} onChange={()=>{}}/>
-                                                    </div>
-                                                </div>
-                                                <div>
-                                                    Summary
-                                                </div>
-                                            </div>
-                                        )
-                                    case "Pets":
-                                        return (
-                                            <div>
-                                                <div className="text-xl font-bold">
-                                                    Pets
-                                                </div>
-                                                <div className="flex flex-col gap-3">
-                                                    <div>
-                                                        <NumberField label="Eggs:" value={3} onChange={()=>{}}/>
-                                                    </div>
-                                                    <div>
-                                                        <NumberField label="Summon cost:" value={3} onChange={()=>{}}/>
-                                                    </div>
-                                                </div>
-                                                <div>
-                                                    Summary
-                                                </div>
-                                            </div>
-                                        )
-                                    case "Mounts":
-                                        return (
-                                            <div>
-                                                <div className="text-xl font-bold">
-                                                    Mounts
-                                                </div>
-                                                <div className="flex flex-col gap-3">
-                                                    <div>
-                                                        <NumberField label="Clockwiders:" value={3} onChange={()=>{}}/>
-                                                    </div>
-                                                    <div>
-                                                        <NumberField label="Summon cost" value={3} onChange={()=>{}}/>
-                                                    </div>
-                                                </div>
-                                                <div>
-                                                    Summary
-                                                </div>
-                                            </div>
-                                        )
-                                    default:
-                                        return (
-                                            <div>
-                                                <div className="text-xl font-bold">
-                                                    Something went wrong.
-                                                </div>
-                                                <div className="text-base">
-                                                    Provided wrong resource. Refresh and try again.
-                                                </div>
-                                            </div>
-                                        )
-                                }
+            case "Forge":
+                return (
+                    <div>
+                        <div className="text-xl font-bold">
+                            Forge
+                        </div>
+                        <div className="flex flex-col gap-3">
+                            <div>
+                                <NumberField label="Coins:" value={getResourceQuantity(`qty-${resource}`)} onChange={(value)=>{handleQuantityChange(`qty-${resource}`, Math.max(0, Math.floor(Number(value) || 0)))}}/>
+                            </div>
+                            <div>
+                                <NumberField label="Forge speed up (%)" value={0} onChange={()=>{}}/>
+                            </div>
+                            <div>
+                                <NumberField label="Forge cost decrease (%)" value={0} onChange={()=>{}}/>
+                            </div>
+                            <div>
+                                Using gems?
+                                slider
+                            </div>
+                            </div>
+                            <div>
+                                Summary + info
+                            </div>
+                        </div>
+                )
+            case "Skills":
+                return (
+                        <div>
+                            <div className="text-xl font-bold">
+                                Skills
+                            </div>
+                            <div className="flex flex-col gap-3">
+                                <div>
+                                    <NumberField label="Tickets:" value={getResourceQuantity(`qty-${resource}`)} onChange={(value)=>{handleQuantityChange(`qty-${resource}`, Math.max(0, Math.floor(Number(value) || 0)))}}/>
+                                </div>
+                                <div>
+                                    <NumberField label="Summon cost:" value={0} onChange={()=>{}}/>
+                                </div>
+                            </div>
+                            <div>
+                                Summary
+                            </div>
+                        </div>
+                )
+            case "Pets":
+                return (
+                    <div>
+                        <div className="text-xl font-bold">
+                            Pets
+                        </div>
+                        <div className="flex flex-col gap-3">
+                            <div>
+                                <NumberField label="Eggs:" value={getResourceQuantity(`qty-${resource}`)} onChange={(value)=>{handleQuantityChange(`qty-${resource}`, Math.max(0, Math.floor(Number(value) || 0)))}}/>
+                            </div>
+                            <div>
+                                <NumberField label="Summon cost:" value={0} onChange={()=>{}}/>
+                            </div>
+                            <div>
+                            <NumberField label="Extra chance (%):" value={0} onChange={()=>{}}/>
+                            </div>
+                        </div>
+                        <div>
+                            Summary
+                        </div>
+                    </div>
+                )
+            case "Mounts":
+                return (
+                    <div>
+                        <div className="text-xl font-bold">
+                            Mounts
+                        </div>
+                        <div className="flex flex-col gap-3">
+                            <div>
+                                <NumberField label="Clockwiders:" value={getResourceQuantity(`qty-${resource}`)} onChange={(value)=>{handleQuantityChange(`qty-${resource}`, Math.max(0, Math.floor(Number(value) || 0)))}}/>
+                            </div>
+                            <div>
+                                <NumberField label="Summon cost" value={0} onChange={()=>{}}/>
+                            </div>
+                            <div>
+                                <NumberField label="Extra chance (%):" value={0} onChange={()=>{}}/>
+                            </div>
+                        </div>
+                        <div>
+                            Summary
+                        </div>
+                    </div>
+                )
+            default:
+                return (
+                    <div>
+                        <div className="text-xl font-bold">
+                            Something went wrong.
+                        </div>
+                        <div className="text-base">
+                            Provided wrong resource. Refresh and try again.
+                        </div>
+                    </div>
+                )
+        }
     }
 
     return (

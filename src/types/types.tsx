@@ -271,10 +271,23 @@ export interface petChancesType{
 
  export type AscendCalculatorState = {
     selectedResource: string,
-    
+    resourceQuantities: Record<string, number>,
+    resourceCosts: Record<string, number>,
+    resourceSpeedUps: Record<string, number>
  }
 
  export interface SearchBarProps{
     searchText: string,
     changeHandler: (text:string) => void
  }
+
+ export interface AscendResource{
+    id: number,
+    resource: string,
+    defaultCost: number,
+    levels: AscendResourceUnion
+ }
+
+ export type AscendResourceUnion = forgeLevelType[] | mountLevelType[] | petLevelType[] | skillLevelType[]
+
+ export type AscendResources = AscendResource[]
