@@ -72,10 +72,15 @@ function WarDayCalculator() {
 
     useEffect(() => {
         const timeout = setTimeout(() => {
+            try{
             localStorage.setItem(
                 STORAGE_KEY,
                 JSON.stringify(calculatorState)
             );
+            }
+            catch{
+                
+            }
         }, 200);
 
         return () => clearTimeout(timeout);
