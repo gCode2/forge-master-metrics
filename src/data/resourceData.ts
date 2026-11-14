@@ -7,7 +7,7 @@ export const forgeLevels: forgeLevelType[] = [
         totalSummon: null,
         gemCost: null,
         time: null,
-        forgeChances: {
+        chances: {
             primitive: 1.0,
             medieval: 0,
             earlyModern: 0,
@@ -26,7 +26,7 @@ export const forgeLevels: forgeLevelType[] = [
         totalSummon: null,
         gemCost: 1,
         time: 300,
-        forgeChances: {
+        chances: {
             primitive: 0.99,
             medieval: 0.01,
             earlyModern: 0,
@@ -45,7 +45,7 @@ export const forgeLevels: forgeLevelType[] = [
         totalSummon: null,
         gemCost: 2,
         time: 900,
-        forgeChances: {
+        chances: {
             primitive: 0.98,
             medieval: 0.02,
             earlyModern: 0,
@@ -64,7 +64,7 @@ export const forgeLevels: forgeLevelType[] = [
         totalSummon: null,
         gemCost: 4,
         time: 1800,
-        forgeChances: {
+        chances: {
             primitive: 0.96,
             medieval: 0.04,
             earlyModern: 0,
@@ -83,7 +83,7 @@ export const forgeLevels: forgeLevelType[] = [
         totalSummon: null,
         gemCost: 8,
         time: 3600,
-        forgeChances: {
+        chances: {
             primitive: 0.915,
             medieval: 0.08,
             earlyModern: 0.005,
@@ -102,7 +102,7 @@ export const forgeLevels: forgeLevelType[] = [
         totalSummon: null,
         gemCost: 17,
         time: 7200,
-        forgeChances: {
+        chances: {
             primitive: 0.82,
             medieval: 0.16,
             earlyModern: 0.02,
@@ -121,7 +121,7 @@ export const forgeLevels: forgeLevelType[] = [
         totalSummon: null,
         gemCost: 63,
         time: 27180,
-        forgeChances: {
+        chances: {
             primitive: 0.64,
             medieval: 0.32,
             earlyModern: 0.04,
@@ -140,7 +140,7 @@ export const forgeLevels: forgeLevelType[] = [
         totalSummon: null,
         gemCost: 109,
         time: 47160,
-        forgeChances: {
+        chances: {
             primitive: 0.278,
             medieval: 0.64,
             earlyModern: 0.08,
@@ -159,7 +159,7 @@ export const forgeLevels: forgeLevelType[] = [
         totalSummon: null,
         gemCost: 155,
         time: 67140,
-        forgeChances: {
+        chances: {
             primitive: 0.13,
             medieval: 0.70,
             earlyModern: 0.16,
@@ -178,7 +178,7 @@ export const forgeLevels: forgeLevelType[] = [
         totalSummon: null,
         gemCost: 201,
         time: 87180,
-        forgeChances: {
+        chances: {
             primitive: 0.06,
             medieval: 0.60,
             earlyModern: 0.32,
@@ -197,7 +197,7 @@ export const forgeLevels: forgeLevelType[] = [
         totalSummon: null,
         gemCost: 247,
         time: 104400,
-        forgeChances: {
+        chances: {
             primitive: 0,
             medieval: 0.319,
             earlyModern: 0.64,
@@ -216,7 +216,7 @@ export const forgeLevels: forgeLevelType[] = [
         totalSummon: null,
         gemCost: 293,
         time: 126000,
-        forgeChances: {
+        chances: {
             primitive: 0,
             medieval: 0.275,
             earlyModern: 0.64,
@@ -235,7 +235,7 @@ export const forgeLevels: forgeLevelType[] = [
         totalSummon: null,
         gemCost: 339,
         time: 144000,
-        forgeChances: {
+        chances: {
             primitive: 0,
             medieval: 0.08,
             earlyModern: 0.75,
@@ -254,7 +254,7 @@ export const forgeLevels: forgeLevelType[] = [
         totalSummon: null,
         gemCost: 385,
         time: 165600,
-        forgeChances: {
+        chances: {
             primitive: 0,
             medieval: 0,
             earlyModern: 0.66,
@@ -273,7 +273,7 @@ export const forgeLevels: forgeLevelType[] = [
         totalSummon: null,
         gemCost: 431,
         time: 187200,
-        forgeChances: {
+        chances: {
             primitive: 0,
             medieval: 0,
             earlyModern: 0.317,
@@ -292,7 +292,7 @@ export const forgeLevels: forgeLevelType[] = [
         totalSummon: null,
         gemCost: 477,
         time: 205200,
-        forgeChances: {
+        chances: {
             primitive: 0,
             medieval: 0,
             earlyModern: 0.215,
@@ -311,7 +311,7 @@ export const forgeLevels: forgeLevelType[] = [
         totalSummon: null,
         gemCost: 523,
         time: 226800,
-        forgeChances: {
+        chances: {
             primitive: 0,
             medieval: 0,
             earlyModern: 0,
@@ -330,7 +330,7 @@ export const forgeLevels: forgeLevelType[] = [
         totalSummon: null,
         gemCost: 569,
         time: 244800,
-        forgeChances: {
+        chances: {
             primitive: 0,
             medieval: 0,
             earlyModern: 0,
@@ -349,7 +349,7 @@ export const forgeLevels: forgeLevelType[] = [
         totalSummon: null,
         gemCost: 638,
         time: 277200,
-        forgeChances: {
+        chances: {
             primitive: 0,
             medieval: 0,
             earlyModern: 0,
@@ -368,7 +368,7 @@ export const forgeLevels: forgeLevelType[] = [
         totalSummon: null,
         gemCost: 707,
         time: 306000,
-        forgeChances: {
+        chances: {
             primitive: 0,
             medieval: 0,
             earlyModern: 0,
@@ -387,7 +387,7 @@ export const forgeLevels: forgeLevelType[] = [
         totalSummon: null,
         gemCost: 776,
         time: 334800,
-        forgeChances: {
+        chances: {
             primitive: 0,
             medieval: 0,
             earlyModern: 0,
@@ -406,7 +406,7 @@ export const forgeLevels: forgeLevelType[] = [
         totalSummon: null,
         gemCost: 845,
         time: 363600,
-        forgeChances: {
+        chances: {
             primitive: 0,
             medieval: 0,
             earlyModern: 0,
@@ -425,7 +425,7 @@ export const forgeLevels: forgeLevelType[] = [
         totalSummon: null,
         gemCost: 914,
         time: 396000,
-        forgeChances: {
+        chances: {
             primitive: 0,
             medieval: 0,
             earlyModern: 0,
@@ -444,7 +444,7 @@ export const forgeLevels: forgeLevelType[] = [
         totalSummon: null,
         gemCost: 983,
         time: 424800,
-        forgeChances: {
+        chances: {
             primitive: 0,
             medieval: 0,
             earlyModern: 0,
@@ -463,7 +463,7 @@ export const forgeLevels: forgeLevelType[] = [
         totalSummon: null,
         gemCost: 1050,
         time: 457200,
-        forgeChances: {
+        chances: {
             primitive: 0,
             medieval: 0,
             earlyModern: 0,
@@ -482,7 +482,7 @@ export const forgeLevels: forgeLevelType[] = [
         totalSummon: null,
         gemCost: 1120,
         time: 486000,
-        forgeChances: {
+        chances: {
             primitive: 0,
             medieval: 0,
             earlyModern: 0,
@@ -501,7 +501,7 @@ export const forgeLevels: forgeLevelType[] = [
         totalSummon: null,
         gemCost: 1190,
         time: 514800,
-        forgeChances: {
+        chances: {
             primitive: 0,
             medieval: 0,
             earlyModern: 0,
@@ -520,7 +520,7 @@ export const forgeLevels: forgeLevelType[] = [
         totalSummon: null,
         gemCost: 1250,
         time: 547200,
-        forgeChances: {
+        chances: {
             primitive: 0,
             medieval: 0,
             earlyModern: 0,
@@ -539,7 +539,7 @@ export const forgeLevels: forgeLevelType[] = [
         totalSummon: null,
         gemCost: 1320,
         time: 576000,
-        forgeChances: {
+        chances: {
             primitive: 0,
             medieval: 0,
             earlyModern: 0,
@@ -558,7 +558,7 @@ export const forgeLevels: forgeLevelType[] = [
         totalSummon: null,
         gemCost: 1390,
         time: 607200,
-        forgeChances: {
+        chances: {
             primitive: 0,
             medieval: 0,
             earlyModern: 0,
@@ -577,7 +577,7 @@ export const forgeLevels: forgeLevelType[] = [
         totalSummon: null,
         gemCost: 1460,
         time: 633600,
-        forgeChances: {
+        chances: {
             primitive: 0,
             medieval: 0,
             earlyModern: 0,
@@ -596,7 +596,7 @@ export const forgeLevels: forgeLevelType[] = [
         totalSummon: null,
         gemCost: 1530,
         time: 666000,
-        forgeChances: {
+        chances: {
             primitive: 0,
             medieval: 0,
             earlyModern: 0,
@@ -615,7 +615,7 @@ export const forgeLevels: forgeLevelType[] = [
         totalSummon: null,
         gemCost: 1600,
         time: 694800,
-        forgeChances: {
+        chances: {
             primitive: 0,
             medieval: 0,
             earlyModern: 0,
@@ -634,7 +634,7 @@ export const forgeLevels: forgeLevelType[] = [
         totalSummon: null,
         gemCost: 1670,
         time: 727200,
-        forgeChances: {
+        chances: {
             primitive: 0,
             medieval: 0,
             earlyModern: 0,
@@ -653,7 +653,7 @@ export const forgeLevels: forgeLevelType[] = [
         totalSummon: null,
         gemCost: 1740,
         time: 756000,
-        forgeChances: {
+        chances: {
             primitive: 0,
             medieval: 0,
             earlyModern: 0,
@@ -675,7 +675,7 @@ export const skillLevels: skillLevelType[] = [
     totalSummon: 2,
     cost: 80,
     totalCost: 80,
-    skillsChances: { common: 100, rare: 0, epic: 0, legendary: 0, ultimate: 0, mythic: 0 }
+    chances: { common: 100, rare: 0, epic: 0, legendary: 0, ultimate: 0, mythic: 0 }
   },
   {
     level: 2,
@@ -683,7 +683,7 @@ export const skillLevels: skillLevelType[] = [
     totalSummon: 6,
     cost: 160,
     totalCost: 240,
-    skillsChances: { common: 99.95, rare: 0.05, epic: 0, legendary: 0, ultimate: 0, mythic: 0 }
+    chances: { common: 99.95, rare: 0.05, epic: 0, legendary: 0, ultimate: 0, mythic: 0 }
   },
   {
     level: 3,
@@ -691,7 +691,7 @@ export const skillLevels: skillLevelType[] = [
     totalSummon: 12,
     cost: 240,
     totalCost: 480,
-    skillsChances: { common: 99.90, rare: 0.10, epic: 0, legendary: 0, ultimate: 0, mythic: 0 }
+    chances: { common: 99.90, rare: 0.10, epic: 0, legendary: 0, ultimate: 0, mythic: 0 }
   },
   {
     level: 4,
@@ -699,7 +699,7 @@ export const skillLevels: skillLevelType[] = [
     totalSummon: 20,
     cost: 320,
     totalCost: 800,
-    skillsChances: { common: 99.75, rare: 0.25, epic: 0, legendary: 0, ultimate: 0, mythic: 0 }
+    chances: { common: 99.75, rare: 0.25, epic: 0, legendary: 0, ultimate: 0, mythic: 0 }
   },
   {
     level: 5,
@@ -707,7 +707,7 @@ export const skillLevels: skillLevelType[] = [
     totalSummon: 30,
     cost: 400,
     totalCost: 1200,
-    skillsChances: { common: 99, rare: 1, epic: 0, legendary: 0, ultimate: 0, mythic: 0 }
+    chances: { common: 99, rare: 1, epic: 0, legendary: 0, ultimate: 0, mythic: 0 }
   },
   {
     level: 6,
@@ -715,7 +715,7 @@ export const skillLevels: skillLevelType[] = [
     totalSummon: 42,
     cost: 480,
     totalCost: 1680,
-    skillsChances: { common: 98, rare: 2, epic: 0, legendary: 0, ultimate: 0, mythic: 0 }
+    chances: { common: 98, rare: 2, epic: 0, legendary: 0, ultimate: 0, mythic: 0 }
   },
   {
     level: 7,
@@ -723,7 +723,7 @@ export const skillLevels: skillLevelType[] = [
     totalSummon: 56,
     cost: 560,
     totalCost: 2240,
-    skillsChances: { common: 96, rare: 4, epic: 0, legendary: 0, ultimate: 0, mythic: 0 }
+    chances: { common: 96, rare: 4, epic: 0, legendary: 0, ultimate: 0, mythic: 0 }
   },
   {
     level: 8,
@@ -731,7 +731,7 @@ export const skillLevels: skillLevelType[] = [
     totalSummon: 72,
     cost: 640,
     totalCost: 2880,
-    skillsChances: { common: 94.89, rare: 5.08, epic: 0.03, legendary: 0, ultimate: 0, mythic: 0 }
+    chances: { common: 94.89, rare: 5.08, epic: 0.03, legendary: 0, ultimate: 0, mythic: 0 }
   },
   {
     level: 9,
@@ -739,7 +739,7 @@ export const skillLevels: skillLevelType[] = [
     totalSummon: 90,
     cost: 720,
     totalCost: 3600,
-    skillsChances: { common: 93.49, rare: 6.45, epic: 0.06, legendary: 0, ultimate: 0, mythic: 0 }
+    chances: { common: 93.49, rare: 6.45, epic: 0.06, legendary: 0, ultimate: 0, mythic: 0 }
   },
   {
     level: 10,
@@ -747,7 +747,7 @@ export const skillLevels: skillLevelType[] = [
     totalSummon: 110,
     cost: 800,
     totalCost: 4400,
-    skillsChances: { common: 91.68, rare: 8.19, epic: 0.12, legendary: 0, ultimate: 0, mythic: 0 }
+    chances: { common: 91.68, rare: 8.19, epic: 0.12, legendary: 0, ultimate: 0, mythic: 0 }
   },
   {
     level: 11,
@@ -755,7 +755,7 @@ export const skillLevels: skillLevelType[] = [
     totalSummon: 140,
     cost: 1200,
     totalCost: 5600,
-    skillsChances: { common: 89.34, rare: 10.41, epic: 0.25, legendary: 0, ultimate: 0, mythic: 0 }
+    chances: { common: 89.34, rare: 10.41, epic: 0.25, legendary: 0, ultimate: 0, mythic: 0 }
   },
   {
     level: 12,
@@ -763,7 +763,7 @@ export const skillLevels: skillLevelType[] = [
     totalSummon: 180,
     cost: 1600,
     totalCost: 7200,
-    skillsChances: { common: 86.28, rare: 13.21, epic: 0.50, legendary: 0, ultimate: 0, mythic: 0 }
+    chances: { common: 86.28, rare: 13.21, epic: 0.50, legendary: 0, ultimate: 0, mythic: 0 }
   },
   {
     level: 13,
@@ -771,7 +771,7 @@ export const skillLevels: skillLevelType[] = [
     totalSummon: 230,
     cost: 2000,
     totalCost: 9200,
-    skillsChances: { common: 82.22, rare: 16.78, epic: 1, legendary: 0, ultimate: 0, mythic: 0 }
+    chances: { common: 82.22, rare: 16.78, epic: 1, legendary: 0, ultimate: 0, mythic: 0 }
   },
   {
     level: 14,
@@ -779,7 +779,7 @@ export const skillLevels: skillLevelType[] = [
     totalSummon: 290,
     cost: 2400,
     totalCost: 11600,
-    skillsChances: { common: 76.69, rare: 21.31, epic: 2, legendary: 0, ultimate: 0, mythic: 0 }
+    chances: { common: 76.69, rare: 21.31, epic: 2, legendary: 0, ultimate: 0, mythic: 0 }
   },
   {
     level: 15,
@@ -787,7 +787,7 @@ export const skillLevels: skillLevelType[] = [
     totalSummon: 370,
     cost: 3200,
     totalCost: 14800,
-    skillsChances: { common: 68.93, rare: 27.07, epic: 4, legendary: 0, ultimate: 0, mythic: 0 }
+    chances: { common: 68.93, rare: 27.07, epic: 4, legendary: 0, ultimate: 0, mythic: 0 }
   },
   {
     level: 16,
@@ -795,7 +795,7 @@ export const skillLevels: skillLevelType[] = [
     totalSummon: 470,
     cost: 4000,
     totalCost: 18800,
-    skillsChances: { common: 61.18, rare: 34.38, epic: 4.44, legendary: 0, ultimate: 0, mythic: 0 }
+    chances: { common: 61.18, rare: 34.38, epic: 4.44, legendary: 0, ultimate: 0, mythic: 0 }
   },
   {
     level: 17,
@@ -803,7 +803,7 @@ export const skillLevels: skillLevelType[] = [
     totalSummon: 580,
     cost: 4400,
     totalCost: 23200,
-    skillsChances: { common: 51.41, rare: 43.66, epic: 4.93, legendary: 0, ultimate: 0, mythic: 0 }
+    chances: { common: 51.41, rare: 43.66, epic: 4.93, legendary: 0, ultimate: 0, mythic: 0 }
   },
   {
     level: 18,
@@ -811,7 +811,7 @@ export const skillLevels: skillLevelType[] = [
     totalSummon: 690,
     cost: 4400,
     totalCost: 27600,
-    skillsChances: { common: 39.05, rare: 55.45, epic: 5.47, legendary: 0.03, ultimate: 0, mythic: 0 }
+    chances: { common: 39.05, rare: 55.45, epic: 5.47, legendary: 0.03, ultimate: 0, mythic: 0 }
   },
   {
     level: 19,
@@ -819,7 +819,7 @@ export const skillLevels: skillLevelType[] = [
     totalSummon: 800,
     cost: 4400,
     totalCost: 32000,
-    skillsChances: { common: 23.44, rare: 70.45, epic: 6.07, legendary: 0.06, ultimate: 0, mythic: 0 }
+    chances: { common: 23.44, rare: 70.45, epic: 6.07, legendary: 0.06, ultimate: 0, mythic: 0 }
   },
   {
     level: 20,
@@ -827,7 +827,7 @@ export const skillLevels: skillLevelType[] = [
     totalSummon: 910,
     cost: 4400,
     totalCost: 36400,
-    skillsChances: { common: 17.50, rare: 75.63, epic: 6.74, legendary: 0.12, ultimate: 0, mythic: 0 }
+    chances: { common: 17.50, rare: 75.63, epic: 6.74, legendary: 0.12, ultimate: 0, mythic: 0 }
   },
   {
     level: 21,
@@ -835,7 +835,7 @@ export const skillLevels: skillLevelType[] = [
     totalSummon: 1020,
     cost: 4400,
     totalCost: 40800,
-    skillsChances: { common: 17.50, rare: 74.77, epic: 7.48, legendary: 0.25, ultimate: 0, mythic: 0 }
+    chances: { common: 17.50, rare: 74.77, epic: 7.48, legendary: 0.25, ultimate: 0, mythic: 0 }
   },
   {
     level: 22,
@@ -843,7 +843,7 @@ export const skillLevels: skillLevelType[] = [
     totalSummon: 1130,
     cost: 4400,
     totalCost: 45200,
-    skillsChances: { common: 17.50, rare: 73.69, epic: 8.31, legendary: 0.50, ultimate: 0, mythic: 0 }
+    chances: { common: 17.50, rare: 73.69, epic: 8.31, legendary: 0.50, ultimate: 0, mythic: 0 }
   },
   {
     level: 23,
@@ -851,7 +851,7 @@ export const skillLevels: skillLevelType[] = [
     totalSummon: 1240,
     cost: 4400,
     totalCost: 49600,
-    skillsChances: { common: 17.50, rare: 72.28, epic: 9.22, legendary: 1, ultimate: 0, mythic: 0 }
+    chances: { common: 17.50, rare: 72.28, epic: 9.22, legendary: 1, ultimate: 0, mythic: 0 }
   },
   {
     level: 24,
@@ -859,7 +859,7 @@ export const skillLevels: skillLevelType[] = [
     totalSummon: 1350,
     cost: 4400,
     totalCost: 54000,
-    skillsChances: { common: 17.50, rare: 70.27, epic: 10.23, legendary: 2, ultimate: 0, mythic: 0 }
+    chances: { common: 17.50, rare: 70.27, epic: 10.23, legendary: 2, ultimate: 0, mythic: 0 }
   },
   {
     level: 25,
@@ -867,7 +867,7 @@ export const skillLevels: skillLevelType[] = [
     totalSummon: 1460,
     cost: 4400,
     totalCost: 58400,
-    skillsChances: { common: 17.50, rare: 67.14, epic: 11.36, legendary: 4, ultimate: 0, mythic: 0 }
+    chances: { common: 17.50, rare: 67.14, epic: 11.36, legendary: 4, ultimate: 0, mythic: 0 }
   },
   {
     level: 26,
@@ -875,7 +875,7 @@ export const skillLevels: skillLevelType[] = [
     totalSummon: 1570,
     cost: 4400,
     totalCost: 62800,
-    skillsChances: { common: 17.50, rare: 65.67, epic: 12.61, legendary: 4.22, ultimate: 0, mythic: 0 }
+    chances: { common: 17.50, rare: 65.67, epic: 12.61, legendary: 4.22, ultimate: 0, mythic: 0 }
   },
   {
     level: 27,
@@ -883,7 +883,7 @@ export const skillLevels: skillLevelType[] = [
     totalSummon: 1680,
     cost: 4400,
     totalCost: 67200,
-    skillsChances: { common: 17.50, rare: 64.05, epic: 13.99, legendary: 4.45, ultimate: 0, mythic: 0 }
+    chances: { common: 17.50, rare: 64.05, epic: 13.99, legendary: 4.45, ultimate: 0, mythic: 0 }
   },
   {
     level: 28,
@@ -891,7 +891,7 @@ export const skillLevels: skillLevelType[] = [
     totalSummon: 1790,
     cost: 4400,
     totalCost: 71600,
-    skillsChances: { common: 17.50, rare: 62.27, epic: 15.53, legendary: 4.70, ultimate: 0, mythic: 0 }
+    chances: { common: 17.50, rare: 62.27, epic: 15.53, legendary: 4.70, ultimate: 0, mythic: 0 }
   },
   {
     level: 29,
@@ -899,7 +899,7 @@ export const skillLevels: skillLevelType[] = [
     totalSummon: 1900,
     cost: 4400,
     totalCost: 76000,
-    skillsChances: { common: 17.50, rare: 60.30, epic: 17.24, legendary: 4.96, ultimate: 0, mythic: 0 }
+    chances: { common: 17.50, rare: 60.30, epic: 17.24, legendary: 4.96, ultimate: 0, mythic: 0 }
   },
   {
     level: 30,
@@ -907,7 +907,7 @@ export const skillLevels: skillLevelType[] = [
     totalSummon: 2010,
     cost: 4400,
     totalCost: 80400,
-    skillsChances: { common: 17.50, rare: 58.13, epic: 19.14, legendary: 5.23, ultimate: 0, mythic: 0 }
+    chances: { common: 17.50, rare: 58.13, epic: 19.14, legendary: 5.23, ultimate: 0, mythic: 0 }
   },
   {
     level: 31,
@@ -915,7 +915,7 @@ export const skillLevels: skillLevelType[] = [
     totalSummon: 2120,
     cost: 4400,
     totalCost: 84800,
-    skillsChances: { common: 17.50, rare: 55.74, epic: 21.24, legendary: 5.51, ultimate: 0, mythic: 0 }
+    chances: { common: 17.50, rare: 55.74, epic: 21.24, legendary: 5.51, ultimate: 0, mythic: 0 }
   },
   {
     level: 32,
@@ -923,7 +923,7 @@ export const skillLevels: skillLevelType[] = [
     totalSummon: 2230,
     cost: 4400,
     totalCost: 89200,
-    skillsChances: { common: 17.50, rare: 53.10, epic: 23.58, legendary: 5.82, ultimate: 0, mythic: 0 }
+    chances: { common: 17.50, rare: 53.10, epic: 23.58, legendary: 5.82, ultimate: 0, mythic: 0 }
   },
   {
     level: 33,
@@ -931,7 +931,7 @@ export const skillLevels: skillLevelType[] = [
     totalSummon: 2340,
     cost: 4400,
     totalCost: 93600,
-    skillsChances: { common: 17.50, rare: 50.19, epic: 26.17, legendary: 6.14, ultimate: 0, mythic: 0 }
+    chances: { common: 17.50, rare: 50.19, epic: 26.17, legendary: 6.14, ultimate: 0, mythic: 0 }
   },
   {
     level: 34,
@@ -939,7 +939,7 @@ export const skillLevels: skillLevelType[] = [
     totalSummon: 2450,
     cost: 4400,
     totalCost: 98000,
-    skillsChances: { common: 17.50, rare: 46.97, epic: 29.05, legendary: 6.48, ultimate: 0, mythic: 0 }
+    chances: { common: 17.50, rare: 46.97, epic: 29.05, legendary: 6.48, ultimate: 0, mythic: 0 }
   },
   {
     level: 35,
@@ -947,7 +947,7 @@ export const skillLevels: skillLevelType[] = [
     totalSummon: 2560,
     cost: 4400,
     totalCost: 102400,
-    skillsChances: { common: 17.50, rare: 43.42, epic: 32.25, legendary: 6.83, ultimate: 0, mythic: 0 }
+    chances: { common: 17.50, rare: 43.42, epic: 32.25, legendary: 6.83, ultimate: 0, mythic: 0 }
   },
   {
     level: 36,
@@ -955,7 +955,7 @@ export const skillLevels: skillLevelType[] = [
     totalSummon: 2670,
     cost: 4400,
     totalCost: 106800,
-    skillsChances: { common: 17.50, rare: 39.50, epic: 35.80, legendary: 7.21, ultimate: 0, mythic: 0 }
+    chances: { common: 17.50, rare: 39.50, epic: 35.80, legendary: 7.21, ultimate: 0, mythic: 0 }
   },
   {
     level: 37,
@@ -963,7 +963,7 @@ export const skillLevels: skillLevelType[] = [
     totalSummon: 2780,
     cost: 4400,
     totalCost: 111200,
-    skillsChances: { common: 17.50, rare: 35.16, epic: 39.73, legendary: 7.61, ultimate: 0, mythic: 0 }
+    chances: { common: 17.50, rare: 35.16, epic: 39.73, legendary: 7.61, ultimate: 0, mythic: 0 }
   },
   {
     level: 38,
@@ -971,7 +971,7 @@ export const skillLevels: skillLevelType[] = [
     totalSummon: 2890,
     cost: 4400,
     totalCost: 115600,
-    skillsChances: { common: 17.50, rare: 30.37, epic: 44.11, legendary: 8.02, ultimate: 0, mythic: 0 }
+    chances: { common: 17.50, rare: 30.37, epic: 44.11, legendary: 8.02, ultimate: 0, mythic: 0 }
   },
   {
     level: 39,
@@ -979,7 +979,7 @@ export const skillLevels: skillLevelType[] = [
     totalSummon: 3000,
     cost: 4400,
     totalCost: 120000,
-    skillsChances: { common: 17.50, rare: 25.05, epic: 48.96, legendary: 8.46, ultimate: 0.03, mythic: 0 }
+    chances: { common: 17.50, rare: 25.05, epic: 48.96, legendary: 8.46, ultimate: 0.03, mythic: 0 }
   },
   {
     level: 40,
@@ -987,7 +987,7 @@ export const skillLevels: skillLevelType[] = [
     totalSummon: 3110,
     cost: 4400,
     totalCost: 124400,
-    skillsChances: { common: 17.50, rare: 19.17, epic: 54.34, legendary: 8.93, ultimate: 0.06, mythic: 0 }
+    chances: { common: 17.50, rare: 19.17, epic: 54.34, legendary: 8.93, ultimate: 0.06, mythic: 0 }
   },
   {
     level: 41,
@@ -995,7 +995,7 @@ export const skillLevels: skillLevelType[] = [
     totalSummon: 3220,
     cost: 4400,
     totalCost: 128800,
-    skillsChances: { common: 17.50, rare: 16.50, epic: 56.45, legendary: 9.42, ultimate: 0.12, mythic: 0 }
+    chances: { common: 17.50, rare: 16.50, epic: 56.45, legendary: 9.42, ultimate: 0.12, mythic: 0 }
   },
   {
     level: 42,
@@ -1003,7 +1003,7 @@ export const skillLevels: skillLevelType[] = [
     totalSummon: 3330,
     cost: 4400,
     totalCost: 133200,
-    skillsChances: { common: 17.50, rare: 16.50, epic: 55.81, legendary: 9.94, ultimate: 0.25, mythic: 0 }
+    chances: { common: 17.50, rare: 16.50, epic: 55.81, legendary: 9.94, ultimate: 0.25, mythic: 0 }
   },
   {
     level: 43,
@@ -1011,7 +1011,7 @@ export const skillLevels: skillLevelType[] = [
     totalSummon: 3440,
     cost: 4400,
     totalCost: 137600,
-    skillsChances: { common: 17.50, rare: 16.50, epic: 55.01, legendary: 10.49, ultimate: 0.50, mythic: 0 }
+    chances: { common: 17.50, rare: 16.50, epic: 55.01, legendary: 10.49, ultimate: 0.50, mythic: 0 }
   },
   {
     level: 44,
@@ -1019,7 +1019,7 @@ export const skillLevels: skillLevelType[] = [
     totalSummon: 3550,
     cost: 4400,
     totalCost: 142000,
-    skillsChances: { common: 17.50, rare: 16.50, epic: 53.94, legendary: 11.06, ultimate: 1, mythic: 0 }
+    chances: { common: 17.50, rare: 16.50, epic: 53.94, legendary: 11.06, ultimate: 1, mythic: 0 }
   },
   {
     level: 45,
@@ -1027,7 +1027,7 @@ export const skillLevels: skillLevelType[] = [
     totalSummon: 3660,
     cost: 4400,
     totalCost: 146400,
-    skillsChances: { common: 17.50, rare: 16.50, epic: 52.33, legendary: 11.67, ultimate: 2, mythic: 0 }
+    chances: { common: 17.50, rare: 16.50, epic: 52.33, legendary: 11.67, ultimate: 2, mythic: 0 }
   },
   {
     level: 46,
@@ -1035,7 +1035,7 @@ export const skillLevels: skillLevelType[] = [
     totalSummon: 3770,
     cost: 4400,
     totalCost: 150800,
-    skillsChances: { common: 17.50, rare: 16.50, epic: 49.69, legendary: 12.31, ultimate: 4, mythic: 0 }
+    chances: { common: 17.50, rare: 16.50, epic: 49.69, legendary: 12.31, ultimate: 4, mythic: 0 }
   },
   {
     level: 47,
@@ -1043,7 +1043,7 @@ export const skillLevels: skillLevelType[] = [
     totalSummon: 3880,
     cost: 4400,
     totalCost: 155200,
-    skillsChances: { common: 17.50, rare: 16.50, epic: 48.79, legendary: 12.99, ultimate: 4.22, mythic: 0 }
+    chances: { common: 17.50, rare: 16.50, epic: 48.79, legendary: 12.99, ultimate: 4.22, mythic: 0 }
   },
   {
     level: 48,
@@ -1051,7 +1051,7 @@ export const skillLevels: skillLevelType[] = [
     totalSummon: 3990,
     cost: 4400,
     totalCost: 159600,
-    skillsChances: { common: 17.50, rare: 16.50, epic: 47.84, legendary: 13.71, ultimate: 4.45, mythic: 0 }
+    chances: { common: 17.50, rare: 16.50, epic: 47.84, legendary: 13.71, ultimate: 4.45, mythic: 0 }
   },
   {
     level: 49,
@@ -1059,7 +1059,7 @@ export const skillLevels: skillLevelType[] = [
     totalSummon: 4100,
     cost: 4400,
     totalCost: 164000,
-    skillsChances: { common: 17.50, rare: 16.50, epic: 46.85, legendary: 14.46, ultimate: 4.70, mythic: 0 }
+    chances: { common: 17.50, rare: 16.50, epic: 46.85, legendary: 14.46, ultimate: 4.70, mythic: 0 }
   },
   {
     level: 50,
@@ -1067,7 +1067,7 @@ export const skillLevels: skillLevelType[] = [
     totalSummon: 4210,
     cost: 4400,
     totalCost: 168400,
-    skillsChances: { common: 17.50, rare: 16.50, epic: 45.79, legendary: 15.25, ultimate: 4.96, mythic: 0 }
+    chances: { common: 17.50, rare: 16.50, epic: 45.79, legendary: 15.25, ultimate: 4.96, mythic: 0 }
   },
   {
     level: 51,
@@ -1075,7 +1075,7 @@ export const skillLevels: skillLevelType[] = [
     totalSummon: 4320,
     cost: 4400,
     totalCost: 172800,
-    skillsChances: { common: 17.50, rare: 16.50, epic: 44.68, legendary: 16.09, ultimate: 5.23, mythic: 0 }
+    chances: { common: 17.50, rare: 16.50, epic: 44.68, legendary: 16.09, ultimate: 5.23, mythic: 0 }
   },
   {
     level: 52,
@@ -1083,7 +1083,7 @@ export const skillLevels: skillLevelType[] = [
     totalSummon: 4430,
     cost: 4400,
     totalCost: 177200,
-    skillsChances: { common: 17.50, rare: 16.50, epic: 43.51, legendary: 16.98, ultimate: 5.51, mythic: 0 }
+    chances: { common: 17.50, rare: 16.50, epic: 43.51, legendary: 16.98, ultimate: 5.51, mythic: 0 }
   },
   {
     level: 53,
@@ -1091,7 +1091,7 @@ export const skillLevels: skillLevelType[] = [
     totalSummon: 4540,
     cost: 4400,
     totalCost: 181600,
-    skillsChances: { common: 17.50, rare: 16.50, epic: 42.27, legendary: 17.91, ultimate: 5.82, mythic: 0 }
+    chances: { common: 17.50, rare: 16.50, epic: 42.27, legendary: 17.91, ultimate: 5.82, mythic: 0 }
   },
   {
     level: 54,
@@ -1099,7 +1099,7 @@ export const skillLevels: skillLevelType[] = [
     totalSummon: 4650,
     cost: 4400,
     totalCost: 186000,
-    skillsChances: { common: 17.50, rare: 16.50, epic: 40.97, legendary: 18.90, ultimate: 6.14, mythic: 0 }
+    chances: { common: 17.50, rare: 16.50, epic: 40.97, legendary: 18.90, ultimate: 6.14, mythic: 0 }
   },
   {
     level: 55,
@@ -1107,7 +1107,7 @@ export const skillLevels: skillLevelType[] = [
     totalSummon: 4760,
     cost: 4400,
     totalCost: 190400,
-    skillsChances: { common: 17.50, rare: 16.50, epic: 39.59, legendary: 19.94, ultimate: 6.48, mythic: 0 }
+    chances: { common: 17.50, rare: 16.50, epic: 39.59, legendary: 19.94, ultimate: 6.48, mythic: 0 }
   },
   {
     level: 56,
@@ -1115,7 +1115,7 @@ export const skillLevels: skillLevelType[] = [
     totalSummon: 4870,
     cost: 4400,
     totalCost: 194800,
-    skillsChances: { common: 17.50, rare: 16.50, epic: 38.13, legendary: 21.03, ultimate: 6.83, mythic: 0 }
+    chances: { common: 17.50, rare: 16.50, epic: 38.13, legendary: 21.03, ultimate: 6.83, mythic: 0 }
   },
   {
     level: 57,
@@ -1123,7 +1123,7 @@ export const skillLevels: skillLevelType[] = [
     totalSummon: 4980,
     cost: 4400,
     totalCost: 199200,
-    skillsChances: { common: 17.50, rare: 16.50, epic: 36.60, legendary: 22.19, ultimate: 7.21, mythic: 0 }
+    chances: { common: 17.50, rare: 16.50, epic: 36.60, legendary: 22.19, ultimate: 7.21, mythic: 0 }
   },
   {
     level: 58,
@@ -1131,7 +1131,7 @@ export const skillLevels: skillLevelType[] = [
     totalSummon: 5090,
     cost: 4400,
     totalCost: 203600,
-    skillsChances: { common: 17.50, rare: 16.50, epic: 34.99, legendary: 23.41, ultimate: 7.61, mythic: 0 }
+    chances: { common: 17.50, rare: 16.50, epic: 34.99, legendary: 23.41, ultimate: 7.61, mythic: 0 }
   },
   {
     level: 59,
@@ -1139,7 +1139,7 @@ export const skillLevels: skillLevelType[] = [
     totalSummon: 5200,
     cost: 4400,
     totalCost: 208000,
-    skillsChances: { common: 17.50, rare: 16.50, epic: 33.28, legendary: 24.70, ultimate: 8.02, mythic: 0 }
+    chances: { common: 17.50, rare: 16.50, epic: 33.28, legendary: 24.70, ultimate: 8.02, mythic: 0 }
   },
   {
     level: 60,
@@ -1147,7 +1147,7 @@ export const skillLevels: skillLevelType[] = [
     totalSummon: 5310,
     cost: 4400,
     totalCost: 212400,
-    skillsChances: { common: 17.50, rare: 16.50, epic: 31.48, legendary: 26.06, ultimate: 8.46, mythic: 0 }
+    chances: { common: 17.50, rare: 16.50, epic: 31.48, legendary: 26.06, ultimate: 8.46, mythic: 0 }
   },
   {
     level: 61,
@@ -1155,7 +1155,7 @@ export const skillLevels: skillLevelType[] = [
     totalSummon: 5420,
     cost: 4400,
     totalCost: 216800,
-    skillsChances: { common: 17.50, rare: 16.50, epic: 29.58, legendary: 27.49, ultimate: 8.93, mythic: 0 }
+    chances: { common: 17.50, rare: 16.50, epic: 29.58, legendary: 27.49, ultimate: 8.93, mythic: 0 }
   },
   {
     level: 62,
@@ -1163,7 +1163,7 @@ export const skillLevels: skillLevelType[] = [
     totalSummon: 5530,
     cost: 4400,
     totalCost: 221200,
-    skillsChances: { common: 17.50, rare: 16.50, epic: 27.58, legendary: 29, ultimate: 9.42, mythic: 0 }
+    chances: { common: 17.50, rare: 16.50, epic: 27.58, legendary: 29, ultimate: 9.42, mythic: 0 }
   },
   {
     level: 63,
@@ -1171,7 +1171,7 @@ export const skillLevels: skillLevelType[] = [
     totalSummon: 5640,
     cost: 4400,
     totalCost: 225600,
-    skillsChances: { common: 17.50, rare: 16.50, epic: 25.47, legendary: 30.59, ultimate: 9.94, mythic: 0 }
+    chances: { common: 17.50, rare: 16.50, epic: 25.47, legendary: 30.59, ultimate: 9.94, mythic: 0 }
   },
   {
     level: 64,
@@ -1179,7 +1179,7 @@ export const skillLevels: skillLevelType[] = [
     totalSummon: 5750,
     cost: 4400,
     totalCost: 230000,
-    skillsChances: { common: 17.50, rare: 16.50, epic: 23.24, legendary: 32.28, ultimate: 10.49, mythic: 0 }
+    chances: { common: 17.50, rare: 16.50, epic: 23.24, legendary: 32.28, ultimate: 10.49, mythic: 0 }
   },
   {
     level: 65,
@@ -1187,7 +1187,7 @@ export const skillLevels: skillLevelType[] = [
     totalSummon: 5860,
     cost: 4400,
     totalCost: 234400,
-    skillsChances: { common: 17.50, rare: 16.50, epic: 20.88, legendary: 34.05, ultimate: 11.06, mythic: 0 }
+    chances: { common: 17.50, rare: 16.50, epic: 20.88, legendary: 34.05, ultimate: 11.06, mythic: 0 }
   },
   {
     level: 66,
@@ -1195,7 +1195,7 @@ export const skillLevels: skillLevelType[] = [
     totalSummon: 5970,
     cost: 4400,
     totalCost: 238800,
-    skillsChances: { common: 17.50, rare: 16.50, epic: 16.50, legendary: 37.83, ultimate: 11.67, mythic: 0 }
+    chances: { common: 17.50, rare: 16.50, epic: 16.50, legendary: 37.83, ultimate: 11.67, mythic: 0 }
   },
   {
     level: 67,
@@ -1203,7 +1203,7 @@ export const skillLevels: skillLevelType[] = [
     totalSummon: 6080,
     cost: 4400,
     totalCost: 243200,
-    skillsChances: { common: 17.50, rare: 16.50, epic: 16.50, legendary: 37.19, ultimate: 12.31, mythic: 0 }
+    chances: { common: 17.50, rare: 16.50, epic: 16.50, legendary: 37.19, ultimate: 12.31, mythic: 0 }
   },
   {
     level: 68,
@@ -1211,7 +1211,7 @@ export const skillLevels: skillLevelType[] = [
     totalSummon: 6190,
     cost: 4400,
     totalCost: 247600,
-    skillsChances: { common: 17.50, rare: 16.50, epic: 16.50, legendary: 36.48, ultimate: 12.99, mythic: 0.03 }
+    chances: { common: 17.50, rare: 16.50, epic: 16.50, legendary: 36.48, ultimate: 12.99, mythic: 0.03 }
   },
   {
     level: 69,
@@ -1219,7 +1219,7 @@ export const skillLevels: skillLevelType[] = [
     totalSummon: 6300,
     cost: 4400,
     totalCost: 252000,
-    skillsChances: { common: 17.50, rare: 16.50, epic: 16.50, legendary: 35.73, ultimate: 13.71, mythic: 0.06 }
+    chances: { common: 17.50, rare: 16.50, epic: 16.50, legendary: 35.73, ultimate: 13.71, mythic: 0.06 }
   },
   {
     level: 70,
@@ -1227,7 +1227,7 @@ export const skillLevels: skillLevelType[] = [
     totalSummon: 6410,
     cost: 4400,
     totalCost: 256400,
-    skillsChances: { common: 17.50, rare: 16.50, epic: 16.50, legendary: 34.92, ultimate: 14.46, mythic: 0.12 }
+    chances: { common: 17.50, rare: 16.50, epic: 16.50, legendary: 34.92, ultimate: 14.46, mythic: 0.12 }
   },
   {
     level: 71,
@@ -1235,7 +1235,7 @@ export const skillLevels: skillLevelType[] = [
     totalSummon: 6520,
     cost: 4400,
     totalCost: 260800,
-    skillsChances: { common: 17.50, rare: 16.50, epic: 16.50, legendary: 34, ultimate: 15.25, mythic: 0.25 }
+    chances: { common: 17.50, rare: 16.50, epic: 16.50, legendary: 34, ultimate: 15.25, mythic: 0.25 }
   },
   {
     level: 72,
@@ -1243,7 +1243,7 @@ export const skillLevels: skillLevelType[] = [
     totalSummon: 6630,
     cost: 4400,
     totalCost: 265200,
-    skillsChances: { common: 17.50, rare: 16.50, epic: 16.50, legendary: 32.91, ultimate: 16.09, mythic: 0.50 }
+    chances: { common: 17.50, rare: 16.50, epic: 16.50, legendary: 32.91, ultimate: 16.09, mythic: 0.50 }
   },
   {
     level: 73,
@@ -1251,7 +1251,7 @@ export const skillLevels: skillLevelType[] = [
     totalSummon: 6740,
     cost: 4400,
     totalCost: 269600,
-    skillsChances: { common: 17.50, rare: 16.50, epic: 16.50, legendary: 31.52, ultimate: 16.98, mythic: 1 }
+    chances: { common: 17.50, rare: 16.50, epic: 16.50, legendary: 31.52, ultimate: 16.98, mythic: 1 }
   },
   {
     level: 74,
@@ -1259,7 +1259,7 @@ export const skillLevels: skillLevelType[] = [
     totalSummon: 6850,
     cost: 4400,
     totalCost: 274000,
-    skillsChances: { common: 17.50, rare: 16.50, epic: 16.50, legendary: 29.59, ultimate: 17.91, mythic: 2 }
+    chances: { common: 17.50, rare: 16.50, epic: 16.50, legendary: 29.59, ultimate: 17.91, mythic: 2 }
   },
   {
     level: 75,
@@ -1267,7 +1267,7 @@ export const skillLevels: skillLevelType[] = [
     totalSummon: 6960,
     cost: 4400,
     totalCost: 278400,
-    skillsChances: { common: 17.50, rare: 16.50, epic: 16.50, legendary: 26.60, ultimate: 18.90, mythic: 4 }
+    chances: { common: 17.50, rare: 16.50, epic: 16.50, legendary: 26.60, ultimate: 18.90, mythic: 4 }
   },
   {
     level: 76,
@@ -1275,7 +1275,7 @@ export const skillLevels: skillLevelType[] = [
     totalSummon: 7070,
     cost: 4400,
     totalCost: 282800,
-    skillsChances: { common: 17.50, rare: 16.50, epic: 16.50, legendary: 25.33, ultimate: 19.94, mythic: 4.23 }
+    chances: { common: 17.50, rare: 16.50, epic: 16.50, legendary: 25.33, ultimate: 19.94, mythic: 4.23 }
   },
   {
     level: 77,
@@ -1283,7 +1283,7 @@ export const skillLevels: skillLevelType[] = [
     totalSummon: 7180,
     cost: 4400,
     totalCost: 287200,
-    skillsChances: { common: 17.50, rare: 16.50, epic: 16.50, legendary: 23.99, ultimate: 21.03, mythic: 4.48 }
+    chances: { common: 17.50, rare: 16.50, epic: 16.50, legendary: 23.99, ultimate: 21.03, mythic: 4.48 }
   },
   {
     level: 78,
@@ -1291,7 +1291,7 @@ export const skillLevels: skillLevelType[] = [
     totalSummon: 7290,
     cost: 4400,
     totalCost: 291600,
-    skillsChances: { common: 17.50, rare: 16.50, epic: 16.50, legendary: 22.57, ultimate: 22.19, mythic: 4.74 }
+    chances: { common: 17.50, rare: 16.50, epic: 16.50, legendary: 22.57, ultimate: 22.19, mythic: 4.74 }
   },
   {
     level: 79,
@@ -1299,7 +1299,7 @@ export const skillLevels: skillLevelType[] = [
     totalSummon: 7400,
     cost: 4400,
     totalCost: 296000,
-    skillsChances: { common: 17.50, rare: 16.50, epic: 16.50, legendary: 21.08, ultimate: 23.41, mythic: 5.01 }
+    chances: { common: 17.50, rare: 16.50, epic: 16.50, legendary: 21.08, ultimate: 23.41, mythic: 5.01 }
   },
   {
     level: 80,
@@ -1307,7 +1307,7 @@ export const skillLevels: skillLevelType[] = [
     totalSummon: 7510,
     cost: 4400,
     totalCost: 300400,
-    skillsChances: { common: 17.50, rare: 16.50, epic: 16.50, legendary: 19.50, ultimate: 24.70, mythic: 5.30 }
+    chances: { common: 17.50, rare: 16.50, epic: 16.50, legendary: 19.50, ultimate: 24.70, mythic: 5.30 }
   },
   {
     level: 81,
@@ -1315,7 +1315,7 @@ export const skillLevels: skillLevelType[] = [
     totalSummon: 7620,
     cost: 4400,
     totalCost: 304800,
-    skillsChances: { common: 17.50, rare: 16.50, epic: 16.50, legendary: 17.83, ultimate: 26.06, mythic: 5.61 }
+    chances: { common: 17.50, rare: 16.50, epic: 16.50, legendary: 17.83, ultimate: 26.06, mythic: 5.61 }
   },
   {
     level: 82,
@@ -1323,7 +1323,7 @@ export const skillLevels: skillLevelType[] = [
     totalSummon: 7730,
     cost: 4400,
     totalCost: 309200,
-    skillsChances: { common: 17.50, rare: 16.50, epic: 16.50, legendary: 16.50, ultimate: 27.06, mythic: 5.94 }
+    chances: { common: 17.50, rare: 16.50, epic: 16.50, legendary: 16.50, ultimate: 27.06, mythic: 5.94 }
   },
   {
     level: 83,
@@ -1331,7 +1331,7 @@ export const skillLevels: skillLevelType[] = [
     totalSummon: 7840,
     cost: 4400,
     totalCost: 313600,
-    skillsChances: { common: 17.50, rare: 16.50, epic: 16.50, legendary: 16.50, ultimate: 26.72, mythic: 6.28 }
+    chances: { common: 17.50, rare: 16.50, epic: 16.50, legendary: 16.50, ultimate: 26.72, mythic: 6.28 }
   },
   {
     level: 84,
@@ -1339,7 +1339,7 @@ export const skillLevels: skillLevelType[] = [
     totalSummon: 7950,
     cost: 4400,
     totalCost: 318000,
-    skillsChances: { common: 17.50, rare: 16.50, epic: 16.50, legendary: 16.50, ultimate: 26.36, mythic: 6.64 }
+    chances: { common: 17.50, rare: 16.50, epic: 16.50, legendary: 16.50, ultimate: 26.36, mythic: 6.64 }
   },
   {
     level: 85,
@@ -1347,7 +1347,7 @@ export const skillLevels: skillLevelType[] = [
     totalSummon: 8060,
     cost: 4400,
     totalCost: 322400,
-    skillsChances: { common: 17.50, rare: 16.50, epic: 16.50, legendary: 16.50, ultimate: 25.97, mythic: 7.03 }
+    chances: { common: 17.50, rare: 16.50, epic: 16.50, legendary: 16.50, ultimate: 25.97, mythic: 7.03 }
   },
   {
     level: 86,
@@ -1355,7 +1355,7 @@ export const skillLevels: skillLevelType[] = [
     totalSummon: 8170,
     cost: 4400,
     totalCost: 326800,
-    skillsChances: { common: 17.50, rare: 16.50, epic: 16.50, legendary: 16.50, ultimate: 25.56, mythic: 7.44 }
+    chances: { common: 17.50, rare: 16.50, epic: 16.50, legendary: 16.50, ultimate: 25.56, mythic: 7.44 }
   },
   {
     level: 87,
@@ -1363,7 +1363,7 @@ export const skillLevels: skillLevelType[] = [
     totalSummon: 8280,
     cost: 4400,
     totalCost: 331200,
-    skillsChances: { common: 17.50, rare: 16.50, epic: 16.50, legendary: 16.50, ultimate: 25.13, mythic: 7.87 }
+    chances: { common: 17.50, rare: 16.50, epic: 16.50, legendary: 16.50, ultimate: 25.13, mythic: 7.87 }
   },
   {
     level: 88,
@@ -1371,7 +1371,7 @@ export const skillLevels: skillLevelType[] = [
     totalSummon: 8390,
     cost: 4400,
     totalCost: 335600,
-    skillsChances: { common: 17.50, rare: 16.50, epic: 16.50, legendary: 16.50, ultimate: 24.67, mythic: 8.32 }
+    chances: { common: 17.50, rare: 16.50, epic: 16.50, legendary: 16.50, ultimate: 24.67, mythic: 8.32 }
   },
   {
     level: 89,
@@ -1379,7 +1379,7 @@ export const skillLevels: skillLevelType[] = [
     totalSummon: 8500,
     cost: 4400,
     totalCost: 340000,
-    skillsChances: { common: 17.50, rare: 16.50, epic: 16.50, legendary: 16.50, ultimate: 24.19, mythic: 8.81 }
+    chances: { common: 17.50, rare: 16.50, epic: 16.50, legendary: 16.50, ultimate: 24.19, mythic: 8.81 }
   },
   {
     level: 90,
@@ -1387,7 +1387,7 @@ export const skillLevels: skillLevelType[] = [
     totalSummon: 8610,
     cost: 4400,
     totalCost: 344400,
-    skillsChances: { common: 17.50, rare: 16.50, epic: 16.50, legendary: 16.50, ultimate: 23.68, mythic: 9.32 }
+    chances: { common: 17.50, rare: 16.50, epic: 16.50, legendary: 16.50, ultimate: 23.68, mythic: 9.32 }
   },
   {
     level: 91,
@@ -1395,7 +1395,7 @@ export const skillLevels: skillLevelType[] = [
     totalSummon: 8720,
     cost: 4400,
     totalCost: 348800,
-    skillsChances: { common: 17.50, rare: 16.50, epic: 16.50, legendary: 16.50, ultimate: 23.14, mythic: 9.86 }
+    chances: { common: 17.50, rare: 16.50, epic: 16.50, legendary: 16.50, ultimate: 23.14, mythic: 9.86 }
   },
   {
     level: 92,
@@ -1403,7 +1403,7 @@ export const skillLevels: skillLevelType[] = [
     totalSummon: 8830,
     cost: 4400,
     totalCost: 353200,
-    skillsChances: { common: 17.50, rare: 16.50, epic: 16.50, legendary: 16.50, ultimate: 22.57, mythic: 10.43 }
+    chances: { common: 17.50, rare: 16.50, epic: 16.50, legendary: 16.50, ultimate: 22.57, mythic: 10.43 }
   },
   {
     level: 93,
@@ -1411,7 +1411,7 @@ export const skillLevels: skillLevelType[] = [
     totalSummon: 8940,
     cost: 4400,
     totalCost: 357600,
-    skillsChances: { common: 17.50, rare: 16.50, epic: 16.50, legendary: 16.50, ultimate: 21.96, mythic: 11.04 }
+    chances: { common: 17.50, rare: 16.50, epic: 16.50, legendary: 16.50, ultimate: 21.96, mythic: 11.04 }
   },
   {
     level: 94,
@@ -1419,7 +1419,7 @@ export const skillLevels: skillLevelType[] = [
     totalSummon: 9050,
     cost: 4400,
     totalCost: 362000,
-    skillsChances: { common: 17.50, rare: 16.50, epic: 16.50, legendary: 16.50, ultimate: 21.32, mythic: 11.68 }
+    chances: { common: 17.50, rare: 16.50, epic: 16.50, legendary: 16.50, ultimate: 21.32, mythic: 11.68 }
   },
   {
     level: 95,
@@ -1427,7 +1427,7 @@ export const skillLevels: skillLevelType[] = [
     totalSummon: 9160,
     cost: 4400,
     totalCost: 366400,
-    skillsChances: { common: 17.50, rare: 16.50, epic: 16.50, legendary: 16.50, ultimate: 20.65, mythic: 12.35 }
+    chances: { common: 17.50, rare: 16.50, epic: 16.50, legendary: 16.50, ultimate: 20.65, mythic: 12.35 }
   },
   {
     level: 96,
@@ -1435,7 +1435,7 @@ export const skillLevels: skillLevelType[] = [
     totalSummon: 9270,
     cost: 4400,
     totalCost: 370800,
-    skillsChances: { common: 17.50, rare: 16.50, epic: 16.50, legendary: 16.50, ultimate: 19.93, mythic: 13.07 }
+    chances: { common: 17.50, rare: 16.50, epic: 16.50, legendary: 16.50, ultimate: 19.93, mythic: 13.07 }
   },
   {
     level: 97,
@@ -1443,7 +1443,7 @@ export const skillLevels: skillLevelType[] = [
     totalSummon: 9380,
     cost: 4400,
     totalCost: 375200,
-    skillsChances: { common: 17.50, rare: 16.50, epic: 16.50, legendary: 16.50, ultimate: 19.17, mythic: 13.83 }
+    chances: { common: 17.50, rare: 16.50, epic: 16.50, legendary: 16.50, ultimate: 19.17, mythic: 13.83 }
   },
   {
     level: 98,
@@ -1451,7 +1451,7 @@ export const skillLevels: skillLevelType[] = [
     totalSummon: 9490,
     cost: 4400,
     totalCost: 379600,
-    skillsChances: { common: 17.50, rare: 16.50, epic: 16.50, legendary: 16.50, ultimate: 18.37, mythic: 14.63 }
+    chances: { common: 17.50, rare: 16.50, epic: 16.50, legendary: 16.50, ultimate: 18.37, mythic: 14.63 }
   },
   {
     level: 99,
@@ -1459,7 +1459,7 @@ export const skillLevels: skillLevelType[] = [
     totalSummon: 9600,
     cost: 4400,
     totalCost: 384000,
-    skillsChances: { common: 17.50, rare: 16.50, epic: 16.50, legendary: 16.50, ultimate: 17.52, mythic: 15.48 }
+    chances: { common: 17.50, rare: 16.50, epic: 16.50, legendary: 16.50, ultimate: 17.52, mythic: 15.48 }
   },
   {
     level: 100,
@@ -1467,7 +1467,7 @@ export const skillLevels: skillLevelType[] = [
     totalSummon: null,
     cost: null,
     totalCost: null,
-    skillsChances: { common: 17.50, rare: 16.50, epic: 16.50, legendary: 16.50, ultimate: 16.50, mythic: 16.50 }
+    chances: { common: 17.50, rare: 16.50, epic: 16.50, legendary: 16.50, ultimate: 16.50, mythic: 16.50 }
   }
 ]
 
@@ -1479,7 +1479,7 @@ export const mountLevels: mountLevelType[] = [
     totalSummon: 20,
     cost: 1000,
     totalCost: 1000,
-    mountsChances: {
+    chances: {
         common: 100.00,
         rare: 0.00,
         epic: 0.00,
@@ -1493,7 +1493,7 @@ export const mountLevels: mountLevelType[] = [
     totalSummon: 40,
     cost: 1000,
     totalCost: 2000,
-    mountsChances: {
+    chances: {
         common: 99.99,
         rare: 0.01,
         epic: 0.00,
@@ -1507,7 +1507,7 @@ export const mountLevels: mountLevelType[] = [
     totalSummon: 60,
     cost: 1000,
     totalCost: 3000,
-    mountsChances: {
+    chances: {
         common: 99.98,
         rare: 0.02,
         epic: 0.00,
@@ -1521,7 +1521,7 @@ export const mountLevels: mountLevelType[] = [
     totalSummon: 80,
     cost: 1000,
     totalCost: 4000,
-    mountsChances: {
+    chances: {
         common: 99.97,
         rare: 0.03,
         epic: 0.00,
@@ -1535,7 +1535,7 @@ export const mountLevels: mountLevelType[] = [
     totalSummon: 100,
     cost: 1000,
     totalCost: 5000,
-    mountsChances: {
+    chances: {
         common: 99.95,
         rare: 0.05,
         epic: 0.00,
@@ -1549,7 +1549,7 @@ export const mountLevels: mountLevelType[] = [
     totalSummon: 120,
     cost: 1000,
     totalCost: 6000,
-    mountsChances: {
+    chances: {
         common: 99.92,
         rare: 0.08,
         epic: 0.00,
@@ -1563,7 +1563,7 @@ export const mountLevels: mountLevelType[] = [
     totalSummon: 140,
     cost: 1000,
     totalCost: 7000,
-    mountsChances: {
+    chances: {
         common: 99.86,
         rare: 0.14,
         epic: 0.00,
@@ -1577,7 +1577,7 @@ export const mountLevels: mountLevelType[] = [
     totalSummon: 160,
     cost: 1000,
     totalCost: 8000,
-    mountsChances: {
+    chances: {
         common: 99.76,
         rare: 0.24,
         epic: 0.00,
@@ -1591,7 +1591,7 @@ export const mountLevels: mountLevelType[] = [
     totalSummon: 180,
     cost: 1000,
     totalCost: 9000,
-    mountsChances: {
+    chances: {
         common: 99.59,
         rare: 0.41,
         epic: 0.00,
@@ -1605,7 +1605,7 @@ export const mountLevels: mountLevelType[] = [
     totalSummon: 200,
     cost: 1000,
     totalCost: 10000,
-    mountsChances: {
+    chances: {
         common: 99.30,
         rare: 0.70,
         epic: 0.00,
@@ -1619,7 +1619,7 @@ export const mountLevels: mountLevelType[] = [
     totalSummon: 220,
     cost: 1000,
     totalCost: 11000,
-    mountsChances: {
+    chances: {
         common: 98.81,
         rare: 1.19,
         epic: 0.00,
@@ -1633,7 +1633,7 @@ export const mountLevels: mountLevelType[] = [
     totalSummon: 240,
     cost: 1000,
     totalCost: 12000,
-    mountsChances: {
+    chances: {
         common: 97.98,
         rare: 2.02,
         epic: 0.00,
@@ -1647,7 +1647,7 @@ export const mountLevels: mountLevelType[] = [
     totalSummon: 260,
     cost: 1000,
     totalCost: 13000,
-    mountsChances: {
+    chances: {
         common: 96.57,
         rare: 3.43,
         epic: 0.00,
@@ -1661,7 +1661,7 @@ export const mountLevels: mountLevelType[] = [
     totalSummon: 280,
     cost: 1000,
     totalCost: 14000,
-    mountsChances: {
+    chances: {
         common: 94.17,
         rare: 5.83,
         epic: 0.00,
@@ -1675,7 +1675,7 @@ export const mountLevels: mountLevelType[] = [
     totalSummon: 300,
     cost: 1000,
     totalCost: 15000,
-    mountsChances: {
+    chances: {
         common: 90.09,
         rare: 9.90,
         epic: 0.00,
@@ -1689,7 +1689,7 @@ export const mountLevels: mountLevelType[] = [
     totalSummon: 320,
     cost: 1000,
     totalCost: 16000,
-    mountsChances: {
+    chances: {
         common: 83.16,
         rare: 16.84,
         epic: 0.00,
@@ -1703,7 +1703,7 @@ export const mountLevels: mountLevelType[] = [
     totalSummon: 340,
     cost: 1000,
     totalCost: 17000,
-    mountsChances: {
+    chances: {
         common: 80.00,
         rare: 20.00,
         epic: 0.00,
@@ -1717,7 +1717,7 @@ export const mountLevels: mountLevelType[] = [
     totalSummon: 360,
     cost: 1000,
     totalCost: 18000,
-    mountsChances: {
+    chances: {
         common: 75.00,
         rare: 25.00,
         epic: 0.00,
@@ -1731,7 +1731,7 @@ export const mountLevels: mountLevelType[] = [
     totalSummon: 380,
     cost: 1000,
     totalCost: 19000,
-    mountsChances: {
+    chances: {
         common: 68.75,
         rare: 31.25,
         epic: 0.00,
@@ -1745,7 +1745,7 @@ export const mountLevels: mountLevelType[] = [
     totalSummon: 400,
     cost: 1000,
     totalCost: 20000,
-    mountsChances: {
+    chances: {
         common: 60.94,
         rare: 39.06,
         epic: 0.00,
@@ -1759,7 +1759,7 @@ export const mountLevels: mountLevelType[] = [
     totalSummon: 420,
     cost: 1000,
     totalCost: 21000,
-    mountsChances: {
+    chances: {
         common: 51.17,
         rare: 48.83,
         epic: 0.00,
@@ -1773,7 +1773,7 @@ export const mountLevels: mountLevelType[] = [
     totalSummon: 440,
     cost: 1000,
     totalCost: 22000,
-    mountsChances: {
+    chances: {
         common: 38.89,
         rare: 61.03,
         epic: 0.07,
@@ -1787,7 +1787,7 @@ export const mountLevels: mountLevelType[] = [
     totalSummon: 460,
     cost: 1000,
     totalCost: 23000,
-    mountsChances: {
+    chances: {
         common: 23.59,
         rare: 76.29,
         epic: 0.12,
@@ -1801,7 +1801,7 @@ export const mountLevels: mountLevelType[] = [
     totalSummon: 480,
     cost: 1000,
     totalCost: 24000,
-    mountsChances: {
+    chances: {
         common: 15.00,
         rare: 84.80,
         epic: 0.20,
@@ -1815,7 +1815,7 @@ export const mountLevels: mountLevelType[] = [
     totalSummon: 500,
     cost: 1000,
     totalCost: 25000,
-    mountsChances: {
+    chances: {
         common: 15.00,
         rare: 84.66,
         epic: 0.34,
@@ -1829,7 +1829,7 @@ export const mountLevels: mountLevelType[] = [
     totalSummon: 520,
     cost: 1000,
     totalCost: 26000,
-    mountsChances: {
+    chances: {
         common: 15.00,
         rare: 84.44,
         epic: 0.56,
@@ -1843,7 +1843,7 @@ export const mountLevels: mountLevelType[] = [
     totalSummon: 540,
     cost: 1000,
     totalCost: 27000,
-    mountsChances: {
+    chances: {
         common: 15.00,
         rare: 84.07,
         epic: 0.93,
@@ -1857,7 +1857,7 @@ export const mountLevels: mountLevelType[] = [
     totalSummon: 560,
     cost: 1000,
     totalCost: 28000,
-    mountsChances: {
+    chances: {
         common: 15.00,
         rare: 83.44,
         epic: 1.55,
@@ -1871,7 +1871,7 @@ export const mountLevels: mountLevelType[] = [
     totalSummon: 580,
     cost: 1000,
     totalCost: 29000,
-    mountsChances: {
+    chances: {
         common: 15.00,
         rare: 82.41,
         epic: 2.59,
@@ -1885,7 +1885,7 @@ export const mountLevels: mountLevelType[] = [
     totalSummon: 600,
     cost: 1000,
     totalCost: 30000,
-    mountsChances: {
+    chances: {
         common: 15.00,
         rare: 80.68,
         epic: 4.32,
@@ -1899,7 +1899,7 @@ export const mountLevels: mountLevelType[] = [
     totalSummon: 620,
     cost: 1000,
     totalCost: 31000,
-    mountsChances: {
+    chances: {
         common: 15.00,
         rare: 77.80,
         epic: 7.20,
@@ -1913,7 +1913,7 @@ export const mountLevels: mountLevelType[] = [
     totalSummon: 640,
     cost: 1000,
     totalCost: 32000,
-    mountsChances: {
+    chances: {
         common: 15.00,
         rare: 73.00,
         epic: 12.00,
@@ -1927,7 +1927,7 @@ export const mountLevels: mountLevelType[] = [
     totalSummon: 660,
     cost: 1000,
     totalCost: 33000,
-    mountsChances: {
+    chances: {
         common: 15.00,
         rare: 65.00,
         epic: 20.00,
@@ -1941,7 +1941,7 @@ export const mountLevels: mountLevelType[] = [
     totalSummon: 680,
     cost: 1000,
     totalCost: 34000,
-    mountsChances: {
+    chances: {
         common: 15.00,
         rare: 61.00,
         epic: 24.00,
@@ -1955,7 +1955,7 @@ export const mountLevels: mountLevelType[] = [
     totalSummon: 700,
     cost: 1000,
     totalCost: 35000,
-    mountsChances: {
+    chances: {
         common: 15.00,
         rare: 56.20,
         epic: 28.80,
@@ -1969,7 +1969,7 @@ export const mountLevels: mountLevelType[] = [
     totalSummon: 720,
     cost: 1000,
     totalCost: 36000,
-    mountsChances: {
+    chances: {
         common: 15.00,
         rare: 50.44,
         epic: 34.56,
@@ -1983,7 +1983,7 @@ export const mountLevels: mountLevelType[] = [
     totalSummon: 740,
     cost: 1000,
     totalCost: 37000,
-    mountsChances: {
+    chances: {
         common: 15.00,
         rare: 43.53,
         epic: 41.47,
@@ -1997,7 +1997,7 @@ export const mountLevels: mountLevelType[] = [
     totalSummon: 760,
     cost: 1000,
     totalCost: 38000,
-    mountsChances: {
+    chances: {
         common: 15.00,
         rare: 35.16,
         epic: 49.77,
@@ -2011,7 +2011,7 @@ export const mountLevels: mountLevelType[] = [
     totalSummon: 780,
     cost: 1000,
     totalCost: 39000,
-    mountsChances: {
+    chances: {
         common: 15.00,
         rare: 25.16,
         epic: 59.72,
@@ -2025,7 +2025,7 @@ export const mountLevels: mountLevelType[] = [
     totalSummon: 800,
     cost: 1000,
     totalCost: 40000,
-    mountsChances: {
+    chances: {
         common: 15.00,
         rare: 15.00,
         epic: 69.80,
@@ -2039,7 +2039,7 @@ export const mountLevels: mountLevelType[] = [
     totalSummon: 820,
     cost: 1000,
     totalCost: 41000,
-    mountsChances: {
+    chances: {
         common: 15.00,
         rare: 15.00,
         epic: 69.66,
@@ -2053,7 +2053,7 @@ export const mountLevels: mountLevelType[] = [
     totalSummon: 840,
     cost: 1000,
     totalCost: 42000,
-    mountsChances: {
+    chances: {
         common: 15.00,
         rare: 15.00,
         epic: 69.44,
@@ -2067,7 +2067,7 @@ export const mountLevels: mountLevelType[] = [
     totalSummon: 860,
     cost: 1000,
     totalCost: 43000,
-    mountsChances: {
+    chances: {
         common: 15.00,
         rare: 15.00,
         epic: 69.07,
@@ -2081,7 +2081,7 @@ export const mountLevels: mountLevelType[] = [
     totalSummon: 880,
     cost: 1000,
     totalCost: 44000,
-    mountsChances: {
+    chances: {
         common: 15.00,
         rare: 15.00,
         epic: 68.44,
@@ -2095,7 +2095,7 @@ export const mountLevels: mountLevelType[] = [
     totalSummon: 900,
     cost: 1000,
     totalCost: 45000,
-    mountsChances: {
+    chances: {
         common: 15.00,
         rare: 15.00,
         epic: 67.41,
@@ -2109,7 +2109,7 @@ export const mountLevels: mountLevelType[] = [
     totalSummon: 920,
     cost: 1000,
     totalCost: 46000,
-    mountsChances: {
+    chances: {
         common: 15.00,
         rare: 15.00,
         epic: 65.68,
@@ -2123,7 +2123,7 @@ export const mountLevels: mountLevelType[] = [
     totalSummon: 940,
     cost: 1000,
     totalCost: 47000,
-    mountsChances: {
+    chances: {
         common: 15.00,
         rare: 15.00,
         epic: 62.80,
@@ -2137,7 +2137,7 @@ export const mountLevels: mountLevelType[] = [
     totalSummon: 960,
     cost: 1000,
     totalCost: 48000,
-    mountsChances: {
+    chances: {
         common: 15.00,
         rare: 15.00,
         epic: 58.00,
@@ -2151,7 +2151,7 @@ export const mountLevels: mountLevelType[] = [
     totalSummon: 980,
     cost: 1000,
     totalCost: 49000,
-    mountsChances: {
+    chances: {
         common: 15.00,
         rare: 15.00,
         epic: 50.00,
@@ -2165,7 +2165,7 @@ export const mountLevels: mountLevelType[] = [
     totalSummon: 1000,
     cost: 1000,
     totalCost: 50000,
-    mountsChances: {
+    chances: {
         common: 15.00,
         rare: 15.00,
         epic: 48.50,
@@ -2179,7 +2179,7 @@ export const mountLevels: mountLevelType[] = [
     totalSummon: 1020,
     cost: 1000,
     totalCost: 51000,
-    mountsChances: {
+    chances: {
         common: 15.00,
         rare: 15.00,
         epic: 46.89,
@@ -2193,7 +2193,7 @@ export const mountLevels: mountLevelType[] = [
     totalSummon: 1040,
     cost: 1000,
     totalCost: 52000,
-    mountsChances: {
+    chances: {
         common: 15.00,
         rare: 15.00,
         epic: 45.15,
@@ -2207,7 +2207,7 @@ export const mountLevels: mountLevelType[] = [
     totalSummon: 1060,
     cost: 1000,
     totalCost: 53000,
-    mountsChances: {
+    chances: {
         common: 15.00,
         rare: 15.00,
         epic: 43.29,
@@ -2221,7 +2221,7 @@ export const mountLevels: mountLevelType[] = [
     totalSummon: 1080,
     cost: 1000,
     totalCost: 54000,
-    mountsChances: {
+    chances: {
         common: 15.00,
         rare: 15.00,
         epic: 41.29,
@@ -2235,7 +2235,7 @@ export const mountLevels: mountLevelType[] = [
     totalSummon: 1100,
     cost: 1000,
     totalCost: 55000,
-    mountsChances: {
+    chances: {
         common: 15.00,
         rare: 15.00,
         epic: 39.06,
@@ -2249,7 +2249,7 @@ export const mountLevels: mountLevelType[] = [
     totalSummon: 1120,
     cost: 1000,
     totalCost: 56000,
-    mountsChances: {
+    chances: {
         common: 15.00,
         rare: 15.00,
         epic: 36.70,
@@ -2263,7 +2263,7 @@ export const mountLevels: mountLevelType[] = [
     totalSummon: 1140,
     cost: 1000,
     totalCost: 57000,
-    mountsChances: {
+    chances: {
         common: 15.00,
         rare: 15.00,
         epic: 34.13,
@@ -2277,7 +2277,7 @@ export const mountLevels: mountLevelType[] = [
     totalSummon: 1160,
     cost: 1000,
     totalCost: 58000,
-    mountsChances: {
+    chances: {
         common: 15.00,
         rare: 15.00,
         epic: 31.32,
@@ -2291,7 +2291,7 @@ export const mountLevels: mountLevelType[] = [
     totalSummon: 1180,
     cost: 1000,
     totalCost: 59000,
-    mountsChances: {
+    chances: {
         common: 15.00,
         rare: 15.00,
         epic: 28.22,
@@ -2305,7 +2305,7 @@ export const mountLevels: mountLevelType[] = [
     totalSummon: 1200,
     cost: 1000,
     totalCost: 60000,
-    mountsChances: {
+    chances: {
         common: 15.00,
         rare: 15.00,
         epic: 24.75,
@@ -2319,7 +2319,7 @@ export const mountLevels: mountLevelType[] = [
     totalSummon: 1220,
     cost: 1000,
     totalCost: 61000,
-    mountsChances: {
+    chances: {
         common: 15.00,
         rare: 15.00,
         epic: 20.81,
@@ -2333,7 +2333,7 @@ export const mountLevels: mountLevelType[] = [
     totalSummon: 1240,
     cost: 1000,
     totalCost: 62000,
-    mountsChances: {
+    chances: {
         common: 15.00,
         rare: 15.00,
         epic: 15.00,
@@ -2347,7 +2347,7 @@ export const mountLevels: mountLevelType[] = [
     totalSummon: 1260,
     cost: 1000,
     totalCost: 63000,
-    mountsChances: {
+    chances: {
         common: 15.00,
         rare: 15.00,
         epic: 15.00,
@@ -2361,7 +2361,7 @@ export const mountLevels: mountLevelType[] = [
     totalSummon: 1280,
     cost: 1000,
     totalCost: 64000,
-    mountsChances: {
+    chances: {
         common: 15.00,
         rare: 15.00,
         epic: 15.00,
@@ -2375,7 +2375,7 @@ export const mountLevels: mountLevelType[] = [
     totalSummon: 1300,
     cost: 1000,
     totalCost: 65000,
-    mountsChances: {
+    chances: {
         common: 15.00,
         rare: 15.00,
         epic: 15.00,
@@ -2389,7 +2389,7 @@ export const mountLevels: mountLevelType[] = [
     totalSummon: 1320,
     cost: 1000,
     totalCost: 66000,
-    mountsChances: {
+    chances: {
         common: 15.00,
         rare: 15.00,
         epic: 15.00,
@@ -2403,7 +2403,7 @@ export const mountLevels: mountLevelType[] = [
     totalSummon: 1340,
     cost: 1000,
     totalCost: 67000,
-    mountsChances: {
+    chances: {
         common: 15.00,
         rare: 15.00,
         epic: 15.00,
@@ -2417,7 +2417,7 @@ export const mountLevels: mountLevelType[] = [
     totalSummon: 1360,
     cost: 1000,
     totalCost: 68000,
-    mountsChances: {
+    chances: {
         common: 15.00,
         rare: 15.00,
         epic: 15.00,
@@ -2431,7 +2431,7 @@ export const mountLevels: mountLevelType[] = [
     totalSummon: 1380,
     cost: 1000,
     totalCost: 69000,
-    mountsChances: {
+    chances: {
         common: 15.00,
         rare: 15.00,
         epic: 15.00,
@@ -2445,7 +2445,7 @@ export const mountLevels: mountLevelType[] = [
     totalSummon: 1400,
     cost: 1000,
     totalCost: 70000,
-    mountsChances: {
+    chances: {
         common: 15.00,
         rare: 15.00,
         epic: 15.00,
@@ -2459,7 +2459,7 @@ export const mountLevels: mountLevelType[] = [
     totalSummon: 1420,
     cost: 1000,
     totalCost: 71000,
-    mountsChances: {
+    chances: {
         common: 15.00,
         rare: 15.00,
         epic: 15.00,
@@ -2473,7 +2473,7 @@ export const mountLevels: mountLevelType[] = [
     totalSummon: 1440,
     cost: 1000,
     totalCost: 72000,
-    mountsChances: {
+    chances: {
         common: 15.00,
         rare: 15.00,
         epic: 15.00,
@@ -2487,7 +2487,7 @@ export const mountLevels: mountLevelType[] = [
     totalSummon: 1460,
     cost: 1000,
     totalCost: 73000,
-    mountsChances: {
+    chances: {
         common: 15.00,
         rare: 15.00,
         epic: 15.00,
@@ -2501,7 +2501,7 @@ export const mountLevels: mountLevelType[] = [
     totalSummon: 1480,
     cost: 1000,
     totalCost: 74000,
-    mountsChances: {
+    chances: {
         common: 15.00,
         rare: 15.00,
         epic: 15.00,
@@ -2515,7 +2515,7 @@ export const mountLevels: mountLevelType[] = [
     totalSummon: 1500,
     cost: 1000,
     totalCost: 75000,
-    mountsChances: {
+    chances: {
         common: 15.00,
         rare: 15.00,
         epic: 15.00,
@@ -2529,7 +2529,7 @@ export const mountLevels: mountLevelType[] = [
     totalSummon: 1520,
     cost: 1000,
     totalCost: 76000,
-    mountsChances: {
+    chances: {
         common: 15.00,
         rare: 15.00,
         epic: 15.00,
@@ -2543,7 +2543,7 @@ export const mountLevels: mountLevelType[] = [
     totalSummon: 1540,
     cost: 1000,
     totalCost: 77000,
-    mountsChances: {
+    chances: {
         common: 15.00,
         rare: 15.00,
         epic: 15.00,
@@ -2557,7 +2557,7 @@ export const mountLevels: mountLevelType[] = [
     totalSummon: 1560,
     cost: 1000,
     totalCost: 78000,
-    mountsChances: {
+    chances: {
         common: 15.00,
         rare: 15.00,
         epic: 15.00,
@@ -2571,7 +2571,7 @@ export const mountLevels: mountLevelType[] = [
     totalSummon: 1580,
     cost: 1000,
     totalCost: 79000,
-    mountsChances: {
+    chances: {
         common: 15.00,
         rare: 15.00,
         epic: 15.00,
@@ -2585,7 +2585,7 @@ export const mountLevels: mountLevelType[] = [
     totalSummon: 1600,
     cost: 1000,
     totalCost: 80000,
-    mountsChances: {
+    chances: {
         common: 15.00,
         rare: 15.00,
         epic: 15.00,
@@ -2599,7 +2599,7 @@ export const mountLevels: mountLevelType[] = [
     totalSummon: 1620,
     cost: 1000,
     totalCost: 81000,
-    mountsChances: {
+    chances: {
         common: 15.00,
         rare: 15.00,
         epic: 15.00,
@@ -2613,7 +2613,7 @@ export const mountLevels: mountLevelType[] = [
     totalSummon: 1640,
     cost: 1000,
     totalCost: 82000,
-    mountsChances: {
+    chances: {
         common: 15.00,
         rare: 15.00,
         epic: 15.00,
@@ -2627,7 +2627,7 @@ export const mountLevels: mountLevelType[] = [
     totalSummon: 1660,
     cost: 1000,
     totalCost: 83000,
-    mountsChances: {
+    chances: {
         common: 15.00,
         rare: 15.00,
         epic: 15.00,
@@ -2641,7 +2641,7 @@ export const mountLevels: mountLevelType[] = [
     totalSummon: 1680,
     cost: 1000,
     totalCost: 84000,
-    mountsChances: {
+    chances: {
         common: 15.00,
         rare: 15.00,
         epic: 15.00,
@@ -2655,7 +2655,7 @@ export const mountLevels: mountLevelType[] = [
     totalSummon: 1700,
     cost: 1000,
     totalCost: 85000,
-    mountsChances: {
+    chances: {
         common: 15.00,
         rare: 15.00,
         epic: 15.00,
@@ -2669,7 +2669,7 @@ export const mountLevels: mountLevelType[] = [
     totalSummon: 1720,
     cost: 1000,
     totalCost: 86000,
-    mountsChances: {
+    chances: {
         common: 15.00,
         rare: 15.00,
         epic: 15.00,
@@ -2683,7 +2683,7 @@ export const mountLevels: mountLevelType[] = [
     totalSummon: 1740,
     cost: 1000,
     totalCost: 87000,
-    mountsChances: {
+    chances: {
         common: 15.00,
         rare: 15.00,
         epic: 15.00,
@@ -2697,7 +2697,7 @@ export const mountLevels: mountLevelType[] = [
     totalSummon: 1760,
     cost: 1000,
     totalCost: 88000,
-    mountsChances: {
+    chances: {
         common: 15.00,
         rare: 15.00,
         epic: 15.00,
@@ -2711,7 +2711,7 @@ export const mountLevels: mountLevelType[] = [
     totalSummon: 1780,
     cost: 1000,
     totalCost: 89000,
-    mountsChances: {
+    chances: {
         common: 15.00,
         rare: 15.00,
         epic: 15.00,
@@ -2725,7 +2725,7 @@ export const mountLevels: mountLevelType[] = [
     totalSummon: 1800,
     cost: 1000,
     totalCost: 90000,
-    mountsChances: {
+    chances: {
         common: 15.00,
         rare: 15.00,
         epic: 15.00,
@@ -2739,7 +2739,7 @@ export const mountLevels: mountLevelType[] = [
     totalSummon: 1820,
     cost: 1000,
     totalCost: 91000,
-    mountsChances: {
+    chances: {
         common: 15.00,
         rare: 15.00,
         epic: 15.00,
@@ -2753,7 +2753,7 @@ export const mountLevels: mountLevelType[] = [
     totalSummon: 1840,
     cost: 1000,
     totalCost: 92000,
-    mountsChances: {
+    chances: {
         common: 15.00,
         rare: 15.00,
         epic: 15.00,
@@ -2767,7 +2767,7 @@ export const mountLevels: mountLevelType[] = [
     totalSummon: 1860,
     cost: 1000,
     totalCost: 93000,
-    mountsChances: {
+    chances: {
         common: 15.00,
         rare: 15.00,
         epic: 15.00,
@@ -2781,7 +2781,7 @@ export const mountLevels: mountLevelType[] = [
     totalSummon: 1880,
     cost: 1000,
     totalCost: 94000,
-    mountsChances: {
+    chances: {
         common: 15.00,
         rare: 15.00,
         epic: 15.00,
@@ -2795,7 +2795,7 @@ export const mountLevels: mountLevelType[] = [
     totalSummon: 1900,
     cost: 1000,
     totalCost: 95000,
-    mountsChances: {
+    chances: {
         common: 15.00,
         rare: 15.00,
         epic: 15.00,
@@ -2809,7 +2809,7 @@ export const mountLevels: mountLevelType[] = [
     totalSummon: 1920,
     cost: 1000,
     totalCost: 96000,
-    mountsChances: {
+    chances: {
         common: 15.00,
         rare: 15.00,
         epic: 15.00,
@@ -2823,7 +2823,7 @@ export const mountLevels: mountLevelType[] = [
     totalSummon: 1940,
     cost: 1000,
     totalCost: 97000,
-    mountsChances: {
+    chances: {
         common: 15.00,
         rare: 15.00,
         epic: 15.00,
@@ -2837,7 +2837,7 @@ export const mountLevels: mountLevelType[] = [
     totalSummon: 1960,
     cost: 1000,
     totalCost: 98000,
-    mountsChances: {
+    chances: {
         common: 15.00,
         rare: 15.00,
         epic: 15.00,
@@ -2851,7 +2851,7 @@ export const mountLevels: mountLevelType[] = [
     totalSummon: 1980,
     cost: 1000,
     totalCost: 99000,
-    mountsChances: {
+    chances: {
         common: 15.00,
         rare: 15.00,
         epic: 15.00,
@@ -2865,7 +2865,7 @@ export const mountLevels: mountLevelType[] = [
     totalSummon: null,
     cost: null,
     totalCost: null,
-    mountsChances: {
+    chances: {
         common: 15.00,
         rare: 15.00,
         epic: 15.00,
@@ -2883,7 +2883,7 @@ export const petLevels: petLevelType[] = [
     totalSummon: 2,
     cost: 200,
     totalCost: 200,
-    petChances: {
+    chances: {
         common: 100.00,
         rare: 0.00,
         epic: 0.00,
@@ -2897,7 +2897,7 @@ export const petLevels: petLevelType[] = [
     totalSummon: 4,
     cost: 200,
     totalCost: 400,
-    petChances: {
+    chances: {
         common: 99.50,
         rare: 0.50,
         epic: 0.00,
@@ -2911,7 +2911,7 @@ export const petLevels: petLevelType[] = [
     totalSummon: 7,
     cost: 300,
     totalCost: 700,
-    petChances: {
+    chances: {
         common: 99.00,
         rare: 1.00,
         epic: 0.00,
@@ -2925,7 +2925,7 @@ export const petLevels: petLevelType[] = [
     totalSummon: 10,
     cost: 300,
     totalCost: 1000,
-    petChances: {
+    chances: {
         common: 98.00,
         rare: 2.00,
         epic: 0.00,
@@ -2939,7 +2939,7 @@ export const petLevels: petLevelType[] = [
     totalSummon: 14,
     cost: 400,
     totalCost: 1400,
-    petChances: {
+    chances: {
         common: 95.00,
         rare: 5.00,
         epic: 0.00,
@@ -2953,7 +2953,7 @@ export const petLevels: petLevelType[] = [
     totalSummon: 18,
     cost: 400,
     totalCost: 1800,
-    petChances: {
+    chances: {
         common: 90.00,
         rare: 10.00,
         epic: 0.00,
@@ -2967,7 +2967,7 @@ export const petLevels: petLevelType[] = [
     totalSummon: 23,
     cost: 500,
     totalCost: 2300,
-    petChances: {
+    chances: {
         common: 79.66,
         rare: 20.00,
         epic: 0.34,
@@ -2981,7 +2981,7 @@ export const petLevels: petLevelType[] = [
     totalSummon: 28,
     cost: 500,
     totalCost: 2800,
-    petChances: {
+    chances: {
         common: 77.64,
         rare: 21.80,
         epic: 0.56,
@@ -2995,7 +2995,7 @@ export const petLevels: petLevelType[] = [
     totalSummon: 34,
     cost: 600,
     totalCost: 3400,
-    petChances: {
+    chances: {
         common: 75.30,
         rare: 23.76,
         epic: 0.93,
@@ -3009,7 +3009,7 @@ export const petLevels: petLevelType[] = [
     totalSummon: 40,
     cost: 600,
     totalCost: 4000,
-    petChances: {
+    chances: {
         common: 72.54,
         rare: 25.90,
         epic: 1.55,
@@ -3023,7 +3023,7 @@ export const petLevels: petLevelType[] = [
     totalSummon: 47,
     cost: 700,
     totalCost: 4700,
-    petChances: {
+    chances: {
         common: 69.18,
         rare: 28.23,
         epic: 2.59,
@@ -3037,7 +3037,7 @@ export const petLevels: petLevelType[] = [
     totalSummon: 54,
     cost: 700,
     totalCost: 5400,
-    petChances: {
+    chances: {
         common: 64.91,
         rare: 30.77,
         epic: 4.32,
@@ -3051,7 +3051,7 @@ export const petLevels: petLevelType[] = [
     totalSummon: 62,
     cost: 800,
     totalCost: 6200,
-    petChances: {
+    chances: {
         common: 59.26,
         rare: 33.54,
         epic: 7.20,
@@ -3065,7 +3065,7 @@ export const petLevels: petLevelType[] = [
     totalSummon: 71,
     cost: 900,
     totalCost: 7100,
-    petChances: {
+    chances: {
         common: 51.44,
         rare: 36.56,
         epic: 12.00,
@@ -3079,7 +3079,7 @@ export const petLevels: petLevelType[] = [
     totalSummon: 81,
     cost: 1000,
     totalCost: 8100,
-    petChances: {
+    chances: {
         common: 40.15,
         rare: 39.85,
         epic: 20.00,
@@ -3093,7 +3093,7 @@ export const petLevels: petLevelType[] = [
     totalSummon: 92,
     cost: 1100,
     totalCost: 9200,
-    petChances: {
+    chances: {
         common: 35.86,
         rare: 43.44,
         epic: 20.70,
@@ -3107,7 +3107,7 @@ export const petLevels: petLevelType[] = [
     totalSummon: 104,
     cost: 1200,
     totalCost: 10400,
-    petChances: {
+    chances: {
         common: 31.23,
         rare: 47.35,
         epic: 21.42,
@@ -3121,7 +3121,7 @@ export const petLevels: petLevelType[] = [
     totalSummon: 117,
     cost: 1300,
     totalCost: 11700,
-    petChances: {
+    chances: {
         common: 26.22,
         rare: 51.61,
         epic: 22.17,
@@ -3135,7 +3135,7 @@ export const petLevels: petLevelType[] = [
     totalSummon: 131,
     cost: 1400,
     totalCost: 13100,
-    petChances: {
+    chances: {
         common: 20.80,
         rare: 56.25,
         epic: 22.95,
@@ -3149,7 +3149,7 @@ export const petLevels: petLevelType[] = [
     totalSummon: 146,
     cost: 1500,
     totalCost: 14600,
-    petChances: {
+    chances: {
         common: 15.00,
         rare: 61.25,
         epic: 23.75,
@@ -3163,7 +3163,7 @@ export const petLevels: petLevelType[] = [
     totalSummon: 162,
     cost: 1600,
     totalCost: 16200,
-    petChances: {
+    chances: {
         common: 15.00,
         rare: 60.42,
         epic: 24.59,
@@ -3177,7 +3177,7 @@ export const petLevels: petLevelType[] = [
     totalSummon: 179,
     cost: 1700,
     totalCost: 17900,
-    petChances: {
+    chances: {
         common: 15.00,
         rare: 59.55,
         epic: 25.45,
@@ -3191,7 +3191,7 @@ export const petLevels: petLevelType[] = [
     totalSummon: 197,
     cost: 1800,
     totalCost: 19700,
-    petChances: {
+    chances: {
         common: 15.00,
         rare: 58.66,
         epic: 26.34,
@@ -3205,7 +3205,7 @@ export const petLevels: petLevelType[] = [
     totalSummon: 216,
     cost: 1900,
     totalCost: 21600,
-    petChances: {
+    chances: {
         common: 15.00,
         rare: 57.74,
         epic: 27.26,
@@ -3219,7 +3219,7 @@ export const petLevels: petLevelType[] = [
     totalSummon: 236,
     cost: 2000,
     totalCost: 23600,
-    petChances: {
+    chances: {
         common: 15.00,
         rare: 56.79,
         epic: 28.21,
@@ -3233,7 +3233,7 @@ export const petLevels: petLevelType[] = [
     totalSummon: 257,
     cost: 2100,
     totalCost: 25700,
-    petChances: {
+    chances: {
         common: 15.00,
         rare: 55.80,
         epic: 29.20,
@@ -3247,7 +3247,7 @@ export const petLevels: petLevelType[] = [
     totalSummon: 279,
     cost: 2200,
     totalCost: 27900,
-    petChances: {
+    chances: {
         common: 15.00,
         rare: 54.78,
         epic: 30.22,
@@ -3261,7 +3261,7 @@ export const petLevels: petLevelType[] = [
     totalSummon: 302,
     cost: 2300,
     totalCost: 30200,
-    petChances: {
+    chances: {
         common: 15.00,
         rare: 53.65,
         epic: 31.28,
@@ -3275,7 +3275,7 @@ export const petLevels: petLevelType[] = [
     totalSummon: 325,
     cost: 2300,
     totalCost: 32500,
-    petChances: {
+    chances: {
         common: 15.00,
         rare: 52.51,
         epic: 32.37,
@@ -3289,7 +3289,7 @@ export const petLevels: petLevelType[] = [
     totalSummon: 348,
     cost: 2300,
     totalCost: 34800,
-    petChances: {
+    chances: {
         common: 15.00,
         rare: 51.27,
         epic: 33.51,
@@ -3303,7 +3303,7 @@ export const petLevels: petLevelType[] = [
     totalSummon: 371,
     cost: 2300,
     totalCost: 37100,
-    petChances: {
+    chances: {
         common: 15.00,
         rare: 49.98,
         epic: 34.68,
@@ -3317,7 +3317,7 @@ export const petLevels: petLevelType[] = [
     totalSummon: 394,
     cost: 2300,
     totalCost: 39400,
-    petChances: {
+    chances: {
         common: 15.00,
         rare: 48.55,
         epic: 35.89,
@@ -3331,7 +3331,7 @@ export const petLevels: petLevelType[] = [
     totalSummon: 417,
     cost: 2300,
     totalCost: 41700,
-    petChances: {
+    chances: {
         common: 15.00,
         rare: 46.92,
         epic: 37.15,
@@ -3345,7 +3345,7 @@ export const petLevels: petLevelType[] = [
     totalSummon: 440,
     cost: 2300,
     totalCost: 44000,
-    petChances: {
+    chances: {
         common: 15.00,
         rare: 45.00,
         epic: 38.45,
@@ -3359,7 +3359,7 @@ export const petLevels: petLevelType[] = [
     totalSummon: 463,
     cost: 2300,
     totalCost: 46300,
-    petChances: {
+    chances: {
         common: 15.00,
         rare: 42.61,
         epic: 39.80,
@@ -3373,7 +3373,7 @@ export const petLevels: petLevelType[] = [
     totalSummon: 486,
     cost: 2300,
     totalCost: 48600,
-    petChances: {
+    chances: {
         common: 15.00,
         rare: 39.49,
         epic: 41.19,
@@ -3387,7 +3387,7 @@ export const petLevels: petLevelType[] = [
     totalSummon: 509,
     cost: 2300,
     totalCost: 50900,
-    petChances: {
+    chances: {
         common: 15.00,
         rare: 35.17,
         epic: 42.63,
@@ -3401,7 +3401,7 @@ export const petLevels: petLevelType[] = [
     totalSummon: 532,
     cost: 2300,
     totalCost: 53200,
-    petChances: {
+    chances: {
         common: 15.00,
         rare: 28.88,
         epic: 44.12,
@@ -3415,7 +3415,7 @@ export const petLevels: petLevelType[] = [
     totalSummon: 555,
     cost: 2300,
     totalCost: 55500,
-    petChances: {
+    chances: {
         common: 15.00,
         rare: 19.33,
         epic: 45.67,
@@ -3429,7 +3429,7 @@ export const petLevels: petLevelType[] = [
     totalSummon: 578,
     cost: 2300,
     totalCost: 57800,
-    petChances: {
+    chances: {
         common: 15.00,
         rare: 15.00,
         epic: 49.50,
@@ -3443,7 +3443,7 @@ export const petLevels: petLevelType[] = [
     totalSummon: 601,
     cost: 2300,
     totalCost: 60100,
-    petChances: {
+    chances: {
         common: 15.00,
         rare: 15.00,
         epic: 48.99,
@@ -3457,7 +3457,7 @@ export const petLevels: petLevelType[] = [
     totalSummon: 624,
     cost: 2300,
     totalCost: 62400,
-    petChances: {
+    chances: {
         common: 15.00,
         rare: 15.00,
         epic: 48.46,
@@ -3471,7 +3471,7 @@ export const petLevels: petLevelType[] = [
     totalSummon: 647,
     cost: 2300,
     totalCost: 64700,
-    petChances: {
+    chances: {
         common: 15.00,
         rare: 15.00,
         epic: 47.92,
@@ -3485,7 +3485,7 @@ export const petLevels: petLevelType[] = [
     totalSummon: 670,
     cost: 2300,
     totalCost: 67000,
-    petChances: {
+    chances: {
         common: 15.00,
         rare: 15.00,
         epic: 47.37,
@@ -3499,7 +3499,7 @@ export const petLevels: petLevelType[] = [
     totalSummon: 693,
     cost: 2300,
     totalCost: 69300,
-    petChances: {
+    chances: {
         common: 15.00,
         rare: 15.00,
         epic: 46.81,
@@ -3513,7 +3513,7 @@ export const petLevels: petLevelType[] = [
     totalSummon: 716,
     cost: 2300,
     totalCost: 71600,
-    petChances: {
+    chances: {
         common: 15.00,
         rare: 15.00,
         epic: 46.15,
@@ -3527,7 +3527,7 @@ export const petLevels: petLevelType[] = [
     totalSummon: 739,
     cost: 2300,
     totalCost: 73900,
-    petChances: {
+    chances: {
         common: 15.00,
         rare: 15.00,
         epic: 45.51,
@@ -3541,7 +3541,7 @@ export const petLevels: petLevelType[] = [
     totalSummon: 762,
     cost: 2300,
     totalCost: 76200,
-    petChances: {
+    chances: {
         common: 15.00,
         rare: 15.00,
         epic: 44.82,
@@ -3555,7 +3555,7 @@ export const petLevels: petLevelType[] = [
     totalSummon: 785,
     cost: 2300,
     totalCost: 78500,
-    petChances: {
+    chances: {
         common: 15.00,
         rare: 15.00,
         epic: 44.06,
@@ -3569,7 +3569,7 @@ export const petLevels: petLevelType[] = [
     totalSummon: 808,
     cost: 2300,
     totalCost: 80800,
-    petChances: {
+    chances: {
         common: 15.00,
         rare: 15.00,
         epic: 43.20,
@@ -3583,7 +3583,7 @@ export const petLevels: petLevelType[] = [
     totalSummon: 831,
     cost: 2300,
     totalCost: 83100,
-    petChances: {
+    chances: {
         common: 15.00,
         rare: 15.00,
         epic: 42.17,
@@ -3597,7 +3597,7 @@ export const petLevels: petLevelType[] = [
     totalSummon: 854,
     cost: 2300,
     totalCost: 85400,
-    petChances: {
+    chances: {
         common: 15.00,
         rare: 15.00,
         epic: 40.87,
@@ -3611,7 +3611,7 @@ export const petLevels: petLevelType[] = [
     totalSummon: 877,
     cost: 2300,
     totalCost: 87700,
-    petChances: {
+    chances: {
         common: 15.00,
         rare: 15.00,
         epic: 39.15,
@@ -3625,7 +3625,7 @@ export const petLevels: petLevelType[] = [
     totalSummon: 900,
     cost: 2300,
     totalCost: 90000,
-    petChances: {
+    chances: {
         common: 15.00,
         rare: 15.00,
         epic: 36.71,
@@ -3639,7 +3639,7 @@ export const petLevels: petLevelType[] = [
     totalSummon: 923,
     cost: 2300,
     totalCost: 92300,
-    petChances: {
+    chances: {
         common: 15.00,
         rare: 15.00,
         epic: 33.11,
@@ -3653,7 +3653,7 @@ export const petLevels: petLevelType[] = [
     totalSummon: 946,
     cost: 2300,
     totalCost: 94600,
-    petChances: {
+    chances: {
         common: 15.00,
         rare: 15.00,
         epic: 27.57,
@@ -3667,7 +3667,7 @@ export const petLevels: petLevelType[] = [
     totalSummon: 969,
     cost: 2300,
     totalCost: 96900,
-    petChances: {
+    chances: {
         common: 15.00,
         rare: 15.00,
         epic: 18.81,
@@ -3681,7 +3681,7 @@ export const petLevels: petLevelType[] = [
     totalSummon: 992,
     cost: 2300,
     totalCost: 99200,
-    petChances: {
+    chances: {
         common: 15.00,
         rare: 15.00,
         epic: 15.00,
@@ -3695,7 +3695,7 @@ export const petLevels: petLevelType[] = [
     totalSummon: 1015,
     cost: 2300,
     totalCost: 101500,
-    petChances: {
+    chances: {
         common: 15.00,
         rare: 15.00,
         epic: 15.00,
@@ -3709,7 +3709,7 @@ export const petLevels: petLevelType[] = [
     totalSummon: 1038,
     cost: 2300,
     totalCost: 103800,
-    petChances: {
+    chances: {
         common: 15.00,
         rare: 15.00,
         epic: 15.00,
@@ -3723,7 +3723,7 @@ export const petLevels: petLevelType[] = [
     totalSummon: 1061,
     cost: 2300,
     totalCost: 106100,
-    petChances: {
+    chances: {
         common: 15.00,
         rare: 15.00,
         epic: 15.00,
@@ -3737,7 +3737,7 @@ export const petLevels: petLevelType[] = [
     totalSummon: 1084,
     cost: 2300,
     totalCost: 108400,
-    petChances: {
+    chances: {
         common: 15.00,
         rare: 15.00,
         epic: 15.00,
@@ -3751,7 +3751,7 @@ export const petLevels: petLevelType[] = [
     totalSummon: 1107,
     cost: 2300,
     totalCost: 110700,
-    petChances: {
+    chances: {
         common: 15.00,
         rare: 15.00,
         epic: 15.00,
@@ -3765,7 +3765,7 @@ export const petLevels: petLevelType[] = [
     totalSummon: 1130,
     cost: 2300,
     totalCost: 113000,
-    petChances: {
+    chances: {
         common: 15.00,
         rare: 15.00,
         epic: 15.00,
@@ -3779,7 +3779,7 @@ export const petLevels: petLevelType[] = [
     totalSummon: 1153,
     cost: 2300,
     totalCost: 115300,
-    petChances: {
+    chances: {
         common: 15.00,
         rare: 15.00,
         epic: 15.00,
@@ -3793,7 +3793,7 @@ export const petLevels: petLevelType[] = [
     totalSummon: 1176,
     cost: 2300,
     totalCost: 117600,
-    petChances: {
+    chances: {
         common: 15.00,
         rare: 15.00,
         epic: 15.00,
@@ -3807,7 +3807,7 @@ export const petLevels: petLevelType[] = [
     totalSummon: 1199,
     cost: 2300,
     totalCost: 119900,
-    petChances: {
+    chances: {
         common: 15.00,
         rare: 15.00,
         epic: 15.00,
@@ -3821,7 +3821,7 @@ export const petLevels: petLevelType[] = [
     totalSummon: 1222,
     cost: 2300,
     totalCost: 122200,
-    petChances: {
+    chances: {
         common: 15.00,
         rare: 15.00,
         epic: 15.00,
@@ -3835,7 +3835,7 @@ export const petLevels: petLevelType[] = [
     totalSummon: 1245,
     cost: 2300,
     totalCost: 124500,
-    petChances: {
+    chances: {
         common: 15.00,
         rare: 15.00,
         epic: 15.00,
@@ -3849,7 +3849,7 @@ export const petLevels: petLevelType[] = [
     totalSummon: 1268,
     cost: 2300,
     totalCost: 126800,
-    petChances: {
+    chances: {
         common: 15.00,
         rare: 15.00,
         epic: 15.00,
@@ -3863,7 +3863,7 @@ export const petLevels: petLevelType[] = [
     totalSummon: 1291,
     cost: 2300,
     totalCost: 129100,
-    petChances: {
+    chances: {
         common: 15.00,
         rare: 15.00,
         epic: 15.00,
@@ -3877,7 +3877,7 @@ export const petLevels: petLevelType[] = [
     totalSummon: 1314,
     cost: 2300,
     totalCost: 131400,
-    petChances: {
+    chances: {
         common: 15.00,
         rare: 15.00,
         epic: 15.00,
@@ -3891,7 +3891,7 @@ export const petLevels: petLevelType[] = [
     totalSummon: 1337,
     cost: 2300,
     totalCost: 133700,
-    petChances: {
+    chances: {
         common: 15.00,
         rare: 15.00,
         epic: 15.00,
@@ -3905,7 +3905,7 @@ export const petLevels: petLevelType[] = [
     totalSummon: 1360,
     cost: 2300,
     totalCost: 136000,
-    petChances: {
+    chances: {
         common: 15.00,
         rare: 15.00,
         epic: 15.00,
@@ -3919,7 +3919,7 @@ export const petLevels: petLevelType[] = [
     totalSummon: 1383,
     cost: 2300,
     totalCost: 138300,
-    petChances: {
+    chances: {
         common: 15.00,
         rare: 15.00,
         epic: 15.00,
@@ -3933,7 +3933,7 @@ export const petLevels: petLevelType[] = [
     totalSummon: 1406,
     cost: 2300,
     totalCost: 140600,
-    petChances: {
+    chances: {
         common: 15.00,
         rare: 15.00,
         epic: 15.00,
@@ -3947,7 +3947,7 @@ export const petLevels: petLevelType[] = [
     totalSummon: 1429,
     cost: 2300,
     totalCost: 142900,
-    petChances: {
+    chances: {
         common: 15.00,
         rare: 15.00,
         epic: 15.00,
@@ -3961,7 +3961,7 @@ export const petLevels: petLevelType[] = [
     totalSummon: 1452,
     cost: 2300,
     totalCost: 145200,
-    petChances: {
+    chances: {
         common: 15.00,
         rare: 15.00,
         epic: 15.00,
@@ -3975,7 +3975,7 @@ export const petLevels: petLevelType[] = [
     totalSummon: 1475,
     cost: 2300,
     totalCost: 147500,
-    petChances: {
+    chances: {
         common: 15.00,
         rare: 15.00,
         epic: 15.00,
@@ -3989,7 +3989,7 @@ export const petLevels: petLevelType[] = [
     totalSummon: 1498,
     cost: 2300,
     totalCost: 149800,
-    petChances: {
+    chances: {
         common: 15.00,
         rare: 15.00,
         epic: 15.00,
@@ -4003,7 +4003,7 @@ export const petLevels: petLevelType[] = [
     totalSummon: 1521,
     cost: 2300,
     totalCost: 152100,
-    petChances: {
+    chances: {
         common: 15.00,
         rare: 15.00,
         epic: 15.00,
@@ -4017,7 +4017,7 @@ export const petLevels: petLevelType[] = [
     totalSummon: 1544,
     cost: 2300,
     totalCost: 154400,
-    petChances: {
+    chances: {
         common: 15.00,
         rare: 15.00,
         epic: 15.00,
@@ -4031,7 +4031,7 @@ export const petLevels: petLevelType[] = [
     totalSummon: 1567,
     cost: 2300,
     totalCost: 156700,
-    petChances: {
+    chances: {
         common: 15.00,
         rare: 15.00,
         epic: 15.00,
@@ -4045,7 +4045,7 @@ export const petLevels: petLevelType[] = [
     totalSummon: 1590,
     cost: 2300,
     totalCost: 159000,
-    petChances: {
+    chances: {
         common: 15.00,
         rare: 15.00,
         epic: 15.00,
@@ -4059,7 +4059,7 @@ export const petLevels: petLevelType[] = [
     totalSummon: 1613,
     cost: 2300,
     totalCost: 161300,
-    petChances: {
+    chances: {
         common: 15.00,
         rare: 15.00,
         epic: 15.00,
@@ -4073,7 +4073,7 @@ export const petLevels: petLevelType[] = [
     totalSummon: 1636,
     cost: 2300,
     totalCost: 163600,
-    petChances: {
+    chances: {
         common: 15.00,
         rare: 15.00,
         epic: 15.00,
@@ -4087,7 +4087,7 @@ export const petLevels: petLevelType[] = [
     totalSummon: 1659,
     cost: 2300,
     totalCost: 165900,
-    petChances: {
+    chances: {
         common: 15.00,
         rare: 15.00,
         epic: 15.00,
@@ -4101,7 +4101,7 @@ export const petLevels: petLevelType[] = [
     totalSummon: 1682,
     cost: 2300,
     totalCost: 168200,
-    petChances: {
+    chances: {
         common: 15.00,
         rare: 15.00,
         epic: 15.00,
@@ -4115,7 +4115,7 @@ export const petLevels: petLevelType[] = [
     totalSummon: 1705,
     cost: 2300,
     totalCost: 170500,
-    petChances: {
+    chances: {
         common: 15.00,
         rare: 15.00,
         epic: 15.00,
@@ -4129,7 +4129,7 @@ export const petLevels: petLevelType[] = [
     totalSummon: 1728,
     cost: 2300,
     totalCost: 172800,
-    petChances: {
+    chances: {
         common: 15.00,
         rare: 15.00,
         epic: 15.00,
@@ -4143,7 +4143,7 @@ export const petLevels: petLevelType[] = [
     totalSummon: 1751,
     cost: 2300,
     totalCost: 175100,
-    petChances: {
+    chances: {
         common: 15.00,
         rare: 15.00,
         epic: 15.00,
@@ -4157,7 +4157,7 @@ export const petLevels: petLevelType[] = [
     totalSummon: 1774,
     cost: 2300,
     totalCost: 177400,
-    petChances: {
+    chances: {
         common: 15.00,
         rare: 15.00,
         epic: 15.00,
@@ -4171,7 +4171,7 @@ export const petLevels: petLevelType[] = [
     totalSummon: 1797,
     cost: 2300,
     totalCost: 179700,
-    petChances: {
+    chances: {
         common: 15.00,
         rare: 15.00,
         epic: 15.00,
@@ -4185,7 +4185,7 @@ export const petLevels: petLevelType[] = [
     totalSummon: 1820,
     cost: 2300,
     totalCost: 182000,
-    petChances: {
+    chances: {
         common: 15.00,
         rare: 15.00,
         epic: 15.00,
@@ -4199,7 +4199,7 @@ export const petLevels: petLevelType[] = [
     totalSummon: 1843,
     cost: 2300,
     totalCost: 184300,
-    petChances: {
+    chances: {
         common: 15.00,
         rare: 15.00,
         epic: 15.00,
@@ -4213,7 +4213,7 @@ export const petLevels: petLevelType[] = [
     totalSummon: 1866,
     cost: 2300,
     totalCost: 186600,
-    petChances: {
+    chances: {
         common: 15.00,
         rare: 15.00,
         epic: 15.00,
@@ -4227,7 +4227,7 @@ export const petLevels: petLevelType[] = [
     totalSummon: 1889,
     cost: 2300,
     totalCost: 188900,
-    petChances: {
+    chances: {
         common: 15.00,
         rare: 15.00,
         epic: 15.00,
@@ -4241,7 +4241,7 @@ export const petLevels: petLevelType[] = [
     totalSummon: 1912,
     cost: 2300,
     totalCost: 191200,
-    petChances: {
+    chances: {
         common: 15.00,
         rare: 15.00,
         epic: 15.00,
@@ -4255,7 +4255,7 @@ export const petLevels: petLevelType[] = [
     totalSummon: 1935,
     cost: 2300,
     totalCost: 193500,
-    petChances: {
+    chances: {
         common: 15.00,
         rare: 15.00,
         epic: 15.00,
@@ -4269,7 +4269,7 @@ export const petLevels: petLevelType[] = [
     totalSummon: null,
     cost: null,
     totalCost: null,
-    petChances: {
+    chances: {
         common: 15.00,
         rare: 15.00,
         epic: 15.00,

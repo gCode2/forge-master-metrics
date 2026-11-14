@@ -95,27 +95,42 @@ function AscendCalculator(){
         const tickets = calculatorState.resourceQuantities["qty-Skills"];
         const cost = calculatorState.resourceCosts["cost-Skills"];
 
-        const summons = Math.floor(tickets / cost) * 5;
-        console.log(summons)
+        const summons = Math.floor(tickets / cost);
         return summons;
     }
 
-    function getMaxLevelForResource(resourceName: string, estimatedSummons: number){
-        const resourceData = ascendResources.find(item=>item.resource === resourceName);
-        
-        if(!resourceData) return null;
+   function getMaxLevelForResource(
+        resourceName: string,
+        estimatedSummons: number,
+        pointsPerSummon: number = 1
+    ) {
+        const resourceData = ascendResources.find(item => item.resource === resourceName);
+        if (!resourceData) return null;
 
-        const achievedLevelData = resourceData.levels.findLast(
-            resource=>resource.totalSummon !== null && estimatedSummons >= resource.totalSummon
-        )
-        console.log(resourceData)
-        console.log(estimatedSummons);
-        console.log(achievedLevelData)
+        const levels = resourceData.levels;
+        const totalProgress = estimatedSummons * pointsPerSummon;
+
+        const index = levels.findIndex(
+            item => item.totalSummon === null || totalProgress < item.totalSummon
+        );
+        if (index === -1) return null;
+
+        const current = levels[index];
+        const previousTotal = levels[index - 1]?.totalSummon ?? 0;
+
+        return {
+            level: current.level,
+            progress: totalProgress - previousTotal,
+            required: current.totalSummon === null ? null : current.totalSummon - previousTotal,
+            chances: current.chances
+        };
     }
 
+    const skillsAscend = getMaxLevelForResource("Skills", getEstimatedSkillSummons(), 5);
+    
     useEffect(()=>{
         console.log(calculatorState)
-        getMaxLevelForResource("Skills", getEstimatedSkillSummons())
+        getMaxLevelForResource("Skills", getEstimatedSkillSummons(), 5)
     }, [calculatorState])
 
     function renderResourceContent(resource: AscendResource){
@@ -161,7 +176,50 @@ function AscendCalculator(){
                                 </div>
                             </div>
                             <div>
-                                Summary
+                                <div>
+                                    <div className="font-bold text-xl">
+                                        Summary
+                                    </div>
+                                    {/* <div>
+                                        You can summon skills {getEstimatedSkillSummons()} times
+                                    </div> */}
+                                    <div className="flex flex-col gap-3 border-1 p-3 rounded-md">
+                                        <div className="flex flex-col w-full justify-center items-center">
+                                            <div className="text-xl">
+                                                You'll reach
+                                                <span className="font-bold"> level {skillsAscend?.level}</span>
+                                            </div>
+                                            <div className="text-gray-800 text-xs">
+                                                {skillsAscend?.required === null
+                                                    ? "(MAX level)"
+                                                    : `(${skillsAscend?.progress}/${skillsAscend?.required} to level ${skillsAscend!.level + 1})`}
+                                            </div>
+                                            
+                                        </div>
+                                        <div className="grid grid-cols-2 gap-3 w-full sm:flex sm:flex-row sm:flex-wrap sm:justify-center">
+                                            {Object.entries(skillsAscend?.chances || {}).map(([key, value]) => {
+                                                const formattedKey = key.charAt(0).toUpperCase() + key.slice(1);
+
+                                                return (
+                                                    <div
+                                                        key={key}
+                                                        className={`${key} rounded-md p-2 border-b-4 ring-1 text-xs
+                                                        grid grid-cols-[1fr_40px] items-center gap-1
+                                                        w-full sm:w-auto sm:flex-none`}
+                                                    >
+                                                        <span className="text-left whitespace-nowrap">
+                                                            {formattedKey}:
+                                                        </span>
+
+                                                        <span className="font-bold text-right whitespace-nowrap">
+                                                            {value}%
+                                                        </span>
+                                                    </div>
+                                                );
+                                            })}
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                 )

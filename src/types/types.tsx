@@ -186,7 +186,7 @@ export type PlayerWarPoints = Record<
     totalSummon: number | null,
     gemCost: number | null,
     time: number | null,
-    forgeChances: forgeChancesType
+    chances: forgeChancesType
  }
 
  export interface forgeChancesType{
@@ -208,7 +208,7 @@ export type PlayerWarPoints = Record<
     totalSummon: number | null,
     cost: number | null,
     totalCost: number | null,
-    skillsChances: skillChancesType
+    chances: skillChancesType
  }
 
  export interface skillChancesType{
@@ -226,7 +226,7 @@ export interface mountLevelType{
     totalSummon: number | null,
     cost: number | null,
     totalCost: number | null,
-    mountsChances: mountChancesType
+    chances: mountChancesType
  }
 
 export interface mountChancesType{
@@ -244,7 +244,7 @@ export interface mountChancesType{
     totalSummon: number | null,
     cost: number | null,
     totalCost: number | null,
-    petChances: petChancesType
+    chances: petChancesType
  }
 
 export interface petChancesType{

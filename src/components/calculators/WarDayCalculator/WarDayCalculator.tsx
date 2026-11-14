@@ -209,7 +209,7 @@ function WarDayCalculator() {
                     if(!tier) {
                         return sum;
                     }
-                    const chance = selectedForge.forgeChances[chanceKey];
+                    const chance = selectedForge.chances[chanceKey];
                     const points = getPoints(tier.key, tier.defaultPoints);
                     return sum + chance * points;
 
