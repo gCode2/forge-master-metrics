@@ -1,13 +1,27 @@
 import { useEffect, useState } from "react";
-import type { AscendCalculatorState } from "../../../types/types";
+import type { AscendCalculatorState, AscendResource } from "../../../types/types";
 import { ascendResources } from "../../../data/ascend";
 import NumberField from "../components/NumberField";
 
 const DEFAULT_STATE: AscendCalculatorState = {
     selectedResource: "Forge",
-    resourceQuantities: {},
-    resourceCosts: {},
-    resourceSpeedUps: {}
+    resourceQuantities: {
+        "qty-Forge": 0,
+        "qty-Skills": 0,
+        "qty-Pets": 0,
+        "qty-Mounts": 0,
+    },
+    resourceCosts: {
+        "cost-Skills": ascendResources[1].defaultCost,
+        "cost-Pets": ascendResources[2].defaultCost,
+        "cost-Mounts": ascendResources[3].defaultCost,
+    },
+    resourceBonuses: {
+        "bonus-decrease-Forge": 0,
+        "bonus-speed-Forge": 0,
+        "bonus-chance-Pets": 0,
+        "bonus-chance-Mounts": 0
+    }
 }
 
 // const STORAGE_KEY = "ascend-calculator";
@@ -17,6 +31,7 @@ function AscendCalculator(){
     const [isConfirmingReset, setConfirmingReset] = useState(false);
 
 
+    const selectedResource = ascendResources.find(res=>res.resource === calculatorState.selectedResource);
 
     useEffect(()=>{
         if(isConfirmingReset){
@@ -44,13 +59,67 @@ function AscendCalculator(){
     }
 
     function getResourceQuantity(key:string, defaultVal: number = 0){
-        console.log(key);
-        console.log(calculatorState.resourceQuantities)
         return calculatorState.resourceQuantities[key] ?? defaultVal;
     }
 
-    function renderResourceContent(resource:string){
-        switch(resource){
+    function getResourceCost(key: string, resource: AscendResource){
+        const defaultValue = resource.defaultCost;
+        return calculatorState.resourceCosts[key] ?? defaultValue;
+    }
+
+    function handleCostChange(key: string, value: number){
+        setCalculatorState(prev=>({
+            ...prev,
+            resourceCosts:{
+                ...prev.resourceCosts,
+                [key]: toNonNegativeInteger(value)
+            }
+        }))
+    }
+
+    function handleBonusesChange(key: string, value: number){
+        setCalculatorState(prev=>({
+            ...prev,
+            resourceBonuses:{
+                ...prev.resourceBonuses,
+                [key]: toNonNegativeInteger(value)
+            }
+        }))
+    }
+
+    function getResourceBonuses(key: string, defaultVal: number = 0){
+        return calculatorState.resourceBonuses[key] ?? defaultVal;
+    }
+
+    function getEstimatedSkillSummons(){
+        const tickets = calculatorState.resourceQuantities["qty-Skills"];
+        const cost = calculatorState.resourceCosts["cost-Skills"];
+
+        const summons = Math.floor(tickets / cost) * 5;
+        console.log(summons)
+        return summons;
+    }
+
+    function getMaxLevelForResource(resourceName: string, estimatedSummons: number){
+        const resourceData = ascendResources.find(item=>item.resource === resourceName);
+        
+        if(!resourceData) return null;
+
+        const achievedLevelData = resourceData.levels.findLast(
+            resource=>resource.totalSummon !== null && estimatedSummons >= resource.totalSummon
+        )
+        console.log(resourceData)
+        console.log(estimatedSummons);
+        console.log(achievedLevelData)
+    }
+
+    useEffect(()=>{
+        console.log(calculatorState)
+        getMaxLevelForResource("Skills", getEstimatedSkillSummons())
+    }, [calculatorState])
+
+    function renderResourceContent(resource: AscendResource){
+        switch(resource.resource){
             case "Forge":
                 return (
                     <div>
@@ -59,13 +128,13 @@ function AscendCalculator(){
                         </div>
                         <div className="flex flex-col gap-3">
                             <div>
-                                <NumberField label="Coins:" value={getResourceQuantity(`qty-${resource}`)} onChange={(value)=>{handleQuantityChange(`qty-${resource}`, Math.max(0, Math.floor(Number(value) || 0)))}}/>
+                                <NumberField label="Coins:" value={getResourceQuantity(`qty-${resource.resource}`)} onChange={(value)=>{handleQuantityChange(`qty-${resource.resource}`, Math.max(0, Math.floor(Number(value) || 0)))}}/>
                             </div>
                             <div>
-                                <NumberField label="Forge speed up (%)" value={0} onChange={()=>{}}/>
+                                <NumberField label="Forge speed up (%):" value={getResourceBonuses(`bonus-speed-${resource.resource}`)} onChange={(value)=>{handleBonusesChange(`bonus-speed-${resource.resource}`, Math.max(0, Math.floor(Number(value) || 0)))}}/>
                             </div>
                             <div>
-                                <NumberField label="Forge cost decrease (%)" value={0} onChange={()=>{}}/>
+                                <NumberField label="Forge cost decrease (%):" value={getResourceBonuses(`bonus-decrease-${resource.resource}`)} onChange={(value)=>{handleBonusesChange(`bonus-decrease-${resource.resource}`, Math.max(0, Math.floor(Number(value) || 0)))}}/>
                             </div>
                             <div>
                                 Using gems?
@@ -85,10 +154,10 @@ function AscendCalculator(){
                             </div>
                             <div className="flex flex-col gap-3">
                                 <div>
-                                    <NumberField label="Tickets:" value={getResourceQuantity(`qty-${resource}`)} onChange={(value)=>{handleQuantityChange(`qty-${resource}`, Math.max(0, Math.floor(Number(value) || 0)))}}/>
+                                    <NumberField label="Tickets:" value={getResourceQuantity(`qty-${resource.resource}`)} onChange={(value)=>{handleQuantityChange(`qty-${resource.resource}`, Math.max(0, Math.floor(Number(value) || 0)))}}/>
                                 </div>
                                 <div>
-                                    <NumberField label="Summon cost:" value={0} onChange={()=>{}}/>
+                                    <NumberField label="Summon cost:" value={getResourceCost(`cost-${resource.resource}`, resource)} onChange={(value)=>{handleCostChange(`cost-${resource.resource}`, Math.max(0, Math.floor(Number(value) || resource.defaultCost)))}}/>
                                 </div>
                             </div>
                             <div>
@@ -104,13 +173,13 @@ function AscendCalculator(){
                         </div>
                         <div className="flex flex-col gap-3">
                             <div>
-                                <NumberField label="Eggs:" value={getResourceQuantity(`qty-${resource}`)} onChange={(value)=>{handleQuantityChange(`qty-${resource}`, Math.max(0, Math.floor(Number(value) || 0)))}}/>
+                                <NumberField label="Eggs:" value={getResourceQuantity(`qty-${resource.resource}`)} onChange={(value)=>{handleQuantityChange(`qty-${resource.resource}`, Math.max(0, Math.floor(Number(value) || 0)))}}/>
                             </div>
                             <div>
-                                <NumberField label="Summon cost:" value={0} onChange={()=>{}}/>
+                                <NumberField label="Summon cost:" value={getResourceCost(`cost-${resource.resource}`, resource)} onChange={(value)=>{handleCostChange(`cost-${resource.resource}`, Math.max(0, Math.floor(Number(value) || resource.defaultCost)))}}/>
                             </div>
                             <div>
-                            <NumberField label="Extra chance (%):" value={0} onChange={()=>{}}/>
+                                <NumberField label="Extra chance (%):" value={getResourceBonuses(`bonus-chance-${resource.resource}`)} onChange={(value)=>{handleBonusesChange(`bonus-chance-${resource.resource}`, Math.max(0, Math.floor(Number(value) || 0)))}}/>
                             </div>
                         </div>
                         <div>
@@ -126,13 +195,13 @@ function AscendCalculator(){
                         </div>
                         <div className="flex flex-col gap-3">
                             <div>
-                                <NumberField label="Clockwiders:" value={getResourceQuantity(`qty-${resource}`)} onChange={(value)=>{handleQuantityChange(`qty-${resource}`, Math.max(0, Math.floor(Number(value) || 0)))}}/>
+                                <NumberField label="Clockwiders:" value={getResourceQuantity(`qty-${resource.resource}`)} onChange={(value)=>{handleQuantityChange(`qty-${resource.resource}`, Math.max(0, Math.floor(Number(value) || 0)))}}/>
                             </div>
                             <div>
-                                <NumberField label="Summon cost" value={0} onChange={()=>{}}/>
+                                <NumberField label="Summon cost:" value={getResourceCost(`cost-${resource.resource}`, resource)} onChange={(value)=>{handleCostChange(`cost-${resource.resource}`, Math.max(0, Math.floor(Number(value) || resource.defaultCost)))}}/>
                             </div>
                             <div>
-                                <NumberField label="Extra chance (%):" value={0} onChange={()=>{}}/>
+                                <NumberField label="Extra chance (%):" value={getResourceBonuses(`bonus-chance-${resource.resource}`)} onChange={(value)=>{handleBonusesChange(`bonus-chance-${resource.resource}`, Math.max(0, Math.floor(Number(value) || 0)))}}/>
                             </div>
                         </div>
                         <div>
@@ -189,8 +258,8 @@ function AscendCalculator(){
                                         rounded ring-1 ring-black border-b-4
                                         text-[10px] hover:cursor-pointer
                                         ${calculatorState.selectedResource === resource.resource
-                                            ? "bg-orange-400 border-orange-500 hover:bg-orange-300"
-                                            : "bg-gray-400 border-gray-500 hover:bg-gray-300"}
+                                            ? "bg-orange-400 border-orange-500 hover:bg-orange-300 hover:border-orange-400"
+                                            : "bg-gray-400 border-gray-500 hover:bg-gray-300 hover:border-gray-400"}
                                         `}
                                         onClick={() => setCalculatorState(prev=>({
                                             ...prev,
@@ -221,7 +290,7 @@ function AscendCalculator(){
                                 ))}
                                 </div>
                             <div className="flex flex-col gap-3">
-                                {renderResourceContent(calculatorState.selectedResource)}
+                                {selectedResource ? renderResourceContent(selectedResource) : <div>Something went wrong. Try again later.</div>}
                             </div>
                         </div>
                     </section>

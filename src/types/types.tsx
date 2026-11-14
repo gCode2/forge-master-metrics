@@ -183,6 +183,7 @@ export type PlayerWarPoints = Record<
  export interface forgeLevelType{
     level: number,
     totalCost: number | null,
+    totalSummon: number | null,
     gemCost: number | null,
     time: number | null,
     forgeChances: forgeChancesType
@@ -273,7 +274,7 @@ export interface petChancesType{
     selectedResource: string,
     resourceQuantities: Record<string, number>,
     resourceCosts: Record<string, number>,
-    resourceSpeedUps: Record<string, number>
+    resourceBonuses: Record<string, number>
  }
 
  export interface SearchBarProps{

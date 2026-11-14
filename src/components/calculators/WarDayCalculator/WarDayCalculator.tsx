@@ -390,8 +390,8 @@ function WarDayCalculator() {
                                         rounded ring-1 ring-black border-b-4
                                         text-xs hover:cursor-pointer
                                         ${calculatorState.selectedDay === dayNumber
-                                            ? "bg-orange-400 border-orange-500 hover:bg-orange-300"
-                                            : "bg-gray-400 border-gray-500 hover:bg-gray-300"}
+                                            ? "bg-orange-400 border-orange-500 hover:bg-orange-300 hover:border-orange-400"
+                                            : "bg-gray-400 border-gray-500 hover:bg-gray-300 hover:border-gray-400"}
                                         `}
                                         onClick={() => handleDayChange(dayNumber)}>
                                             Day {dayNumber}

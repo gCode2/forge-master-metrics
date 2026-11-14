@@ -14,7 +14,6 @@ function NumberField({ label, value, onChange, width = "w-25" }: {
                 value={value}
                 onChange={(e) => {
                     const rawValue = e.target.value;
-                    console.log(rawValue)
                     const parsed = rawValue === "" ? 0 : Number(rawValue);
                     onChange(Math.max(0, Math.floor(parsed)));
                 }}

@@ -4,6 +4,7 @@ export const forgeLevels: forgeLevelType[] = [
     {
         level: 1,
         totalCost: null,
+        totalSummon: null,
         gemCost: null,
         time: null,
         forgeChances: {
@@ -22,6 +23,7 @@ export const forgeLevels: forgeLevelType[] = [
     {
         level: 2,
         totalCost: 400,
+        totalSummon: null,
         gemCost: 1,
         time: 300,
         forgeChances: {
@@ -40,6 +42,7 @@ export const forgeLevels: forgeLevelType[] = [
     {
         level: 3,
         totalCost: 700,
+        totalSummon: null,
         gemCost: 2,
         time: 900,
         forgeChances: {
@@ -58,6 +61,7 @@ export const forgeLevels: forgeLevelType[] = [
     {
         level: 4,
         totalCost: 1500,
+        totalSummon: null,
         gemCost: 4,
         time: 1800,
         forgeChances: {
@@ -76,6 +80,7 @@ export const forgeLevels: forgeLevelType[] = [
     {
         level: 5,
         totalCost: 3500,
+        totalSummon: null,
         gemCost: 8,
         time: 3600,
         forgeChances: {
@@ -94,6 +99,7 @@ export const forgeLevels: forgeLevelType[] = [
     {
         level: 6,
         totalCost: 10000,
+        totalSummon: null,
         gemCost: 17,
         time: 7200,
         forgeChances: {
@@ -112,6 +118,7 @@ export const forgeLevels: forgeLevelType[] = [
     {
         level: 7,
         totalCost: 25000,
+        totalSummon: null,
         gemCost: 63,
         time: 27180,
         forgeChances: {
@@ -130,6 +137,7 @@ export const forgeLevels: forgeLevelType[] = [
     {
         level: 8,
         totalCost: 50000,
+        totalSummon: null,
         gemCost: 109,
         time: 47160,
         forgeChances: {
@@ -148,6 +156,7 @@ export const forgeLevels: forgeLevelType[] = [
     {
         level: 9,
         totalCost: 100000,
+        totalSummon: null,
         gemCost: 155,
         time: 67140,
         forgeChances: {
@@ -166,6 +175,7 @@ export const forgeLevels: forgeLevelType[] = [
     {
         level: 10,
         totalCost: 150000,
+        totalSummon: null,
         gemCost: 201,
         time: 87180,
         forgeChances: {
@@ -184,6 +194,7 @@ export const forgeLevels: forgeLevelType[] = [
     {
         level: 11,
         totalCost: 250000,
+        totalSummon: null,
         gemCost: 247,
         time: 104400,
         forgeChances: {
@@ -202,6 +213,7 @@ export const forgeLevels: forgeLevelType[] = [
     {
         level: 12,
         totalCost: 350000,
+        totalSummon: null,
         gemCost: 293,
         time: 126000,
         forgeChances: {
@@ -220,6 +232,7 @@ export const forgeLevels: forgeLevelType[] = [
     {
         level: 13,
         totalCost: 450000,
+        totalSummon: null,
         gemCost: 339,
         time: 144000,
         forgeChances: {
@@ -238,6 +251,7 @@ export const forgeLevels: forgeLevelType[] = [
     {
         level: 14,
         totalCost: 600000,
+        totalSummon: null,
         gemCost: 385,
         time: 165600,
         forgeChances: {
@@ -256,6 +270,7 @@ export const forgeLevels: forgeLevelType[] = [
     {
         level: 15,
         totalCost: 800000,
+        totalSummon: null,
         gemCost: 431,
         time: 187200,
         forgeChances: {
@@ -274,6 +289,7 @@ export const forgeLevels: forgeLevelType[] = [
     {
         level: 16,
         totalCost: 910000,
+        totalSummon: null,
         gemCost: 477,
         time: 205200,
         forgeChances: {
@@ -292,6 +308,7 @@ export const forgeLevels: forgeLevelType[] = [
     {
         level: 17,
         totalCost: 1020000,
+        totalSummon: null,
         gemCost: 523,
         time: 226800,
         forgeChances: {
@@ -310,6 +327,7 @@ export const forgeLevels: forgeLevelType[] = [
     {
         level: 18,
         totalCost: 1130000,
+        totalSummon: null,
         gemCost: 569,
         time: 244800,
         forgeChances: {
@@ -328,6 +346,7 @@ export const forgeLevels: forgeLevelType[] = [
     {
         level: 19,
         totalCost: 1240000,
+        totalSummon: null,
         gemCost: 638,
         time: 277200,
         forgeChances: {
@@ -346,6 +365,7 @@ export const forgeLevels: forgeLevelType[] = [
     {
         level: 20,
         totalCost: 1350000,
+        totalSummon: null,
         gemCost: 707,
         time: 306000,
         forgeChances: {
@@ -364,6 +384,7 @@ export const forgeLevels: forgeLevelType[] = [
     {
         level: 21,
         totalCost: 1460000,
+        totalSummon: null,
         gemCost: 776,
         time: 334800,
         forgeChances: {
@@ -382,6 +403,7 @@ export const forgeLevels: forgeLevelType[] = [
     {
         level: 22,
         totalCost: 1570000,
+        totalSummon: null,
         gemCost: 845,
         time: 363600,
         forgeChances: {
@@ -400,6 +422,7 @@ export const forgeLevels: forgeLevelType[] = [
     {
         level: 23,
         totalCost: 1680000,
+        totalSummon: null,
         gemCost: 914,
         time: 396000,
         forgeChances: {
@@ -418,6 +441,7 @@ export const forgeLevels: forgeLevelType[] = [
     {
         level: 24,
         totalCost: 1790000,
+        totalSummon: null,
         gemCost: 983,
         time: 424800,
         forgeChances: {
@@ -436,6 +460,7 @@ export const forgeLevels: forgeLevelType[] = [
     {
         level: 25,
         totalCost: 1900000,
+        totalSummon: null,
         gemCost: 1050,
         time: 457200,
         forgeChances: {
@@ -454,6 +479,7 @@ export const forgeLevels: forgeLevelType[] = [
     {
         level: 26,
         totalCost: 2010000,
+        totalSummon: null,
         gemCost: 1120,
         time: 486000,
         forgeChances: {
@@ -472,6 +498,7 @@ export const forgeLevels: forgeLevelType[] = [
     {
         level: 27,
         totalCost: 2120000,
+        totalSummon: null,
         gemCost: 1190,
         time: 514800,
         forgeChances: {
@@ -490,6 +517,7 @@ export const forgeLevels: forgeLevelType[] = [
     {
         level: 28,
         totalCost: 2230000,
+        totalSummon: null,
         gemCost: 1250,
         time: 547200,
         forgeChances: {
@@ -508,6 +536,7 @@ export const forgeLevels: forgeLevelType[] = [
     {
         level: 29,
         totalCost: 2340000,
+        totalSummon: null,
         gemCost: 1320,
         time: 576000,
         forgeChances: {
@@ -526,6 +555,7 @@ export const forgeLevels: forgeLevelType[] = [
     {
         level: 30,
         totalCost: 2450000,
+        totalSummon: null,
         gemCost: 1390,
         time: 607200,
         forgeChances: {
@@ -544,6 +574,7 @@ export const forgeLevels: forgeLevelType[] = [
     {
         level: 31,
         totalCost: 2560000,
+        totalSummon: null,
         gemCost: 1460,
         time: 633600,
         forgeChances: {
@@ -562,6 +593,7 @@ export const forgeLevels: forgeLevelType[] = [
     {
         level: 32,
         totalCost: 2670000,
+        totalSummon: null,
         gemCost: 1530,
         time: 666000,
         forgeChances: {
@@ -580,6 +612,7 @@ export const forgeLevels: forgeLevelType[] = [
     {
         level: 33,
         totalCost: 2780000,
+        totalSummon: null,
         gemCost: 1600,
         time: 694800,
         forgeChances: {
@@ -598,6 +631,7 @@ export const forgeLevels: forgeLevelType[] = [
     {
         level: 34,
         totalCost: 2890000,
+        totalSummon: null,
         gemCost: 1670,
         time: 727200,
         forgeChances: {
@@ -616,6 +650,7 @@ export const forgeLevels: forgeLevelType[] = [
     {
         level: 35,
         totalCost: 3000000,
+        totalSummon: null,
         gemCost: 1740,
         time: 756000,
         forgeChances: {
