@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import type { AscendCalculatorState, AscendResource, LevelWithChances } from "../../../types/types";
 import { ascendResources } from "../../../data/ascend";
 import NumberField from "../components/NumberField";
+import { forgeLevels } from "../../../data/resourceData";
 
 const DEFAULT_STATE: AscendCalculatorState = {
     selectedResource: "Forge",
@@ -118,6 +119,136 @@ function AscendCalculator(){
         return {actions, expectedSummons}
     }
 
+    function formatDuration(seconds: number) {
+        const totalSeconds = Math.ceil(seconds);
+
+        const days = Math.floor(totalSeconds / 86400);
+        const hours = Math.floor((totalSeconds % 86400) / 3600);
+        const minutes = Math.floor((totalSeconds % 3600) / 60);
+        const secs = totalSeconds % 60;
+
+        const parts = [];
+
+        if (days > 0) parts.push(`${days}d`);
+        if (hours > 0) parts.push(`${hours}h`);
+        if (minutes > 0) parts.push(`${minutes}m`);
+        if (secs > 0 || parts.length === 0) parts.push(`${secs}s`);
+
+        return parts.join(" ");
+    }
+
+    function getEstimatedForge() {
+        const coins = calculatorState.resourceQuantities["qty-Forge"] ?? 0;
+
+        const costDecrease = Math.min(
+            100,
+            calculatorState.resourceBonuses["bonus-decrease-Forge"] ?? 0
+        );
+
+        const timeSpeedup = Math.min(
+            100,
+            calculatorState.resourceBonuses["bonus-speed-Forge"] ?? 0
+        );
+
+        const levels = forgeLevels;
+
+        let remainingCoins = coins;
+        let currentLevel = levels[0].level;
+        let totalTimeSeconds = 0;
+        let upgradesCompleted = 0;
+        let totalGemCost = 0;
+
+        for (let i = 1; i < levels.length; i++) {
+            const nextLevel = levels[i];
+
+            if (nextLevel.totalCost === null) continue;
+
+            const discountedCost = Math.ceil(
+                nextLevel.totalCost * (1 - costDecrease / 100)
+            );
+
+            if (remainingCoins < discountedCost) break;
+
+            remainingCoins -= discountedCost;
+
+            currentLevel = nextLevel.level;
+            upgradesCompleted++;
+            totalGemCost += nextLevel.gemCost ?? 0;
+
+            const upgradeTime = nextLevel.time ?? 0;
+
+            totalTimeSeconds +=
+                upgradeTime * (1 - timeSpeedup / 100);
+        }
+
+        const nextLevelIndex = levels.findIndex(
+            item => item.level === currentLevel + 1
+        );
+
+        let progress = 0;
+        let required: number | null = null;
+
+        if (nextLevelIndex !== -1) {
+            const nextLevel = levels[nextLevelIndex];
+
+            const nextCost = Math.ceil(
+                nextLevel.totalCost! * (1 - costDecrease / 100)
+            );
+
+            progress = Math.min(remainingCoins, nextCost);
+            required = nextCost;
+        }
+
+        const current = levels.find(
+            item => item.level === currentLevel
+        );
+
+        const rarities = Object.keys(levels[0].chances);
+
+        const missChance: Record<string, number> = {};
+        const expected: Record<string, number> = {};
+
+        rarities.forEach(rarity => {
+            missChance[rarity] = 1;
+            expected[rarity] = 0;
+        });
+
+        for (let i = 1; i <= upgradesCompleted; i++) {
+            const chances = levels[i].chances;
+
+            rarities.forEach(rarity => {
+                const chance = chances[
+                    rarity as keyof typeof chances
+                ];
+
+                missChance[rarity] *= (1 - chance);
+                expected[rarity] += chance;
+            });
+        }
+
+        const atLeastOne: Record<string, number> = {};
+
+        rarities.forEach(rarity => {
+            atLeastOne[rarity] =
+                (1 - missChance[rarity]) * 100;
+        });
+
+        return {
+            level: currentLevel,
+            progress,
+            required,
+            chances: current?.chances ?? {},
+            totalTimeSeconds,
+            remainingCoins,
+            upgradesCompleted,
+            totalGemCost,
+            cumulativeChances: {
+                atLeastOne,
+                expected
+            }
+        };
+    }
+
    function getMaxLevelForResource(
         resourceName: string,
         estimatedSummons: number,
@@ -193,6 +324,8 @@ function AscendCalculator(){
 
     const mountsAscend = getMaxLevelForResource("Mounts", getEstimatedMountSummons().expectedSummons);
     
+    const forgeAscend = getEstimatedForge();
+
     useEffect(()=>{
         console.log(calculatorState)
         getMaxLevelForResource("Skills", getEstimatedSkillSummons(), 5)
@@ -202,7 +335,7 @@ function AscendCalculator(){
         switch(resource.resource){
             case "Forge":
                 return (
-                    <div>
+                    <div className="flex flex-col gap-3">
                         <div className="text-xl font-bold">
                             Forge
                         </div>
@@ -216,13 +349,51 @@ function AscendCalculator(){
                             <div>
                                 <NumberField label="Forge cost decrease (%):" value={getResourceBonuses(`bonus-decrease-${resource.resource}`)} onChange={(value)=>{handleBonusesChange(`bonus-decrease-${resource.resource}`, Math.max(0, Math.floor(Number(value) || 0)))}}/>
                             </div>
-                            <div>
-                                Using gems?
-                                slider
-                            </div>
                             </div>
                             <div>
-                                Summary + info
+                                <div className="flex flex-col gap-3">
+                                    <div className="font-bold text-xl">
+                                        Summary
+                                    </div>
+                                    <div>
+                                        <div className="flex flex-col gap-3 border-1 p-3 rounded-md bg-gray-100 border-gray-500">
+                                            <div className="flex flex-col w-full justify-center items-center">
+                                                <div className="text-xl">
+                                                    You'll reach
+                                                    <span className="font-bold"> level {forgeAscend?.level}</span>
+                                                </div>
+                                                <div className="text-gray-800 text-xs">
+                                                    {forgeAscend?.required === null
+                                                        ? "(MAX level)"
+                                                        : `(${forgeAscend?.progress}/${forgeAscend?.required} to level ${forgeAscend!.level + 1})`}
+                                                </div>
+                                                
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div className="flex flex-col gap-3 border-1 p-3 rounded-md bg-gray-100 border-gray-500">
+                                            <div className="flex flex-col w-full justify-center items-center">
+                                                <div className="text-base">
+                                                    Estimated time: <span className="font-bold"> 
+                                                        {formatDuration(forgeAscend?.totalTimeSeconds ?? 0)}
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div className="flex flex-col gap-3 border-1 p-3 rounded-md bg-gray-100 border-gray-500">
+                                            <div className="flex flex-col w-full justify-center items-center">
+                                                <div className="text-base">
+                                                    Gems to reach that level: <span className="font-bold"> 
+                                                        {forgeAscend?.totalGemCost ?? 0}
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    </div>
                             </div>
                         </div>
                 )
@@ -246,7 +417,7 @@ function AscendCalculator(){
                                         Summary
                                     </div>
                                     <div>
-                                        <div className="flex flex-col gap-3 border-1 p-3 rounded-md">
+                                        <div className="flex flex-col gap-3 border-1 p-3 rounded-md bg-gray-100 border-gray-500">
                                             <div className="flex flex-col w-full justify-center items-center">
                                                 <div className="text-xl">
                                                     You'll reach
@@ -285,11 +456,14 @@ function AscendCalculator(){
                                         </div>
                                     </div>
                                     <div>
-                                        <div className="flex flex-col gap-3 border-1 p-3 rounded-md">
+                                        <div className="flex flex-col gap-3 border-1 p-3 rounded-md bg-gray-100 border-gray-500">
                                             <div className="flex flex-col w-full justify-center items-center">
                                                 <div className="text-xl font-bold">
                                                     Cumulative chances
                                                 </div>
+                                                <div className="text-xs text-center">
+                                                Odds of getting certain drop rarities in the Ascension process
+                                            </div>
                                             </div>
                                             <div className="grid grid-cols-2 gap-3 w-full sm:flex sm:flex-row sm:flex-nowrap sm:justify-center">
                                                 {Object.entries(skillsAscend?.cumulativeChances.atLeastOne || {}).map(([key, value]) => {
@@ -317,12 +491,12 @@ function AscendCalculator(){
                                         </div>
                                     </div>
                                     <div>
-                                        <div className="flex flex-col gap-3 border-1 p-3 rounded-md">
+                                        <div className="flex flex-col gap-3 border-1 p-3 rounded-md bg-gray-100 border-gray-500">
                                             <div className="flex flex-col w-full justify-center items-center">
                                                 <div className="text-xl font-bold">
                                                     Expected average drops
                                                 </div>
-                                                <div>
+                                                <div className="text-xs">
                                                     Per {getEstimatedSkillSummons()*5} summons ({getEstimatedSkillSummons()} actions)
                                                 </div>
                                             </div>
@@ -351,7 +525,26 @@ function AscendCalculator(){
                                             
                                         </div>
 
-                                        </div>
+                                    </div>
+                                    {/* <div className="flex flex-col gap-3 border-1 p-3 rounded-md bg-cyan-100 border-gray-500">
+                                            <div className="flex flex-col w-full justify-center items-center">
+                                                <div className="text-xl font-bold">
+                                                    Info
+                                                </div>
+                                                <div className="text-xs text-center">
+                                                Ascension review
+                                            </div>
+                                            </div>
+                                            <div>
+                                                If you don't want to lose power, you should get at least 3 legendary skills.
+                                            </div>
+                                            <div>
+                                                Your current expected Legendary average drop: {skillsAscend?.cumulativeChances.expected.legendary}
+                                            </div>
+                                            <div>
+                                                {skillsAscend?.cumulativeChances.expected.legendary! > 5 ? "You can ascend" : "Better gather more Skill Tickets"}
+                                            </div>
+                                        </div> */}
                                     </div>
                             </div>
                         </div>
@@ -379,7 +572,7 @@ function AscendCalculator(){
                                         Summary
                                     </div>
                                     
-                                    <div className="flex flex-col gap-3 border-1 p-3 rounded-md">
+                                    <div className="flex flex-col gap-3 border-1 p-3 rounded-md bg-gray-100 border-gray-500">
                                         <div className="flex flex-col w-full justify-center items-center">
                                             <div className="text-xl">
                                                 You'll reach
@@ -417,10 +610,13 @@ function AscendCalculator(){
                                         
                                     </div>
 
-                                    <div className="flex flex-col gap-3 border-1 p-3 rounded-md">
+                                    <div className="flex flex-col gap-3 border-1 p-3 rounded-md bg-gray-100 border-gray-500">
                                         <div className="flex flex-col w-full justify-center items-center">
                                             <div className="text-xl font-bold">
                                                 Cumulative chances
+                                            </div>
+                                            <div className="text-xs text-center">
+                                                Odds of getting certain drop rarities in the Ascension process
                                             </div>
                                         </div>
                                         <div className="grid grid-cols-2 gap-3 w-full sm:flex sm:flex-row sm:flex-nowrap sm:justify-center">
@@ -447,12 +643,12 @@ function AscendCalculator(){
                                         </div>
                                         
                                     </div>
-                                    <div className="flex flex-col gap-3 border-1 p-3 rounded-md">
+                                    <div className="flex flex-col gap-3 border-1 p-3 rounded-md bg-gray-100 border-gray-500">
                                         <div className="flex flex-col w-full justify-center items-center">
                                             <div className="text-xl font-bold">
                                                 Expected average drops
                                             </div>
-                                            <div>
+                                            <div className="text-xs">
                                         Per {getEstimatedPetSummons().expectedSummons} summons ({getEstimatedPetSummons().actions} actions)
                                     </div>
                                         </div>
@@ -508,7 +704,7 @@ function AscendCalculator(){
                                         Summary
                                     </div>
                                     
-                                    <div className="flex flex-col gap-3 border-1 p-3 rounded-md">
+                                    <div className="flex flex-col gap-3 border-1 p-3 rounded-md bg-gray-100 border-gray-500">
                                         <div className="flex flex-col w-full justify-center items-center">
                                             <div className="text-xl">
                                                 You'll reach
@@ -546,10 +742,13 @@ function AscendCalculator(){
                                         
                                     </div>
 
-                                    <div className="flex flex-col gap-3 border-1 p-3 rounded-md">
+                                    <div className="flex flex-col gap-3 border-1 p-3 rounded-md bg-gray-100 border-gray-500">
                                         <div className="flex flex-col w-full justify-center items-center">
                                             <div className="text-xl font-bold">
                                                 Cumulative chances
+                                            </div>
+                                            <div className="text-xs text-center">
+                                                Odds of getting certain drop rarities in the Ascension process
                                             </div>
                                         </div>
                                         <div className="grid grid-cols-2 gap-3 w-full sm:flex sm:flex-row sm:flex-nowrap sm:justify-center">
@@ -576,12 +775,12 @@ function AscendCalculator(){
                                         </div>
                                         
                                     </div>
-                                    <div className="flex flex-col gap-3 border-1 p-3 rounded-md">
+                                    <div className="flex flex-col gap-3 border-1 p-3 rounded-md bg-gray-100 border-gray-500">
                                         <div className="flex flex-col w-full justify-center items-center">
                                             <div className="text-xl font-bold">
                                                 Expected average drops
                                             </div>
-                                            <div>
+                                            <div className="text-xs">
                                         Per {getEstimatedMountSummons().expectedSummons} summons ({getEstimatedMountSummons().actions} actions)
                                     </div>
                                         </div>
