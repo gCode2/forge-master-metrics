@@ -189,7 +189,7 @@ export type PlayerWarPoints = Record<
     chances: forgeChancesType
  }
 
- export interface forgeChancesType{
+ export type forgeChancesType = {
     primitive: number,
     medieval: number,
     earlyModern: number,
@@ -211,7 +211,7 @@ export type PlayerWarPoints = Record<
     chances: skillChancesType
  }
 
- export interface skillChancesType{
+ export type skillChancesType = {
     common: number,
     rare: number,
     epic: number,
@@ -229,7 +229,7 @@ export interface mountLevelType{
     chances: mountChancesType
  }
 
-export interface mountChancesType{
+export type mountChancesType ={
     common: number,
     rare: number,
     epic: number,
@@ -247,7 +247,7 @@ export interface mountChancesType{
     chances: petChancesType
  }
 
-export interface petChancesType{
+export type petChancesType = {
     common: number,
     rare: number,
     epic: number,
@@ -261,7 +261,7 @@ export interface petChancesType{
     setMenuOpened: (isMenuOpened: boolean)=>void;
  }
 
- export type WarCalculatorState = {
+export type WarCalculatorState = {
     selectedDay: number,
     quantities: Record<string, number>,
     customPoints: Record<string, number>,
@@ -270,31 +270,53 @@ export interface petChancesType{
     showAdvancedMode: boolean,
  }
 
- export type AscendCalculatorState = {
-    selectedResource: string,
-    resourceQuantities: Record<string, number>,
-    resourceCosts: Record<string, number>,
-    resourceBonuses: Record<string, number>
- }
 
- export interface SearchBarProps{
+
+export interface SearchBarProps{
     searchText: string,
     changeHandler: (text:string) => void
  }
 
- export interface AscendResource{
-    id: number,
-    resource: string,
-    defaultCost: number,
-    levels: AscendResourceUnion
- }
 
- export type AscendResourceUnion = forgeLevelType[] | mountLevelType[] | petLevelType[] | skillLevelType[]
 
- export type AscendResources = AscendResource[]
+export type AscendResourceUnion = forgeLevelType[] | mountLevelType[] | petLevelType[] | skillLevelType[]
 
- export type LevelWithChances = {
+export type RarityChances = {
+    common: number; rare: number; epic: number;
+    legendary: number; ultimate: number; mythic: number;
+};
+
+export type SummonLevel = {
+    level: number;
+    summon: number | null;
+    totalSummon: number | null;
+    cost: number | null;
+    totalCost: number | null;
+    chances: RarityChances;
+};
+
+export type ResourceName = "Forge" | "Skills" | "Pets" | "Mounts";
+export type SummonResourceName = Exclude<ResourceName, "Forge">;
+
+export type AscendCalculatorState = {
+    selectedResource: ResourceName,
+    resourceQuantities: Record<string, number>,
+    resourceCosts: Record<string, number>,
+    resourceBonuses: Record<string, number>
+}
+
+export type LevelWithChances = {
     level: number,
     totalSummon: number | null,
-    chances: object
- }
+    chances: Record<string, number>
+}
+
+export interface AscendResource {
+    id: number,
+    resource: ResourceName,
+    defaultCost: number,
+    levels: LevelWithChances[]
+}
+
+export type AscendResources = AscendResource[]
+

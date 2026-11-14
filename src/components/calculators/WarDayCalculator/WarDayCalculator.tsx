@@ -319,7 +319,7 @@ function WarDayCalculator() {
                         Calculate how many points you'll earn in a war based on your bonuses and available resources.
                     </div>
                 </div>
-                <div className="flex sm:ml-auto">
+                <div className="flex sm:ml-auto pt-2">
                     <button
                         type="button"
                         className={`
@@ -334,7 +334,7 @@ function WarDayCalculator() {
                     </button>
                 </div>
             </div>
-            <div className="mt-6 w-full">
+            <div className="mt-3 w-full">
                 <section className="flex flex-col gap-4 sm:gap-5 text-sm min-w-0 w-full">
                     <div className="
                         flex flex-col sm:flex-row
