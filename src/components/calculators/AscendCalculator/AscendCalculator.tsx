@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import type { AscendCalculatorState, AscendResource } from "../../../types/types";
+import type { AscendCalculatorState, AscendResource, LevelWithChances } from "../../../types/types";
 import { ascendResources } from "../../../data/ascend";
 import NumberField from "../components/NumberField";
 
@@ -98,6 +98,25 @@ function AscendCalculator(){
         const summons = Math.floor(tickets / cost);
         return summons;
     }
+    function getEstimatedPetSummons(){
+        const eggs = calculatorState.resourceQuantities["qty-Pets"];
+        const cost = calculatorState.resourceCosts["cost-Pets"];
+        const extraChance = calculatorState.resourceBonuses["bonus-chance-Pets"] ?? 0;
+
+        const actions = cost > 0 ? Math.floor(eggs / cost) : 0;
+        const expectedSummons = Math.floor(actions * (1 + extraChance / 100));
+        return {actions, expectedSummons}
+    }
+
+    function getEstimatedMountSummons(){
+        const clockwiders = calculatorState.resourceQuantities["qty-Mounts"];
+        const cost = calculatorState.resourceCosts["cost-Mounts"];
+        const extraChance = calculatorState.resourceBonuses["bonus-chance-Mounts"] ?? 0;
+
+        const actions = cost > 0 ? Math.floor(clockwiders / cost) : 0;
+        const expectedSummons = Math.floor(actions * (1 + extraChance / 100));
+        return {actions, expectedSummons}
+    }
 
    function getMaxLevelForResource(
         resourceName: string,
@@ -122,11 +141,57 @@ function AscendCalculator(){
             level: current.level,
             progress: totalProgress - previousTotal,
             required: current.totalSummon === null ? null : current.totalSummon - previousTotal,
-            chances: current.chances
+            chances: current.chances,
+            cumulativeChances: getCumulativeChances(levels, current.level, totalProgress)
         };
     }
+    function getCumulativeChances(
+        levels: LevelWithChances[],
+        currentLevel: number,
+        totalProgress: number
+    ) {
+        const rarities = Object.keys(levels[0].chances);
+        const missChance: Record<string, number> = {};
 
-    const skillsAscend = getMaxLevelForResource("Skills", getEstimatedSkillSummons(), 5);
+        const expected: Record<string, number> = {};
+
+        rarities.forEach(r => {
+            missChance[r] = 1;
+            expected[r] = 0;
+        });
+
+        let previousTotal = 0;
+
+        for (const lvl of levels) {
+            if (lvl.level > currentLevel) break;
+
+            const pointsHere = lvl.level === currentLevel
+                ? totalProgress - previousTotal
+                : lvl.totalSummon! - previousTotal;
+
+            const summons = pointsHere;
+
+            rarities.forEach(r => {
+                const p = lvl.chances[r as keyof typeof lvl.chances] / 100;
+                missChance[r] *= Math.pow(1 - p, summons);
+                expected[r] += summons * p;
+            });
+
+            previousTotal = lvl.totalSummon ?? previousTotal;
+        }
+
+        const atLeastOne: Record<string, number> = {};
+        rarities.forEach(r => (atLeastOne[r] = (1 - missChance[r]) * 100));
+        return {atLeastOne, expected}
+    }
+
+    
+
+    const skillsAscend = getMaxLevelForResource("Skills", getEstimatedSkillSummons());
+
+    const petsAscend = getMaxLevelForResource("Pets", getEstimatedPetSummons().expectedSummons);
+
+    const mountsAscend = getMaxLevelForResource("Mounts", getEstimatedMountSummons().expectedSummons);
     
     useEffect(()=>{
         console.log(calculatorState)
@@ -163,7 +228,7 @@ function AscendCalculator(){
                 )
             case "Skills":
                 return (
-                        <div>
+                        <div className="flex flex-col gap-3">
                             <div className="text-xl font-bold">
                                 Skills
                             </div>
@@ -176,56 +241,124 @@ function AscendCalculator(){
                                 </div>
                             </div>
                             <div>
-                                <div>
+                                <div className="flex flex-col gap-3">
                                     <div className="font-bold text-xl">
                                         Summary
                                     </div>
-                                    {/* <div>
-                                        You can summon skills {getEstimatedSkillSummons()} times
-                                    </div> */}
-                                    <div className="flex flex-col gap-3 border-1 p-3 rounded-md">
-                                        <div className="flex flex-col w-full justify-center items-center">
-                                            <div className="text-xl">
-                                                You'll reach
-                                                <span className="font-bold"> level {skillsAscend?.level}</span>
+                                    <div>
+                                        <div className="flex flex-col gap-3 border-1 p-3 rounded-md">
+                                            <div className="flex flex-col w-full justify-center items-center">
+                                                <div className="text-xl">
+                                                    You'll reach
+                                                    <span className="font-bold"> level {skillsAscend?.level}</span>
+                                                </div>
+                                                <div className="text-gray-800 text-xs">
+                                                    {skillsAscend?.required === null
+                                                        ? "(MAX level)"
+                                                        : `(${skillsAscend?.progress}/${skillsAscend?.required} to level ${skillsAscend!.level + 1})`}
+                                                </div>
+                                                
                                             </div>
-                                            <div className="text-gray-800 text-xs">
-                                                {skillsAscend?.required === null
-                                                    ? "(MAX level)"
-                                                    : `(${skillsAscend?.progress}/${skillsAscend?.required} to level ${skillsAscend!.level + 1})`}
+                                            <div className="grid grid-cols-2 gap-3 w-full sm:flex sm:flex-row sm:flex-nowrap sm:justify-center">
+                                                {Object.entries(skillsAscend?.chances || {}).map(([key, value]) => {
+                                                    const formattedKey = key.charAt(0).toUpperCase() + key.slice(1);
+
+                                                    return (
+                                                        <div
+                                                            key={key}
+                                                            className={`${key} rounded-md p-2 border-b-4 ring-1 text-xs
+                                                            grid grid-cols-[1fr_auto] items-center gap-2
+                                                            w-full sm:w-auto sm:flex-none`}
+                                                        >
+                                                            <span className="text-left whitespace-nowrap">
+                                                                {formattedKey}:
+                                                            </span>
+
+                                                            <span className="font-bold text-right whitespace-nowrap">
+                                                                {value.toFixed(2)}%
+                                                            </span>
+                                                        </div>
+                                                    );
+                                                })}
                                             </div>
                                             
                                         </div>
-                                        <div className="grid grid-cols-2 gap-3 w-full sm:flex sm:flex-row sm:flex-wrap sm:justify-center">
-                                            {Object.entries(skillsAscend?.chances || {}).map(([key, value]) => {
-                                                const formattedKey = key.charAt(0).toUpperCase() + key.slice(1);
+                                    </div>
+                                    <div>
+                                        <div className="flex flex-col gap-3 border-1 p-3 rounded-md">
+                                            <div className="flex flex-col w-full justify-center items-center">
+                                                <div className="text-xl font-bold">
+                                                    Cumulative chances
+                                                </div>
+                                            </div>
+                                            <div className="grid grid-cols-2 gap-3 w-full sm:flex sm:flex-row sm:flex-nowrap sm:justify-center">
+                                                {Object.entries(skillsAscend?.cumulativeChances.atLeastOne || {}).map(([key, value]) => {
+                                                    const formattedKey = key.charAt(0).toUpperCase() + key.slice(1);
 
-                                                return (
-                                                    <div
-                                                        key={key}
-                                                        className={`${key} rounded-md p-2 border-b-4 ring-1 text-xs
-                                                        grid grid-cols-[1fr_40px] items-center gap-1
-                                                        w-full sm:w-auto sm:flex-none`}
-                                                    >
-                                                        <span className="text-left whitespace-nowrap">
-                                                            {formattedKey}:
-                                                        </span>
+                                                    return (
+                                                        <div
+                                                            key={key}
+                                                            className={`${key} rounded-md p-2 border-b-4 ring-1 text-xs
+                                                            grid grid-cols-[1fr_auto] items-center gap-2
+                                                            w-full sm:w-auto sm:flex-none`}
+                                                        >
+                                                            <span className="text-left whitespace-nowrap">
+                                                                {formattedKey}:
+                                                            </span>
 
-                                                        <span className="font-bold text-right whitespace-nowrap">
-                                                            {value}%
-                                                        </span>
-                                                    </div>
-                                                );
-                                            })}
+                                                            <span className="font-bold text-right whitespace-nowrap">
+                                                                {value.toFixed(2)}%
+                                                            </span>
+                                                        </div>
+                                                    );
+                                                })}
+                                            </div>
+                                            
                                         </div>
                                     </div>
-                                </div>
+                                    <div>
+                                        <div className="flex flex-col gap-3 border-1 p-3 rounded-md">
+                                            <div className="flex flex-col w-full justify-center items-center">
+                                                <div className="text-xl font-bold">
+                                                    Expected average drops
+                                                </div>
+                                                <div>
+                                                    Per {getEstimatedSkillSummons()*5} summons ({getEstimatedSkillSummons()} actions)
+                                                </div>
+                                            </div>
+                                            <div className="grid grid-cols-2 gap-3 w-full sm:flex sm:flex-row sm:flex-nowrap sm:justify-center">
+                                                {Object.entries(skillsAscend?.cumulativeChances.expected || {}).map(([key, value]) => {
+                                                    const formattedKey = key.charAt(0).toUpperCase() + key.slice(1);
+
+                                                    return (
+                                                        <div
+                                                            key={key}
+                                                            className={`${key} rounded-md p-2 border-b-4 ring-1 text-xs
+                                                            grid grid-cols-[1fr_auto] items-center gap-2
+                                                            w-full sm:w-auto sm:flex-none`}
+                                                        >
+                                                            <span className="text-left whitespace-nowrap">
+                                                                {formattedKey}:
+                                                            </span>
+
+                                                            <span className="font-bold text-right whitespace-nowrap">
+                                                                {value.toFixed(2)}
+                                                            </span>
+                                                        </div>
+                                                    );
+                                                })}
+                                            </div>
+                                            
+                                        </div>
+
+                                        </div>
+                                    </div>
                             </div>
                         </div>
                 )
             case "Pets":
                 return (
-                    <div>
+                    <div className="flex flex-col gap-3">
                         <div className="text-xl font-bold">
                             Pets
                         </div>
@@ -241,13 +374,120 @@ function AscendCalculator(){
                             </div>
                         </div>
                         <div>
-                            Summary
+                            <div className="flex flex-col gap-3">
+                                    <div className="font-bold text-xl">
+                                        Summary
+                                    </div>
+                                    
+                                    <div className="flex flex-col gap-3 border-1 p-3 rounded-md">
+                                        <div className="flex flex-col w-full justify-center items-center">
+                                            <div className="text-xl">
+                                                You'll reach
+                                                <span className="font-bold"> level {petsAscend?.level}</span>
+                                            </div>
+                                            <div className="text-gray-800 text-xs">
+                                                {petsAscend?.required === null
+                                                    ? "(MAX level)"
+                                                    : `(${petsAscend?.progress}/${petsAscend?.required} to level ${petsAscend!.level + 1})`}
+                                            </div>
+                                            
+                                        </div>
+                                        <div className="grid grid-cols-2 gap-3 w-full sm:flex sm:flex-row sm:flex-nowrap sm:justify-center">
+                                            {Object.entries(petsAscend?.chances || {}).map(([key, value]) => {
+                                                const formattedKey = key.charAt(0).toUpperCase() + key.slice(1);
+
+                                                return (
+                                                    <div
+                                                        key={key}
+                                                        className={`${key} rounded-md p-2 border-b-4 ring-1 text-xs
+                                                        grid grid-cols-[1fr_auto] items-center gap-2
+                                                        w-full sm:w-auto sm:flex-none`}
+                                                    >
+                                                        <span className="text-left whitespace-nowrap">
+                                                            {formattedKey}:
+                                                        </span>
+
+                                                        <span className="font-bold text-right whitespace-nowrap">
+                                                            {value.toFixed(2)}%
+                                                        </span>
+                                                    </div>
+                                                );
+                                            })}
+                                        </div>
+                                        
+                                    </div>
+
+                                    <div className="flex flex-col gap-3 border-1 p-3 rounded-md">
+                                        <div className="flex flex-col w-full justify-center items-center">
+                                            <div className="text-xl font-bold">
+                                                Cumulative chances
+                                            </div>
+                                        </div>
+                                        <div className="grid grid-cols-2 gap-3 w-full sm:flex sm:flex-row sm:flex-nowrap sm:justify-center">
+                                            {Object.entries(petsAscend?.cumulativeChances.atLeastOne || {}).map(([key, value]) => {
+                                                const formattedKey = key.charAt(0).toUpperCase() + key.slice(1);
+
+                                                return (
+                                                    <div
+                                                        key={key}
+                                                        className={`${key} rounded-md p-2 border-b-4 ring-1 text-xs
+                                                        grid grid-cols-[1fr_auto] items-center gap-2
+                                                        w-full sm:w-auto sm:flex-none`}
+                                                    >
+                                                        <span className="text-left whitespace-nowrap">
+                                                            {formattedKey}:
+                                                        </span>
+
+                                                        <span className="font-bold text-right whitespace-nowrap">
+                                                            {value.toFixed(2)}%
+                                                        </span>
+                                                    </div>
+                                                );
+                                            })}
+                                        </div>
+                                        
+                                    </div>
+                                    <div className="flex flex-col gap-3 border-1 p-3 rounded-md">
+                                        <div className="flex flex-col w-full justify-center items-center">
+                                            <div className="text-xl font-bold">
+                                                Expected average drops
+                                            </div>
+                                            <div>
+                                        Per {getEstimatedPetSummons().expectedSummons} summons ({getEstimatedPetSummons().actions} actions)
+                                    </div>
+                                        </div>
+                                        <div className="grid grid-cols-2 gap-3 w-full sm:flex sm:flex-row sm:flex-nowrap sm:justify-center">
+                                            {Object.entries(petsAscend?.cumulativeChances.expected || {}).map(([key, value]) => {
+                                                const formattedKey = key.charAt(0).toUpperCase() + key.slice(1);
+
+                                                return (
+                                                    <div
+                                                        key={key}
+                                                        className={`${key} rounded-md p-2 border-b-4 ring-1 text-xs
+                                                        grid grid-cols-[1fr_auto] items-center gap-2
+                                                        w-full sm:w-auto sm:flex-none`}
+                                                    >
+                                                        <span className="text-left whitespace-nowrap">
+                                                            {formattedKey}:
+                                                        </span>
+
+                                                        <span className="font-bold text-right whitespace-nowrap">
+                                                            {value.toFixed(2)}
+                                                        </span>
+                                                    </div>
+                                                );
+                                            })}
+                                        </div>
+                                        
+                                    </div>
+
+                                </div>
                         </div>
                     </div>
                 )
             case "Mounts":
                 return (
-                    <div>
+                    <div className="flex flex-col gap-3">
                         <div className="text-xl font-bold">
                             Mounts
                         </div>
@@ -263,7 +503,114 @@ function AscendCalculator(){
                             </div>
                         </div>
                         <div>
-                            Summary
+                            <div className="flex flex-col gap-3">
+                                    <div className="font-bold text-xl">
+                                        Summary
+                                    </div>
+                                    
+                                    <div className="flex flex-col gap-3 border-1 p-3 rounded-md">
+                                        <div className="flex flex-col w-full justify-center items-center">
+                                            <div className="text-xl">
+                                                You'll reach
+                                                <span className="font-bold"> level {mountsAscend?.level}</span>
+                                            </div>
+                                            <div className="text-gray-800 text-xs">
+                                                {mountsAscend?.required === null
+                                                    ? "(MAX level)"
+                                                    : `(${mountsAscend?.progress}/${mountsAscend?.required} to level ${mountsAscend!.level + 1})`}
+                                            </div>
+                                            
+                                        </div>
+                                        <div className="grid grid-cols-2 gap-3 w-full sm:flex sm:flex-row sm:flex-nowrap sm:justify-center">
+                                            {Object.entries(mountsAscend?.chances || {}).map(([key, value]) => {
+                                                const formattedKey = key.charAt(0).toUpperCase() + key.slice(1);
+
+                                                return (
+                                                    <div
+                                                        key={key}
+                                                        className={`${key} rounded-md p-2 border-b-4 ring-1 text-xs
+                                                        grid grid-cols-[1fr_auto] items-center gap-2
+                                                        w-full sm:w-auto sm:flex-none`}
+                                                    >
+                                                        <span className="text-left whitespace-nowrap">
+                                                            {formattedKey}:
+                                                        </span>
+
+                                                        <span className="font-bold text-right whitespace-nowrap">
+                                                            {value.toFixed(2)}%
+                                                        </span>
+                                                    </div>
+                                                );
+                                            })}
+                                        </div>
+                                        
+                                    </div>
+
+                                    <div className="flex flex-col gap-3 border-1 p-3 rounded-md">
+                                        <div className="flex flex-col w-full justify-center items-center">
+                                            <div className="text-xl font-bold">
+                                                Cumulative chances
+                                            </div>
+                                        </div>
+                                        <div className="grid grid-cols-2 gap-3 w-full sm:flex sm:flex-row sm:flex-nowrap sm:justify-center">
+                                            {Object.entries(mountsAscend?.cumulativeChances.atLeastOne || {}).map(([key, value]) => {
+                                                const formattedKey = key.charAt(0).toUpperCase() + key.slice(1);
+
+                                                return (
+                                                    <div
+                                                        key={key}
+                                                        className={`${key} rounded-md p-2 border-b-4 ring-1 text-xs
+                                                        grid grid-cols-[1fr_auto] items-center gap-2
+                                                        w-full sm:w-auto sm:flex-none`}
+                                                    >
+                                                        <span className="text-left whitespace-nowrap">
+                                                            {formattedKey}:
+                                                        </span>
+
+                                                        <span className="font-bold text-right whitespace-nowrap">
+                                                            {value.toFixed(2)}%
+                                                        </span>
+                                                    </div>
+                                                );
+                                            })}
+                                        </div>
+                                        
+                                    </div>
+                                    <div className="flex flex-col gap-3 border-1 p-3 rounded-md">
+                                        <div className="flex flex-col w-full justify-center items-center">
+                                            <div className="text-xl font-bold">
+                                                Expected average drops
+                                            </div>
+                                            <div>
+                                        Per {getEstimatedMountSummons().expectedSummons} summons ({getEstimatedMountSummons().actions} actions)
+                                    </div>
+                                        </div>
+                                        <div className="grid grid-cols-2 gap-3 w-full sm:flex sm:flex-row sm:flex-nowrap sm:justify-center">
+                                            {Object.entries(mountsAscend?.cumulativeChances.expected || {}).map(([key, value]) => {
+                                                const formattedKey = key.charAt(0).toUpperCase() + key.slice(1);
+
+                                                return (
+                                                    <div
+                                                        key={key}
+                                                        className={`${key} rounded-md p-2 border-b-4 ring-1 text-xs
+                                                        grid grid-cols-[1fr_auto] items-center gap-2
+                                                        w-full sm:w-auto sm:flex-none`}
+                                                    >
+                                                        <span className="text-left whitespace-nowrap">
+                                                            {formattedKey}:
+                                                        </span>
+
+                                                        <span className="font-bold text-right whitespace-nowrap">
+                                                            {value.toFixed(2)}
+                                                        </span>
+                                                    </div>
+                                                );
+                                            })}
+                                        </div>
+                                        
+                                    </div>
+
+                                </div>
                         </div>
                     </div>
                 )

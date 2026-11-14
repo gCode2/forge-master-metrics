@@ -292,3 +292,9 @@ export interface petChancesType{
  export type AscendResourceUnion = forgeLevelType[] | mountLevelType[] | petLevelType[] | skillLevelType[]
 
  export type AscendResources = AscendResource[]
+
+ export type LevelWithChances = {
+    level: number,
+    totalSummon: number | null,
+    chances: object
+ }
