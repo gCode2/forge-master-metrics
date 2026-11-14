@@ -249,7 +249,7 @@ function WarDayCalculator() {
                 };
             }
             case 6: {
-                const qty = getQty("merge-mounts-qty", Math.floor(getExpectedMounts()),day);
+                const qty = getQty("merge-mounts-qty", getExpectedMounts(day),day);
                 const pts = getPoints("merge-mounts-pts", customAct?.defaultPoints ?? 0);
                 return { points: qty * pts, detail: `${formatPoints(qty)} merges × ${formatPoints(pts)} pts` };
             }
