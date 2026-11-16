@@ -262,6 +262,7 @@ export type petChancesType = {
  }
 
 export type WarCalculatorState = {
+    visible: boolean,
     selectedDay: number,
     quantities: Record<string, number>,
     customPoints: Record<string, number>,

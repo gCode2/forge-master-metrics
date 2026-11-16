@@ -29,6 +29,7 @@ const FORGE_CHANCE_KEYS = {
 
 
 const DEFAULT_STATE: WarCalculatorState = {
+    visible: true,
     selectedDay: 1,
     quantities: {},
     customPoints: {},
@@ -173,6 +174,13 @@ function WarDayCalculator() {
 
     function getCost(key: string, defaultVal: number = 1){
         return calculatorState.specialSettings[key] !== undefined ? calculatorState.specialSettings[key] : defaultVal;
+    }
+
+    function handleVisibilityToggle(){
+        setCalculatorState(prev=>({
+            ...prev,
+            visible: !prev.visible
+        }))
     }
 
     function getExpectedMounts(day = calculatorState.selectedDay) {
@@ -324,24 +332,70 @@ function WarDayCalculator() {
                         Calculate how many points you'll earn in a war based on your bonuses and available resources.
                     </div>
                 </div>
-                <div className="flex sm:ml-auto pt-2">
+                <div className="flex flex-col gap-2 pt-2 sm:pt-0 sm:ml-auto shrink-0">
                     <button
                         type="button"
-                        className={`
-                        flex justify-center items-center
-                        text-white font-bold
-                        py-2 px-2 sm:px-4
-                        transition duration-300
-                        rounded ring-1 ring-black border-b-4 w-26 sm:w-31
-                        text-xs min-w-max hover:cursor-pointer ${isConfirmingReset ? "bg-red-500 border-red-600 hover:border-red-500 hover:bg-red-400" : "bg-red-400 border-red-500 hover:border-red-400 hover:bg-red-300"}`}
-                        onClick={handleCalculatorReset}>
-                            {isConfirmingReset ? "Are you sure? " : "Reset calculator"}
+                        className="
+                            flex justify-center items-center
+                            text-white font-bold
+                            py-2 px-2 sm:px-4
+                            transition duration-300
+                            rounded ring-1 ring-black border-b-4
+                            w-26 sm:w-31 h-9
+                            text-xs min-w-max hover:cursor-pointer
+                            bg-gray-400 border-gray-500
+                            hover:border-gray-400 hover:bg-gray-300
+                        "
+                        onClick={handleVisibilityToggle}
+                        aria-expanded={calculatorState.visible}
+                        aria-controls="calculator-content"
+                    >
+                        {calculatorState.visible ? "Hide" : "Open"}
                     </button>
+                    <div className={`w-26 sm:w-31 sm:h-9 transition-all duration-300 ease-in-out ${calculatorState.visible ? "h-9" : "h-0"}`}>
+                        <button
+                            type="button"
+                            tabIndex={calculatorState.visible ? 0 : -1}
+                            aria-hidden={!calculatorState.visible}
+                            className={`
+                                flex justify-center items-center
+                                text-white font-bold
+                                py-2 px-2 sm:px-4
+                                rounded ring-1 ring-black border-b-4
+                                w-full h-full
+                                text-xs min-w-max
+                                transition-all duration-300 ease-in-out
+                                ${calculatorState.visible
+                                    ? "opacity-100 translate-y-0 scale-100 pointer-events-auto"
+                                    : "opacity-0 -translate-y-2 scale-95 pointer-events-none"
+                                }
+                                ${isConfirmingReset
+                                    ? "bg-red-500 border-red-600 hover:border-red-500 hover:bg-red-400"
+                                    : "bg-red-400 border-red-500 hover:border-red-400 hover:bg-red-300"
+                                }
+                            `}
+                            onClick={handleCalculatorReset}
+                        >
+                            {isConfirmingReset ? "Are you sure?" : "Reset calculator"}
+                        </button>
+                    </div>
                 </div>
             </div>
-            <div className="mt-3 w-full">
-                <section className="flex flex-col gap-4 sm:gap-5 text-sm min-w-0 w-full">
-                    <div className="
+            <div
+                id="calculator-content"
+                className={`
+                    grid transition-[grid-template-rows]
+                    duration-500 ease-in-out
+                    ${calculatorState.visible
+                        ? "grid-rows-[1fr]"
+                        : "grid-rows-[0fr]"
+                    }
+                `}
+            >
+            <div className="min-h-0 overflow-y-clip">
+                <div className="mt-3 w-full">
+                    <section className="flex flex-col gap-4 sm:gap-5 text-sm min-w-0 w-full">
+                        <div className="
                         flex flex-col sm:flex-row
                         items-start sm:items-center
                         justify-between gap-3
@@ -793,7 +847,8 @@ function WarDayCalculator() {
                                 
                             </section>
                         </div>
-                        
+                        </div>
+                        </div>
                     </div>
         
     );
