@@ -300,6 +300,7 @@ export type ResourceName = "Forge" | "Skills" | "Pets" | "Mounts";
 export type SummonResourceName = Exclude<ResourceName, "Forge">;
 
 export type AscendCalculatorState = {
+    visible: boolean,
     selectedResource: ResourceName,
     resourceQuantities: Record<string, number>,
     resourceCosts: Record<string, number>,

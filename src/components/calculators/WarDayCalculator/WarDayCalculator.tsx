@@ -364,7 +364,7 @@ function WarDayCalculator() {
                                 rounded ring-1 ring-black border-b-4
                                 w-full h-full
                                 text-xs min-w-max
-                                transition-all duration-300 ease-in-out
+                                transition-all duration-300 ease-in-out hover:cursor-pointer
                                 ${calculatorState.visible
                                     ? "opacity-100 translate-y-0 scale-100 pointer-events-auto"
                                     : "opacity-0 -translate-y-2 scale-95 pointer-events-none"

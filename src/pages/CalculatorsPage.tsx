@@ -28,16 +28,16 @@ function CalculatorsPage () {
                     <AscendCalculator/>
                 </div>
             </div>
-            <div className="border-2 rounded flex flex-row text-2xl gap-4 p-6 shadow-lg/20 ">
-                <div className="h-14 w-14 sm:h-25 sm:w-25 shrink-0">
-                    <img src="/icons/gear.png" className="h-14 w-14 sm:h-25 sm:w-25 shrink-0"/>
+            <div className="border-2 rounded flex flex-col sm:flex-row text-2xl gap-4 p-6 shadow-lg/20 justify-center sm:justify-start items-center sm:items-start">
+                <div className="h-14 w-14 sm:h-25 sm:w-25 shrink-0 flex flex-col justify-center items-center">
+                    <img src="/icons/gear.png" className="h-14 w-14 sm:h-23 sm:w-23 shrink-0"/>
                 </div>
-                <div className="flex flex-col">
-                    <div className="text-4xl font-bold">
+                <div className="flex flex-col justify-center items-center sm:justify-start sm:items-start">
+                    <div className="font-bold">
                         Other calculators
                     </div>
-                    <div className="text-sm text-zinc-500">
-                        If you got any ideas for other calculators, just let me know!
+                    <div className="text-sm text-zinc-500 text-center sm:text-left">
+                        If you got any ideas for other calculators, let me know!
                     </div>
                 </div>
             </div>
