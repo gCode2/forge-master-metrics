@@ -25,6 +25,7 @@ function getDefaultCost(name: ResourceName) {
 const DEFAULT_STATE: AscendCalculatorState = {
     visible: true,
     selectedResource: "Forge",
+    showProgressMode: false,
     resourceQuantities: {
         "qty-Forge": 0,
         "qty-Skills": 0,
@@ -81,6 +82,7 @@ function loadState(): AscendCalculatorState {
         return {
             visible: parsed.visible ?? DEFAULT_STATE.visible,
             selectedResource: isValidResource ? parsed.selectedResource : DEFAULT_STATE.selectedResource,
+            showProgressMode: parsed.showProgressMode ?? DEFAULT_STATE.showProgressMode,
             resourceQuantities: mergeNumbers(DEFAULT_STATE.resourceQuantities, parsed?.resourceQuantities),
             resourceCosts: mergeNumbers(DEFAULT_STATE.resourceCosts, parsed?.resourceCosts),
             resourceBonuses: mergeNumbers(DEFAULT_STATE.resourceBonuses, parsed?.resourceBonuses),
@@ -341,12 +343,20 @@ function AscendCalculator() {
     return (
         <div className="flex flex-col gap-1 w-full">
             <div className="flex flex-col sm:flex-row justify-center sm:justify-start items-center gap-2 sm:gap-5">
-                <div className="h-16 w-16 sm:h-25 sm:w-25 shrink-0">
-                    <img src="/icons/ascend.png" className="h-16 w-16 sm:h-25 sm:w-25 shrink-0"/>
+                <div className="h-16 w-16 sm:h-25 sm:w-25 shrink-0 flex flex-col justify-center items-center">
+                    {calculatorState.showProgressMode ?
+                    
+                        <img src="/icons/progress.png" className="h-15 w-15 sm:h-21 sm:w-21"/>
+
+                    : 
+                    
+                        <img src="/icons/ascend.png" className="h-16 w-16 sm:h-25 sm:w-25 shrink-0"/>
+                    }
+                    
                 </div>
                 <div className="flex flex-col justify-center items-center sm:justify-start sm:items-start">
                     <div className="font-bold">
-                        Ascend Calculator
+                        {calculatorState.showProgressMode ? "Progress" : "Ascend"} Calculator
                     </div>
                     <div className="text-sm text-zinc-500 text-center sm:text-left">
                         Find out how much you need to upgrade and what resources are required for your next ascension.
@@ -416,7 +426,46 @@ function AscendCalculator() {
             <div className="mt-3 w-full">
                 <section className="flex flex-col gap-4 sm:gap-5 text-sm min-w-0 w-full">
                     <div className="border-2 rounded-md p-3 flex flex-col gap-4 shadow-lg/20">
-                        <div className="text-xl font-bold text-center sm:text-left">Select Ascension</div>
+                        <div className="
+                        flex flex-col sm:flex-row
+                        items-start sm:items-center
+                        justify-between gap-3
+                        border-2 rounded-lg p-3 bg-gray-50">
+                            <div className="font-bold text-lg sm:text-xl flex flex-col justify-center sm:justify-start items-center sm:items-start w-full">
+                                <div>
+                                    Calculator mode
+                                </div>
+                                <div className="text-zinc-500 text-xs sm:text-sm font-normal">
+                                    {calculatorState.showProgressMode ? "Calculate remaining resources based on your current level and progress" : "Calculate required resources starting from Level 1 after Ascension"}
+                                </div>
+                            </div>
+                            <div className="flex items-center gap-2 sm:gap-3 self-center sm:self-auto shrink-0">
+                                <span className={`text-sm ${!calculatorState.showProgressMode ? "font-bold text-gray-900" : "text-gray-500"}`}>
+                                    Ascend
+                                </span>
+                                <button
+                                    type="button"
+                                    onClick={() => {
+                                        setCalculatorState(prev => ({
+                                            ...prev,
+                                            showProgressMode: !prev.showProgressMode,
+                                        }));}}
+                                    className={`relative w-16 h-8 rounded-full transition-colors duration-200 ${
+                                    calculatorState.showProgressMode ? "bg-orange-500" : "bg-gray-400"}`}
+                                    aria-label="Toggle calculator mode"
+                                    aria-pressed={calculatorState.showProgressMode}>
+                                        <span
+                                            className={`absolute top-1 left-1 w-6 h-6 bg-white rounded-full shadow transition-transform duration-200 ${
+                                                calculatorState.showProgressMode ? "translate-x-8" : "translate-x-0"
+                                                }`}
+                                            />
+                                </button>
+                                <span className={`text-sm ${calculatorState.showProgressMode ? "font-bold text-gray-900" : "text-gray-500"}`}>
+                                    Progress
+                                </span>
+                            </div>
+                    </div>
+                        <div className="text-xl font-bold text-center">Select Ascension</div>
 
                         <div className="grid grid-cols-4 sm:flex sm:flex-row gap-2 items-center justify-center">
                             {ascendResources.map(resource => (
