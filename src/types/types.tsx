@@ -305,7 +305,11 @@ export type AscendCalculatorState = {
     showProgressMode: boolean,
     resourceQuantities: Record<string, number>,
     resourceCosts: Record<string, number>,
-    resourceBonuses: Record<string, number>
+    resourceBonuses: Record<string, number>,
+    resourceProgress: Record<ResourceName, {
+        level:number;
+        progress:number
+    }>
 }
 
 export type LevelWithChances = {

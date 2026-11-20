@@ -28,11 +28,13 @@ export function getSummonCount(items: number, cost: number, extraChance = 0) {
 export function getCumulativeChances(
     levels: LevelWithChances[],
     currentLevel: number,
-    totalProgress: number
+    totalProgress: number,
+    startProgress = 0
 ) {
     const rarities = Object.keys(levels[0].chances);
     const missChance: Record<string, number> = {};
     const expected: Record<string, number> = {};
+
     rarities.forEach(r => {
         missChance[r] = 1;
         expected[r] = 0;
@@ -41,12 +43,23 @@ export function getCumulativeChances(
     let previousTotal = 0;
 
     for (const lvl of levels) {
+
+        if(!lvl) continue;
+
         if (lvl.level > currentLevel) break;
 
-        const summonsHere =
-            lvl.level === currentLevel
-                ? totalProgress - previousTotal
-                : (lvl.totalSummon ?? previousTotal) - previousTotal;
+        const levelEnd = lvl.totalSummon ?? totalProgress;
+
+        // const summonsHere =
+        //     lvl.level === currentLevel
+        //         ? totalProgress - previousTotal
+        //         : (lvl.totalSummon ?? previousTotal) - previousTotal;
+
+        const summonsHere = Math.max(
+            0,
+            Math.min(totalProgress, levelEnd),
+            Math.max(startProgress, previousTotal)
+        )
 
         rarities.forEach(r => {
             const p = lvl.chances[r] / 100;
@@ -63,7 +76,11 @@ export function getCumulativeChances(
     return { atLeastOne, expected };
 }
 
-export function getMaxLevel(levels: LevelWithChances[], totalProgress: number) {
+export function getMaxLevel(
+    levels: LevelWithChances[], 
+    totalProgress: number,
+    startProgress = 0
+) {
     let index = levels.findIndex(l => l.totalSummon === null || totalProgress < l.totalSummon);
     if (index === -1) index = levels.length - 1;
 
@@ -75,7 +92,7 @@ export function getMaxLevel(levels: LevelWithChances[], totalProgress: number) {
         progress: totalProgress - previousTotal,
         required: current.totalSummon === null ? null : current.totalSummon - previousTotal,
         chances: current.chances,
-        cumulativeChances: getCumulativeChances(levels, current.level, totalProgress),
+        cumulativeChances: getCumulativeChances(levels, current.level, totalProgress, startProgress),
     };
 }
 
@@ -83,25 +100,40 @@ export function getForgeResult(
     levels: forgeLevelType[],
     coins: number,
     costDecreasePercent: number,
-    speedUpPercent: number
+    speedUpPercent: number,
+    startingLevel = 1,
+    startingProgress = 0
 ) {
     const costDecrease = Math.min(100, costDecreasePercent);
     const speedUp = Math.min(100, speedUpPercent);
 
     let remainingCoins = coins;
-    let level = levels[0].level;
+    let level = startingLevel;
+    let progress = toNonNegativeInteger(startingProgress);
+
+
     let totalTimeSeconds = 0;
     let totalGemCost = 0;
 
-    for (let i = 1; i < levels.length; i++) {
+    for (let i = levels.findIndex(l => l.level === level) + 1;
+         i < levels.length;
+         i++) {
+
         const next = levels[i];
         if (next.totalCost === null) break;
 
-        const cost = Math.ceil(next.totalCost * (1 - costDecrease / 100));
-        if (remainingCoins < cost) break;
+        const cost = Math.ceil(
+            next.totalCost * (1 - costDecrease / 100)
+        );
 
-        remainingCoins -= cost;
+        const needed = Math.max(0, cost - progress);
+
+        if (remainingCoins < needed) break;
+
+        remainingCoins -= needed;
+        progress = 0;
         level = next.level;
+
         totalGemCost += next.gemCost ?? 0;
         totalTimeSeconds += (next.time ?? 0) * (1 - speedUp / 100);
     }
@@ -119,4 +151,63 @@ export function getForgeResult(
         totalTimeSeconds,
         totalGemCost,
     };
+}
+export function getLevelProgressInfo(
+    levels: LevelWithChances[],
+    currentLevel: number
+){
+    const currentIndex = levels.findIndex(
+        l=> l.level === currentLevel
+    );
+
+    if(currentIndex === -1) return null;
+
+    const current = levels[currentIndex];
+    const previousTotal = levels[currentIndex-1]?.totalSummon ?? 0;
+
+    if(current.totalSummon === null){
+        return{
+            required: null,
+            previousTotal
+        }
+    }
+    return {
+        required: current.totalSummon - previousTotal,
+        previousTotal
+    }
+}
+
+export function getTotalProgress(
+    levels: LevelWithChances[],
+    currentLevel: number,
+    progress: number
+){
+
+    const info = getLevelProgressInfo(levels, currentLevel);
+
+    if(!info) return 0;
+
+    const safeProgress = info.required === null ? 0 : 
+    Math.min(info.required, toNonNegativeInteger(progress))
+
+    return info.previousTotal + safeProgress;
+}
+
+export function getForgeProgressInfo(
+    levels: forgeLevelType[],
+    currentLevel: number,
+    costDecreasePercent: number
+){
+    const next = levels.find(l => l.level === currentLevel + 1);
+
+    if (!next || next.totalCost === null) {
+        return { required: null };
+    }
+
+    return {
+        required: Math.ceil(
+            next.totalCost *
+            (1 - Math.min(100, costDecreasePercent) / 100)
+        ),
+    };  
 }

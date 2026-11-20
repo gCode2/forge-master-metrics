@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import type { ReactNode } from "react";
 import type {
     AscendCalculatorState,
+    LevelWithChances,
     ResourceName,
     SummonResourceName,
 } from "../../../types/types";
@@ -10,9 +11,12 @@ import { forgeLevels } from "../../../data/resourceData";
 import NumberField from "../components/NumberField";
 import {
     formatDuration,
+    getForgeProgressInfo,
     getForgeResult,
+    getLevelProgressInfo,
     getMaxLevel,
     getSummonCount,
+    getTotalProgress,
     toNonNegativeInteger,
 } from "./ascendCalculations";
 
@@ -43,6 +47,12 @@ const DEFAULT_STATE: AscendCalculatorState = {
         "bonus-chance-Pets": 0,
         "bonus-chance-Mounts": 0,
     },
+    resourceProgress:{
+        "Forge": {level: 1, progress: 0},
+        "Skills": {level: 1, progress: 0},
+        "Pets": {level: 1, progress: 0},
+        "Mounts": {level: 1, progress: 0},
+    }
 };
 
 const SUMMON_CONFIG: Record<
@@ -86,6 +96,10 @@ function loadState(): AscendCalculatorState {
             resourceQuantities: mergeNumbers(DEFAULT_STATE.resourceQuantities, parsed?.resourceQuantities),
             resourceCosts: mergeNumbers(DEFAULT_STATE.resourceCosts, parsed?.resourceCosts),
             resourceBonuses: mergeNumbers(DEFAULT_STATE.resourceBonuses, parsed?.resourceBonuses),
+            resourceProgress: {
+                ...DEFAULT_STATE.resourceProgress,
+                ...(parsed?.resourceProgress ?? {})
+            }
         };
     } catch {
         return DEFAULT_STATE;
@@ -205,19 +219,98 @@ function AscendCalculator() {
     const forgeDecrease = resourceBonuses["bonus-decrease-Forge"] ?? 0;
     const forgeSpeed = resourceBonuses["bonus-speed-Forge"] ?? 0;
 
-    const forgeResult = useMemo(
-        () =>
-            selectedResource === "Forge"
-                ? getForgeResult(forgeLevels, qty, forgeDecrease, forgeSpeed)
-                : null,
-        [selectedResource, qty, forgeDecrease, forgeSpeed]
+    const currentProgress = calculatorState.resourceProgress[selectedResource];
+
+    const selectedLevels = ascendResources.find(
+        r=> r.resource === selectedResource
+    )!.levels;
+
+    const progressInfo = selectedResource === "Forge" ? getForgeProgressInfo(
+        forgeLevels,
+        currentProgress.level,
+        forgeDecrease
+    ) : getLevelProgressInfo(
+        selectedLevels as LevelWithChances[],
+        currentProgress.level
     );
 
+
+    function updateProgress(
+        resource: ResourceName,
+        field: "level" | "progress",
+        value: number
+    ) {
+        setCalculatorState(prev => {
+            const current = prev.resourceProgress[resource];
+
+            const levels = ascendResources.find(
+                r => r.resource === resource
+            )!.levels;
+
+            const level = field === "level"
+                ? Math.max(1, Math.min(levels.length, toNonNegativeInteger(value)))
+                : current.level;
+
+            const rawProgress = field === "progress"
+                ? toNonNegativeInteger(value)
+                : 0;
+
+            let maxProgress: number | null = null;
+
+            if (resource === "Forge") {
+                maxProgress = getForgeProgressInfo(
+                    forgeLevels,
+                    level,
+                    prev.resourceBonuses["bonus-decrease-Forge"] ?? 0
+                ).required;
+            } else {
+                maxProgress = getLevelProgressInfo(
+                    levels as LevelWithChances[],
+                    level
+                )?.required ?? null;
+            }
+
+            const progress = maxProgress === null
+                ? 0
+                : Math.min(
+                    field === "level" ? 0 : rawProgress,
+                    maxProgress
+                );
+
+            return {
+                ...prev,
+                resourceProgress: {
+                    ...prev.resourceProgress,
+                    [resource]: { level, progress },
+                },
+            };
+        });
+    }
+
+    const forgeResult = useMemo(
+        () => selectedResource === "Forge"
+            ? getForgeResult(
+                forgeLevels,
+                qty,
+                forgeDecrease,
+                forgeSpeed,
+                calculatorState.showProgressMode
+                    ? currentProgress.level
+                    : 1,
+                calculatorState.showProgressMode
+                    ? currentProgress.progress
+                    : 0
+            )
+            : null,
+        [selectedResource,qty,forgeDecrease,forgeSpeed,calculatorState.showProgressMode,currentProgress]
+    );
     const summonResult = useMemo(() => {
         if (selectedResource === "Forge") return null;
 
         const config = SUMMON_CONFIG[selectedResource];
-        const levels = ascendResources.find(r => r.resource === selectedResource)!.levels;
+
+        const levels = ascendResources.find(r => r.resource === selectedResource)!.levels as LevelWithChances[];
+
         const { actions, expectedSummons } = getSummonCount(
             qty,
             cost,
@@ -225,8 +318,18 @@ function AscendCalculator() {
         );
         const summons = expectedSummons * config.summonsPerAction;
 
-        return { actions, summons, ascend: getMaxLevel(levels, summons) };
-    }, [selectedResource, qty, cost, extraChance]);
+        const startProgress = calculatorState.showProgressMode ? getTotalProgress(levels, currentProgress.level, currentProgress.progress) : 0;
+
+        return { 
+            actions, 
+            summons, 
+            ascend: getMaxLevel(
+                levels, 
+                startProgress + summons,
+                startProgress
+            )
+        };
+    }, [selectedResource, qty, cost, extraChance, calculatorState.showProgressMode, currentProgress]);
 
     function renderForge() {
         if (!forgeResult) return null;
@@ -345,14 +448,10 @@ function AscendCalculator() {
             <div className="flex flex-col sm:flex-row justify-center sm:justify-start items-center gap-2 sm:gap-5">
                 <div className="h-16 w-16 sm:h-25 sm:w-25 shrink-0 flex flex-col justify-center items-center">
                     {calculatorState.showProgressMode ?
-                    
                         <img src="/icons/progress.png" className="h-15 w-15 sm:h-21 sm:w-21"/>
-
                     : 
-                    
                         <img src="/icons/ascend.png" className="h-16 w-16 sm:h-25 sm:w-25 shrink-0"/>
                     }
-                    
                 </div>
                 <div className="flex flex-col justify-center items-center sm:justify-start sm:items-start">
                     <div className="font-bold">
@@ -465,7 +564,7 @@ function AscendCalculator() {
                                 </span>
                             </div>
                     </div>
-                        <div className="text-xl font-bold text-center">Select Ascension</div>
+                        <div className="text-xl font-bold text-center">Select {calculatorState.showProgressMode ? "Resource" : "Ascension"}</div>
 
                         <div className="grid grid-cols-4 sm:flex sm:flex-row gap-2 items-center justify-center">
                             {ascendResources.map(resource => (
@@ -507,7 +606,48 @@ function AscendCalculator() {
                                 </button>
                             ))}
                         </div>
+                        {calculatorState.showProgressMode &&
+                        
+                        <div className="flex flex-col sm:flex-row gap-3 justify-center items-center">
+                            <div className="w-full sm:max-w-100">
+                                <NumberField 
+                                label="Current Level:" 
+                                onChange={v=>updateProgress(
+                                    selectedResource,
+                                    "level",
+                                    Math.min(selectedLevels.length, Math.max(1, toNonNegativeInteger(v)))
+                                )} 
+                                value={currentProgress.level}/>
+                            </div>
+                            {selectedResource !== "Forge" && (
+                                <div className="w-full sm:max-w-100">
+                                    <label className="block mb-1">
+                                        Level progress:
+                                    </label>
+                                    <div className="flex items-center gap-2">
+                                    <input
+                                        type="text"
+                                        inputMode="numeric"
+                                        value={currentProgress.progress}
+                                        onChange={e => updateProgress(
+                                            selectedResource,
+                                            "progress",
+                                            Number(e.target.value.replace(/\D/g, ""))
+                                        )}
+                                        className="w-full border rounded-md p-2"
+                                    />
 
+                                    <span className="whitespace-nowrap">
+                                        / {progressInfo?.required ?? "MAX"}
+                                    </span>
+                                </div>
+                                </div>
+                            )}
+                            
+                        </div>    
+
+                        }
+                        
                         <div className="flex flex-col gap-3">
                             {selectedResource === "Forge" ? renderForge() : renderSummonPanel(selectedResource)}
                         </div>
