@@ -326,4 +326,3 @@ export interface AscendResource {
 }
 
 export type AscendResources = AscendResource[]
-

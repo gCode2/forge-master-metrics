@@ -19,6 +19,7 @@ import {
     getTotalProgress,
     toNonNegativeInteger,
 } from "./ascendCalculations";
+import TextField from "../components/TextField";
 
 const STORAGE_KEY = "ascend-calculator-v1";
 
@@ -621,29 +622,20 @@ function AscendCalculator() {
                             </div>
                             {selectedResource !== "Forge" && (
                                 <div className="w-full sm:max-w-100">
-                                    <label className="block mb-1">
-                                        Level progress:
-                                    </label>
-                                    <div className="flex items-center gap-2">
-                                    <input
-                                        type="text"
-                                        inputMode="numeric"
-                                        value={currentProgress.progress}
-                                        onChange={e => updateProgress(
-                                            selectedResource,
-                                            "progress",
-                                            Number(e.target.value.replace(/\D/g, ""))
-                                        )}
-                                        className="w-full border rounded-md p-2"
+                                
+                                <TextField 
+                                    label="Level progress: " 
+                                    value={currentProgress.progress} 
+                                    onChange={v=>updateProgress(
+                                        selectedResource, 
+                                        "progress", 
+                                        v
+                                    )}
+                                    suffix={`/ ${progressInfo?.required ?? "MAX"}`}
                                     />
-
-                                    <span className="whitespace-nowrap">
-                                        / {progressInfo?.required ?? "MAX"}
-                                    </span>
-                                </div>
+                                    
                                 </div>
                             )}
-                            
                         </div>    
 
                         }
