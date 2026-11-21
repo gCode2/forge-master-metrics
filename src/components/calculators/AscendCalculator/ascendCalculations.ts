@@ -54,11 +54,13 @@ export function getCumulativeChances(
         //     lvl.level === currentLevel
         //         ? totalProgress - previousTotal
         //         : (lvl.totalSummon ?? previousTotal) - previousTotal;
+        const intervalStart = Math.max(startProgress, previousTotal);
+        const intervalEnd = Math.min(totalProgress, levelEnd);
+
 
         const summonsHere = Math.max(
             0,
-            Math.min(totalProgress, levelEnd),
-            Math.max(startProgress, previousTotal)
+            intervalEnd-intervalStart
         )
 
         rarities.forEach(r => {
