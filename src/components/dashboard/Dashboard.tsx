@@ -130,7 +130,7 @@ function Dashboard({playerId} : DashboardProps){
                 <div className="flex items-center gap-3 border-2 rounded-xl shadow-lg/20 p-3 sm:p-4 justify-center items-center">
                     <img src="/icons/calendar.png" className="w-8 h-8 shrink-0" />
                     <div className="text-sm">
-                        Last recorded war:{" "}
+                        Last recorded War:{" "}
                         <span className="font-bold text-orange-400">
                             #{data?.last_scored_war_number}
                         </span>
@@ -140,7 +140,7 @@ function Dashboard({playerId} : DashboardProps){
                 <div className="flex items-center gap-3 border-2 rounded-xl shadow-lg/20 p-3 sm:p-4 justify-center items-center">
                     <img src="/icons/number-1.png" className="w-8 h-8 shrink-0" />
                     <div className="text-sm">
-                        First appearance:{" "}
+                        With us since War:{" "}
                         <span className="font-bold text-orange-400">
                             #{data?.first_scored_war_number}
                         </span>

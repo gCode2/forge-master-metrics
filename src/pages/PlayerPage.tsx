@@ -155,7 +155,7 @@ function PlayerPage() {
                         <img src="/icons/calendar.png" className="w-8 h-8 shrink-0" />
 
                         <div className="text-sm">
-                            Last recorded war:{" "}
+                            Last recorded War:{" "}
                             <span className="font-bold text-orange-400">
                                 #{data?.last_scored_war_number}
                             </span>
@@ -166,7 +166,7 @@ function PlayerPage() {
                         <img src="/icons/number-1.png" className="w-8 h-8 shrink-0" />
 
                         <div className="text-sm">
-                            First appearance:{" "}
+                            With us since War:{" "}
                             <span className="font-bold text-orange-400">
                                 #{data?.first_scored_war_number}
                             </span>
