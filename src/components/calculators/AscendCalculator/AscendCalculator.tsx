@@ -235,6 +235,9 @@ function AscendCalculator() {
         currentProgress.level
     );
 
+    const effectiveProgress = progressInfo?.required == null
+        ? 0
+        : Math.min(currentProgress.progress, Math.max(0, progressInfo.required-1))
 
     function updateProgress(
         resource: ResourceName,
@@ -254,7 +257,7 @@ function AscendCalculator() {
 
             const rawProgress = field === "progress"
                 ? toNonNegativeInteger(value)
-                : 0;
+                : current.progress;
 
             let maxProgress: number | null = null;
 
@@ -271,9 +274,11 @@ function AscendCalculator() {
                 )?.required ?? null;
             }
 
-            const progress = maxProgress === null
-                ? 0
-                : field === "level" ? 0 : Math.min(rawProgress, Math.max(0, maxProgress-1));
+            const progress = field === "level"
+                ? current.progress
+                : maxProgress === null
+                    ? 0
+                    : Math.min(rawProgress, Math.max(0, maxProgress - 1));
 
             return {
                 ...prev,
@@ -296,11 +301,11 @@ function AscendCalculator() {
                     ? currentProgress.level
                     : 1,
                 calculatorState.showProgressMode
-                    ? currentProgress.progress
+                    ? effectiveProgress
                     : 0
             )
             : null,
-        [selectedResource,qty,forgeDecrease,forgeSpeed,calculatorState.showProgressMode,currentProgress]
+        [selectedResource, qty, forgeDecrease, forgeSpeed, calculatorState.showProgressMode, currentProgress.level, effectiveProgress]
     );
     const summonResult = useMemo(() => {
         if (selectedResource === "Forge") return null;
@@ -316,18 +321,20 @@ function AscendCalculator() {
         );
         const summons = expectedSummons * config.summonsPerAction;
 
-        const startProgress = calculatorState.showProgressMode ? getTotalProgress(levels, currentProgress.level, currentProgress.progress) : 0;
+        const startProgress = calculatorState.showProgressMode
+            ? getTotalProgress(levels, currentProgress.level, effectiveProgress)
+            : 0;
 
-        return { 
-            actions, 
-            summons, 
+        return {
+            actions,
+            summons,
             ascend: getMaxLevel(
-                levels, 
+                levels,
                 startProgress + summons,
                 startProgress
             )
         };
-    }, [selectedResource, qty, cost, extraChance, calculatorState.showProgressMode, currentProgress]);
+    }, [selectedResource, qty, cost, extraChance, calculatorState.showProgressMode, currentProgress.level, effectiveProgress]);
 
     function renderForge() {
         if (!forgeResult) return null;
@@ -622,7 +629,7 @@ function AscendCalculator() {
                                 
                                 <TextField 
                                     label="Level progress: " 
-                                    value={currentProgress.progress} 
+                                    value={effectiveProgress} 
                                     onChange={v=>updateProgress(
                                         selectedResource, 
                                         "progress", 
