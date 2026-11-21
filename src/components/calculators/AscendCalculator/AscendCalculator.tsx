@@ -273,10 +273,7 @@ function AscendCalculator() {
 
             const progress = maxProgress === null
                 ? 0
-                : Math.min(
-                    field === "level" ? 0 : rawProgress,
-                    maxProgress
-                );
+                : field === "level" ? 0 : Math.min(rawProgress, Math.max(0, maxProgress-1));
 
             return {
                 ...prev,
